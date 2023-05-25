@@ -15,7 +15,7 @@ public class PIDConfig {
     protected double kD;
     protected double kF;
     protected double tolerance;
-    protected double range;
+    protected Double iZone;
 
     /**
      * Constructs a PID configuration with the specified loop gain constants.
@@ -24,17 +24,16 @@ public class PIDConfig {
      * @param kI integral gain; output based on accumulated error to exponentiate kP.
      * @param kD derivative gain; typically used for damping.
      * @param kF feed forward constant.
-     * @param range maximum (negated to get minimum) motor movement
-     *              percentage allowed for PIDF loop to set [-1, 1].
+     * @param iZone The range allowed for kI
      *
      * @since 0.1.0
      */
-    public PIDConfig(double kP, double kI, double kD, double kF, double range) {
+    public PIDConfig(double kP, double kI, double kD, double kF, Double iZone) {
         this.kP = kP;
         this.kI = kI;
         this.kD = kD;
         this.kF = kF;
-        this.range = range;
+        this.iZone = iZone;
     }
 
     /**
@@ -47,7 +46,7 @@ public class PIDConfig {
      * @since 0.1.0
      */
     public PIDConfig(double kP, double kI, double kD, double kF) {
-        this(kP, kI, kD, kF, 1.0);
+        this(kP, kI, kD, kF, null);
     }
 
     /**
@@ -60,7 +59,7 @@ public class PIDConfig {
      * @since 0.1.0
      */
     public PIDConfig(double kP, double kI, double kD) {
-        this(kP, kI, kD, 0.0, 1.0);
+        this(kP, kI, kD, 0.0, null);
     }
 
     public double getP() {
@@ -83,8 +82,8 @@ public class PIDConfig {
         return tolerance;
     }
 
-    public double getRange() {
-        return range;
+    public Double getIZone() {
+        return iZone;
     }
 
     public PIDConfig setP(double kP) {
@@ -112,8 +111,8 @@ public class PIDConfig {
         return this;
     }
 
-    public PIDConfig setRange(double pidRange) {
-        this.range = pidRange;
+    public PIDConfig setIZone(double iZone) {
+        this.iZone = iZone;
         return this;
     }
 }

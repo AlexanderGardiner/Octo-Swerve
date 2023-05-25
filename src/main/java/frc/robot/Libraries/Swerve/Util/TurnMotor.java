@@ -31,6 +31,12 @@ public class TurnMotor {
 
     private int encoderCountsPerRev;
 
+    /** Creates a turn motor object
+     * @param motorType The type of the motor
+     * @param canID The canID of the motor
+     * @param PIDconfig The PIDconfig of the motor
+     * @param encoderCountsPerRev The ticks per revolution of the encoder
+     */
     public TurnMotor(MotorType motorType, int canID, PIDConfig PIDconfig, int encoderCountsPerRev) {
         this.motorType = motorType;
         this.encoderCountsPerRev = encoderCountsPerRev;

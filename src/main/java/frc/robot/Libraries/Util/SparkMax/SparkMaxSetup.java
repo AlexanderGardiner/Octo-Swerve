@@ -5,6 +5,7 @@ import com.revrobotics.CANSparkMaxLowLevel.PeriodicFrame;
 import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
 
 public class SparkMaxSetup {
+    // Sets up Spark Max according to the config supplied
     public static void setup(CANSparkMax sparkMax, SparkMaxConfig sparkMaxConfig) {
         if (sparkMaxConfig.getReset()) {
             sparkMax.restoreFactoryDefaults();
@@ -38,7 +39,10 @@ public class SparkMaxSetup {
         sparkMax.getPIDController().setSmartMotionMaxAccel(sparkMaxConfig.getMaxAccel(), 0);
         sparkMax.getPIDController().setSmartMotionAllowedClosedLoopError(sparkMaxConfig.getAllowableClosedLoopError(), 0);
 
-        sparkMax.getPIDController().setIZone(sparkMaxConfig.getIntegralZone());
+        if (sparkMaxConfig.getPIDconfig().getIZone()!=null) {
+            sparkMax.getPIDController().setIZone(sparkMaxConfig.getPIDconfig().getIZone());
+        }
+        
         sparkMax.getPIDController().setP(sparkMaxConfig.getPIDconfig().getP());
         sparkMax.getPIDController().setI(sparkMaxConfig.getPIDconfig().getI());
         sparkMax.getPIDController().setD(sparkMaxConfig.getPIDconfig().getD());

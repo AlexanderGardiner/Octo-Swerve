@@ -27,14 +27,24 @@ public class TalonFXConfig {
 
     private double maxVel = 0;
     private double maxAccel = 0;
-    private Integer integralZone = null;
     private int sCurveStrength = 0;
 
     private PIDConfig PIDconfig = new PIDConfig(0, 0, 0);
 
     int encoderCountsPerRev = 4096;
 
-    // Default constructor
+    /** Default constructor
+    * @param statusFrames A status frame object that contains the period for each type of status frame
+    * @param reset If the motor should be reset to factory default
+    * @param allowableClosedLoopError Allowed closed loop error
+    * @param feedbackDevice The feedback device (encoder) used by the motor
+    * @param neutralMode The motor's behavior when not moving
+    * @param statorCurrentLimit The max output current
+    * @param supplyCurrentLimit The max input current
+    * @param inverted Whether the motor's direction is inverted
+    * @param sensorInverted Whether the sensor's direction is inverted
+    * @param encoderCountsPerRev The ticks per one revolution of the motor's encoder
+    */
     public TalonFXConfig(TalonFXStatusFrames statusFrames, boolean reset, double allowableClosedLoopError, 
                          TalonFXFeedbackDevice feedbackDevice, NeutralMode neutralMode,
                          StatorCurrentLimitConfiguration statorCurrentLimit, SupplyCurrentLimitConfiguration supplyCurrentLimit,
@@ -55,7 +65,19 @@ public class TalonFXConfig {
         this.encoderCountsPerRev = encoderCountsPerRev;
     }
 
-    // PID Control
+    /** PID Control
+    * @param statusFrames A status frame object that contains the period for each type of status frame
+    * @param reset If the motor should be reset to factory default
+    * @param allowableClosedLoopError Allowed closed loop error
+    * @param feedbackDevice The feedback device (encoder) used by the motor
+    * @param neutralMode The motor's behavior when not moving
+    * @param statorCurrentLimit The max output current
+    * @param supplyCurrentLimit The max input current
+    * @param inverted Whether the motor's direction is inverted
+    * @param sensorInverted Whether the sensor's direction is inverted
+    * @param encoderCountsPerRev The ticks per one revolution of the motor's encoder
+    * @param PIDconfig The PIDF config for the motor
+    */
     public TalonFXConfig(TalonFXStatusFrames statusFrames, boolean reset, double allowableClosedLoopError, 
                          TalonFXFeedbackDevice feedbackDevice, NeutralMode neutralMode,
                          StatorCurrentLimitConfiguration statorCurrentLimit, SupplyCurrentLimitConfiguration supplyCurrentLimit,
@@ -72,14 +94,29 @@ public class TalonFXConfig {
 
     }
 
-    // Constructor for motion magic control
+    /** Motion Magic Control
+    * @param statusFrames A status frame object that contains the period for each type of status frame
+    * @param reset If the motor should be reset to factory default
+    * @param allowableClosedLoopError Allowed closed loop error
+    * @param feedbackDevice The feedback device (encoder) used by the motor
+    * @param neutralMode The motor's behavior when not moving
+    * @param statorCurrentLimit The max output current
+    * @param supplyCurrentLimit The max input current
+    * @param inverted Whether the motor's direction is inverted
+    * @param sensorInverted Whether the sensor's direction is inverted
+    * @param encoderCountsPerRev The ticks per one revolution of the motor's encoder
+    * @param PIDconfig The PIDF config for the motor
+    * @param maxVel The maximum velocity when under motion magic control
+    * @param maxAccel The maximum acceleration when under motion magic control
+    * @param sCurveStrength The curve strength when under motion magic control
+    */
     public TalonFXConfig(TalonFXStatusFrames statusFrames, boolean reset, double allowableClosedLoopError, 
                          TalonFXFeedbackDevice feedbackDevice, NeutralMode neutralMode,
                          StatorCurrentLimitConfiguration statorCurrentLimit, SupplyCurrentLimitConfiguration supplyCurrentLimit,
                          TalonFXInvertType inverted, boolean sensorInverted,
                          int encoderCountsPerRev,
                          PIDConfig PIDconfig,
-                         Double maxVel, Double maxAccel, Integer integralZone, Integer sCurveStrength) {
+                         Double maxVel, Double maxAccel, Integer sCurveStrength) {
         this(statusFrames, reset, allowableClosedLoopError, 
              feedbackDevice, neutralMode,
              statorCurrentLimit, supplyCurrentLimit,
@@ -89,11 +126,23 @@ public class TalonFXConfig {
 
         this.maxVel = maxVel;
         this.maxAccel = maxAccel;
-        this.integralZone = integralZone;
         this.sCurveStrength = sCurveStrength;
     }
 
-    // PID Control (Integrated Sensor)
+    /** PID Control (Integrated Sensor)
+    * @param statusFrames A status frame object that contains the period for each type of status frame
+    * @param reset If the motor should be reset to factory default
+    * @param allowableClosedLoopError Allowed closed loop error
+    * @param feedbackDevice The feedback device (encoder) used by the motor
+    * @param neutralMode The motor's behavior when not moving
+    * @param statorCurrentLimit The max output current
+    * @param supplyCurrentLimit The max input current
+    * @param inverted Whether the motor's direction is inverted
+    * @param sensorInverted Whether the sensor's direction is inverted
+    * @param encoderCountsPerRev The ticks per one revolution of the motor's encoder
+    * @param PIDconfig The PIDF config for the motor
+    * @param integratedSensorInitializationStrategy The initalization strategy for the integrated sensor
+    */
     public TalonFXConfig(TalonFXStatusFrames statusFrames, boolean reset, double allowableClosedLoopError, 
                          TalonFXFeedbackDevice feedbackDevice, NeutralMode neutralMode,
                          StatorCurrentLimitConfiguration statorCurrentLimit, SupplyCurrentLimitConfiguration supplyCurrentLimit,
@@ -112,7 +161,23 @@ public class TalonFXConfig {
 
     }
 
-    // Motion magic control (Integrated Sensor)
+    /** Motion magic control (Integrated Sensor)
+    * @param statusFrames A status frame object that contains the period for each type of status frame
+    * @param reset If the motor should be reset to factory default
+    * @param allowableClosedLoopError Allowed closed loop error
+    * @param feedbackDevice The feedback device (encoder) used by the motor
+    * @param neutralMode The motor's behavior when not moving
+    * @param statorCurrentLimit The max output current
+    * @param supplyCurrentLimit The max input current
+    * @param inverted Whether the motor's direction is inverted
+    * @param sensorInverted Whether the sensor's direction is inverted
+    * @param encoderCountsPerRev The ticks per one revolution of the motor's encoder
+    * @param PIDconfig The PIDF config for the motor
+    * @param integratedSensorInitializationStrategy The initalization strategy for the integrated sensor
+    * @param maxVel The maximum velocity when under motion magic control
+    * @param maxAccel The maximum acceleration when under motion magic control
+    * @param sCurveStrength The curve strength when under motion magic control
+    */
     public TalonFXConfig(TalonFXStatusFrames statusFrames, boolean reset, double allowableClosedLoopError, 
                          TalonFXFeedbackDevice feedbackDevice, NeutralMode neutralMode,
                          StatorCurrentLimitConfiguration statorCurrentLimit, SupplyCurrentLimitConfiguration supplyCurrentLimit,
@@ -120,7 +185,7 @@ public class TalonFXConfig {
                          int encoderCountsPerRev,
                          PIDConfig PIDconfig,
                          SensorInitializationStrategy integratedSensorInitializationStrategy,
-                         Double maxVel, Double maxAccel, Integer integralZone, Integer sCurveStrength) {
+                         Double maxVel, Double maxAccel, Integer sCurveStrength) {
         this(statusFrames, reset, allowableClosedLoopError, 
              feedbackDevice, neutralMode,
              statorCurrentLimit, supplyCurrentLimit,
@@ -131,7 +196,6 @@ public class TalonFXConfig {
 
         this.maxVel = maxVel;
         this.maxAccel = maxAccel;
-        this.integralZone = integralZone;
         this.sCurveStrength = sCurveStrength;
     }
 
@@ -234,14 +298,6 @@ public class TalonFXConfig {
 
     public void setMaxAccel(double maxAccel) {
         this.maxAccel = maxAccel;
-    }
-
-    public Integer getIntegralZone() {
-        return this.integralZone;
-    }
-
-    public void setIntegralZone(int integralZone) {
-        this.integralZone = integralZone;
     }
 
     public int getSCurveStrength() {

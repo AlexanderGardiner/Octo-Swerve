@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 public class TalonFXSetup {
+    // Sets up TalonFX according to the config supplied
     public static void setup(WPI_TalonFX talonFX, TalonFXConfig talonFXConfig) {
         if (talonFXConfig.getReset()) {
             talonFX.configFactoryDefault();
@@ -31,8 +32,8 @@ public class TalonFXSetup {
         talonFX.configMotionAcceleration(talonFXConfig.getMaxAccel());
         talonFX.configMotionSCurveStrength(talonFXConfig.getSCurveStrength());
 
-        if (talonFXConfig.getIntegralZone()!=null) {
-            talonFX.config_IntegralZone(0, talonFXConfig.getIntegralZone());
+        if (talonFXConfig.getPIDconfig().getIZone()!=null) {
+            talonFX.config_IntegralZone(0, talonFXConfig.getPIDconfig().getIZone());
         }
 
         talonFX.config_kP(0, talonFXConfig.getPIDconfig().getP());

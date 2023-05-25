@@ -1,11 +1,11 @@
 package frc.robot.Libraries.Util.SparkMax;
 
-import java.util.List;
-
 import com.revrobotics.CANSparkMax.IdleMode;
 
 import frc.robot.Libraries.Util.PIDConfig;
-  
+
+/** A config for a Spark Max
+ */
 public class SparkMaxConfig {
     private SparkMaxStatusFrames statusFrames;
     private int timeoutMs;
@@ -25,13 +25,23 @@ public class SparkMaxConfig {
     private double maxVel = 0;
     private double maxAccel = 0;
     private double allowableClosedLoopError = 0;
-    private int integralZone = 0;
 
     private PIDConfig PIDconfig = new PIDConfig(0, 0, 0);
 
     int encoderCountsPerRev = 42;
 
-    // Default constructor
+    /** Default constructor
+    * @param statusFrames A status frame object that contains the period for each type of status frame
+    * @param timeoutMS The timeout for messages on the CAN bus
+    * @param reset If the motor should be reset to factory default
+    * @param encoderType The encoder used by the motor
+    * @param idleMode The motor's behavior when not moving
+    * @param stallCurrentLimit The current limit in amps at 0 rpm
+    * @param freeCurrentLimit The current limit at free speed (5700RPM for NEO).
+    * @param inverted Whether the motor's direction is inverted
+    * @param sensorInverted Whether the sensor's direction is inverted
+    * @param encoderCountsPerRev The ticks per one revolution of the motor's encoder
+    */
     public SparkMaxConfig(SparkMaxStatusFrames statusFrames, int timeoutMs, boolean reset,
                           SparkMaxEncoderType encoderType, IdleMode idleMode,
                           int stallCurrentLimit, int freeCurrentLimit,
@@ -53,7 +63,19 @@ public class SparkMaxConfig {
         this.encoderCountsPerRev = encoderCountsPerRev;
     }
 
-    // Default constructor
+    /** Default constructor
+    * @param statusFrames A status frame object that contains the period for each type of status frame
+    * @param timeoutMS The timeout for messages on the CAN bus
+    * @param reset If the motor should be reset to factory default
+    * @param encoderType The encoder used by the motor
+    * @param idleMode The motor's behavior when not moving
+    * @param stallCurrentLimit The current limit in amps at 0 rpm
+    * @param freeCurrentLimit The current limit at free speed (5700RPM for NEO).
+    * @param inverted Whether the motor's direction is inverted
+    * @param sensorInverted Whether the sensor's direction is inverted
+    * @param encoderCountsPerRev The ticks per one revolution of the motor's encoder
+    * @param positionPIDWrappingEnabled Whether position PID wrapping is enabled
+    */
     public SparkMaxConfig(SparkMaxStatusFrames statusFrames, int timeoutMs, boolean reset,
                           SparkMaxEncoderType encoderType, IdleMode idleMode,
                           int stallCurrentLimit, int freeCurrentLimit,
@@ -69,7 +91,20 @@ public class SparkMaxConfig {
           this.positionPIDWrappingEnabled = positionPIDWrappingEnabled;
     }
 
-    // PID Control
+    /** PID Control
+    * @param statusFrames A status frame object that contains the period for each type of status frame
+    * @param timeoutMS The timeout for messages on the CAN bus
+    * @param reset If the motor should be reset to factory default
+    * @param encoderType The encoder used by the motor
+    * @param idleMode The motor's behavior when not moving
+    * @param stallCurrentLimit The current limit in amps at 0 rpm
+    * @param freeCurrentLimit The current limit at free speed (5700RPM for NEO).
+    * @param inverted Whether the motor's direction is inverted
+    * @param sensorInverted Whether the sensor's direction is inverted
+    * @param encoderCountsPerRev The ticks per one revolution of the motor's encoder
+    * @param positionPIDWrappingEnabled Whether position PID wrapping is enabled
+    * @param PIDconfig The PIDF Config for the motor
+    */
     public SparkMaxConfig(SparkMaxStatusFrames statusFrames, int timeoutMs, boolean reset,
                           SparkMaxEncoderType encoderType, IdleMode idleMode,
                           int stallCurrentLimit, int freeCurrentLimit,
@@ -88,7 +123,23 @@ public class SparkMaxConfig {
 
     }
 
-    // Constructor for smart motion control
+    /** Smart Motion Control
+    * @param statusFrames A status frame object that contains the period for each type of status frame
+    * @param timeoutMS The timeout for messages on the CAN bus
+    * @param reset If the motor should be reset to factory default
+    * @param encoderType The encoder used by the motor
+    * @param idleMode The motor's behavior when not moving
+    * @param stallCurrentLimit The current limit in amps at 0 rpm
+    * @param freeCurrentLimit The current limit at free speed (5700RPM for NEO).
+    * @param inverted Whether the motor's direction is inverted
+    * @param sensorInverted Whether the sensor's direction is inverted
+    * @param encoderCountsPerRev The ticks per one revolution of the motor's encoder
+    * @param positionPIDWrappingEnabled Whether position PID wrapping is enabled
+    * @param PIDconfig The PIDF Config for the motor
+    * @param maxVel The maximum velocity of the motor when under smart motion control
+    * @param maxAccel The maximum acceleration of the motor when under smart motion control
+    * @param allowableClosedLoopError The allowed closed loop error when under smart motion control
+    */
     public SparkMaxConfig(SparkMaxStatusFrames statusFrames, int timeoutMs, boolean reset, 
                           SparkMaxEncoderType encoderType, IdleMode idleMode,
                           int stallCurrentLimit, int freeCurrentLimit,
@@ -96,7 +147,7 @@ public class SparkMaxConfig {
                           int encoderCountsPerRev,
                           boolean positionPIDWrappingEnabled,
                           PIDConfig PIDconfig,
-                          Double maxVel, Double maxAccel, double allowableClosedLoopError, Integer integralZone) {
+                          Double maxVel, Double maxAccel, double allowableClosedLoopError) {
         this(statusFrames, timeoutMs, reset, 
              encoderType, idleMode,
              stallCurrentLimit, freeCurrentLimit,
@@ -108,7 +159,6 @@ public class SparkMaxConfig {
         this.maxVel = maxVel;
         this.maxAccel = maxAccel;
         this.allowableClosedLoopError = allowableClosedLoopError;
-        this.integralZone = integralZone;
     }
     
 
@@ -226,14 +276,6 @@ public class SparkMaxConfig {
 
      public void setMaxAccel(double maxAccel) {
           this.maxAccel = maxAccel;
-     }
-
-     public int getIntegralZone() {
-          return this.integralZone;
-     }
-
-     public void setIntegralZone(int integralZone) {
-          this.integralZone = integralZone;
      }
 
      public PIDConfig getPIDconfig() {
