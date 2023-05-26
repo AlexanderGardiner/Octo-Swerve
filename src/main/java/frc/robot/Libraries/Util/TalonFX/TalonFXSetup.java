@@ -4,7 +4,10 @@ import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 public class TalonFXSetup {
-    // Sets up TalonFX according to the config supplied
+    /** Sets up a TalonFX with the supplied config
+     * @param talonFX The TalonFX to apply the config to
+     * @param talonFXConfig The config to apply
+     */
     public static void setup(WPI_TalonFX talonFX, TalonFXConfig talonFXConfig) {
         if (talonFXConfig.getReset()) {
             talonFX.configFactoryDefault();

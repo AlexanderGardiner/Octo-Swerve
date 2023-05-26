@@ -30,34 +30,58 @@ public class SwerveModule {
         driveEncoderTickToMeters = (2 * Math.PI * wheelRadius * (1/gearingDriveEncoderToOutput)) / driveMotorEncoderCountsPerRev;
     }
 
+    /** Sets the  target velocity of the module
+     * @param velocity The target velocity in ticks per 100ms;
+     */
     public void setTargetVelocityMeters(double velocity) {
         driveMotor.setTargetVelocityTicks(velocity);
     }
 
+    /** Sets the  target angle of the module
+     * @param angle The target angle in radians;
+     */
     public void setTargetAngleRadians(double angle) {
-        driveMotor.setTargetVelocityTicks(angle);
+        turnMotor.setTargetPositionTicks(angle/turnEncoderTickToRadians);
     }
 
+    /** Gets the distance travelled by the drive motor
+     * @return The distance travelled by the drive motor in meters
+     */
     public double getDistanceMeters() {
         return driveMotor.getEncoderPositionTicks() * driveEncoderTickToMeters;
     }
 
+    /** Gets the velocity of the drive motor
+     * @return The velocity of the drive motor in m/s
+     */
     public double getVelocityMeters() {
-        return driveMotor.getEncoderVelocityTicks() * driveEncoderTickToMeters;
+        return driveMotor.getEncoderVelocityTicks() * driveEncoderTickToMeters * 10;
     }
 
+    /** Gets the angle of the turn motor in radians
+     * @return The angle of the turn motor in radians
+     */
     public double getAngleRadians() {
         return turnMotor.getEncoderPositionTicks() * turnEncoderTickToRadians;
     }
 
+    /** Gets the module's position
+     * @return The swerve module position (in meters and radians)
+     */
     public SwerveModulePosition getModulePosition() {
         return new SwerveModulePosition(getDistanceMeters(), new Rotation2d(getAngleRadians()));
     }
 
+    /** Gets the state of the module
+     * @return The swerve module state (in m/s and radians)
+     */
     public SwerveModuleState getModuleState() {
         return new SwerveModuleState(getVelocityMeters(), new Rotation2d(getAngleRadians()));
     }
 
+    /** Sets the target state of the module
+     * @param state The target state (in m/s and radians)
+     */
     public void setTargetState(SwerveModuleState state) {
         SwerveModuleState optimizedState = StateOptimizer.optimizeSwerveStates(state, getAngleRadians());
         setTargetVelocityMeters(optimizedState.speedMetersPerSecond);

@@ -85,27 +85,36 @@ public class DriveMotor {
         }
     }
 
+    /** Gets the encoder position
+     * @return The encoder position in ticks
+     */
     public double getEncoderPositionTicks() {
         if (this.motorType == MotorType.TalonFX) {
             return talonFX.getSensorCollection().getIntegratedSensorPosition();
         } else {
-            return sparkMax.getAlternateEncoder(encoderCountsPerRev).getPosition();
+            return sparkMax.getAlternateEncoder(encoderCountsPerRev).getPosition()*encoderCountsPerRev;
         }
     }
 
+    /** Gets the encoder velocity
+     * @return The encoder velocity in ticks per 100ms
+     */
     public double getEncoderVelocityTicks() {
         if (this.motorType == MotorType.TalonFX) {
             return talonFX.getSensorCollection().getIntegratedSensorVelocity();
         } else {
-            return sparkMax.getAlternateEncoder(encoderCountsPerRev).getVelocity();
+            return (sparkMax.getAlternateEncoder(encoderCountsPerRev).getVelocity()*encoderCountsPerRev)/600;
         }
     }
 
-    public void setTargetVelocityTicks(double position) {
+    /** Sets the target velocity of the motor
+     * @param velocity The target velocity in ticks per 100ms
+     */
+    public void setTargetVelocityTicks(double velocity) {
         if (this.motorType == MotorType.TalonFX) {
-            talonFX.set(ControlMode.Velocity, position);
+            talonFX.set(ControlMode.Velocity, velocity);
         } else {
-            sparkMax.getPIDController().setReference(position, ControlType.kVelocity);
+            sparkMax.getPIDController().setReference((velocity*600)/encoderCountsPerRev, ControlType.kVelocity);
         }
     }
 }

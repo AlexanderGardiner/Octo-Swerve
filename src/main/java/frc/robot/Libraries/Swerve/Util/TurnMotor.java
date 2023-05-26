@@ -85,6 +85,9 @@ public class TurnMotor {
         }
     }
 
+    /** Gets the encoder position
+     * @return The encoder position in ticks
+     */
     public double getEncoderPositionTicks() {
         if (this.motorType == MotorType.TalonFX) {
             return talonFX.getSensorCollection().getIntegratedSensorAbsolutePosition();
@@ -93,11 +96,14 @@ public class TurnMotor {
         }
     }
 
+    /** Sets the target position of the motor
+     * @param position The target position in ticks
+     */
     public void setTargetPositionTicks(double position) {
         if (this.motorType == MotorType.TalonFX) {
             talonFX.set(ControlMode.Position, position);
         } else {
-            sparkMax.getPIDController().setReference(position, ControlType.kPosition);
+            sparkMax.getPIDController().setReference(position/encoderCountsPerRev, ControlType.kPosition);
         }
     }
 }

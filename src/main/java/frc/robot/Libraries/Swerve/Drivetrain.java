@@ -55,6 +55,10 @@ public class Drivetrain {
 
     }
 
+    /** Drives the robot
+     * @param chassisSpeeds The target speed of the robot (x, y, and theta)
+     * @param fieldRelative Whether the movement is field relative
+     */
     public void drive(ChassisSpeeds chassisSpeeds, boolean fieldRelative) {
         if (fieldRelative) {
             chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(chassisSpeeds, gyro.getWrappedAngleRotation2D());

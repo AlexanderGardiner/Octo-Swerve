@@ -5,7 +5,10 @@ import com.revrobotics.CANSparkMaxLowLevel.PeriodicFrame;
 import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
 
 public class SparkMaxSetup {
-    // Sets up Spark Max according to the config supplied
+    /** Sets up a Spark Max with the supplied config
+     * @param sparkMax The Spark Max to apply the config to
+     * @param sparkMaxConfig The config to apply
+     */
     public static void setup(CANSparkMax sparkMax, SparkMaxConfig sparkMaxConfig) {
         if (sparkMaxConfig.getReset()) {
             sparkMax.restoreFactoryDefaults();

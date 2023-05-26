@@ -8,11 +8,18 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 
 public class SwerveKinematics {
     Translation2d[] modulePositions;
+
+    /** Creates a new SwerveKinematics
+     * @param modulePositions The positions of the modules relative to the center of the robot
+     */
     public SwerveKinematics(Translation2d[] modulePositions) {
         this.modulePositions = modulePositions;
     }
-    //TODO: need to implement multiple modules
 
+    /** Calculates the swerve module states to reach a target chassisSpeeds
+     * @param chassisSpeeds The target chassisSpeeds
+     * @return The calculated swerve module states
+     */
     public SwerveModuleState[] calculateFromChassisSpeeds(ChassisSpeeds chassisSpeeds) {
         SwerveModuleState[] moduleStates = {new SwerveModuleState(), new SwerveModuleState(), new SwerveModuleState(), new SwerveModuleState()};
 
