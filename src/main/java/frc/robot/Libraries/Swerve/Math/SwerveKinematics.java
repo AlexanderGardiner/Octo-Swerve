@@ -28,13 +28,16 @@ public class SwerveKinematics {
                                            chassisSpeeds.vyMetersPerSecond*0.02,
                                            new Rotation2d(chassisSpeeds.omegaRadiansPerSecond*0.02));
         
-            Translation2d targetModulePosition = new Translation2d(modulePositions[i].getX() + targetLocation.getX(),
-                                                                modulePositions[i].getY() + targetLocation.getY());  
+
+            Translation2d targetModulePosition = new Translation2d(modulePositions[i].getX() * Math.cos(targetLocation.getRotation().getRadians())
+                                                                   - modulePositions[i].getY() * Math.sin(targetLocation.getRotation().getRadians()),
+                                                                   modulePositions[i].getY() * Math.cos(targetLocation.getRotation().getRadians())
+                                                                  - modulePositions[i].getX() * Math.sin(targetLocation.getRotation().getRadians()));
+
+            targetModulePosition = new Translation2d(targetModulePosition.getX() + targetLocation.getX(),
+                                                     targetModulePosition.getY() + targetLocation.getY());  
                                                                 
-            targetModulePosition = new Translation2d(targetModulePosition.getX() * Math.cos(targetLocation.getRotation().getRadians())
-                                                    - targetModulePosition.getY() * Math.sin(targetLocation.getRotation().getRadians()),
-                                                    targetModulePosition.getY() * Math.cos(targetLocation.getRotation().getRadians())
-                                                    - targetModulePosition.getX() * Math.sin(targetLocation.getRotation().getRadians()));
+            
 
             double distanceToTargetModulePosition = Math.sqrt(Math.pow(targetModulePosition.getY(),2) + Math.pow(targetModulePosition.getX(), 2));
             double angle = (Math.atan2(targetModulePosition.getY(), targetModulePosition.getX()) - (Math.PI/4)) % (2 * Math.PI);
