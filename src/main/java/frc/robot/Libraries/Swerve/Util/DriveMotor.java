@@ -12,7 +12,6 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMax.IdleMode;
-import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
 
 import frc.robot.Libraries.Util.PIDConfig;
 import frc.robot.Libraries.Util.SparkMax.SparkMaxConfig;
@@ -37,8 +36,10 @@ public class DriveMotor {
      * @param canID The canID of the motor
      * @param PIDconfig The PIDconfig of the motor
      * @param encoderCountsPerRev The ticks per revolution of the encoder
+     * @param motorInverted Whether the motor is inverted
+     * @param encoderInverted Whether the encoder is is in phase (inverted)
      */
-    public DriveMotor(MotorType motorType, int canID, PIDConfig PIDconfig, int encoderCountsPerRev) {
+    public DriveMotor(MotorType motorType, int canID, PIDConfig PIDconfig, int encoderCountsPerRev, boolean motorInverted, boolean encoderInverted) {
         this.motorType = motorType;
         this.encoderCountsPerRev = encoderCountsPerRev;
 
@@ -55,8 +56,8 @@ public class DriveMotor {
                 NeutralMode.Brake,
                 new StatorCurrentLimitConfiguration(true, 30, 30, 50),
                 new SupplyCurrentLimitConfiguration(true, 30, 30, 50),
-                TalonFXInvertType.Clockwise,
-                false,
+                motorInverted,
+                encoderInverted,
                 encoderCountsPerRev,
                 PIDconfig);
 
@@ -74,8 +75,8 @@ public class DriveMotor {
                 IdleMode.kBrake,
                 30,
                 30,
-                false,
-                false,
+                motorInverted,
+                encoderInverted,
                 encoderCountsPerRev,
                 true,
                 PIDconfig);

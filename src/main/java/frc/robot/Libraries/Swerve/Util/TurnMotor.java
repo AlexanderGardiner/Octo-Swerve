@@ -31,14 +31,15 @@ public class TurnMotor {
 
     private int encoderCountsPerRev;
 
-    // TODO: Need to add option for inverted motor/encoder
     /** Creates a turn motor object
      * @param motorType The type of the motor
      * @param canID The canID of the motor
      * @param PIDconfig The PIDconfig of the motor
      * @param encoderCountsPerRev The ticks per revolution of the encoder
+     * @param motorInverted Whether the motor is inverted
+     * @param encoderInverted Whether the encoder is is in phase (inverted)
      */
-    public TurnMotor(MotorType motorType, int canID, PIDConfig PIDconfig, int encoderCountsPerRev) {
+    public TurnMotor(MotorType motorType, int canID, PIDConfig PIDconfig, int encoderCountsPerRev, boolean motorInverted, boolean encoderInverted) {
         this.motorType = motorType;
         this.encoderCountsPerRev = encoderCountsPerRev;
 
@@ -55,8 +56,8 @@ public class TurnMotor {
                 NeutralMode.Brake,
                 new StatorCurrentLimitConfiguration(true, 30, 30, 50),
                 new SupplyCurrentLimitConfiguration(true, 30, 30, 50),
-                TalonFXInvertType.Clockwise,
-                false,
+                motorInverted,
+                encoderInverted,
                 encoderCountsPerRev,
                 PIDconfig);
 
@@ -74,8 +75,8 @@ public class TurnMotor {
                 IdleMode.kBrake,
                 30,
                 30,
-                false,
-                false,
+                motorInverted,
+                encoderInverted,
                 encoderCountsPerRev,
                 true,
                 PIDconfig);

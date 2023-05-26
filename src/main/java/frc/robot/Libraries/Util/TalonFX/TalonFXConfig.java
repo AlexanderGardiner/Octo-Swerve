@@ -5,7 +5,6 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
-import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.sensors.SensorInitializationStrategy;
 
 import frc.robot.Libraries.Util.PIDConfig;
@@ -19,7 +18,7 @@ public class TalonFXConfig {
     private SensorInitializationStrategy integratedSensorInitializationStrategy = null;
     private NeutralMode neutralMode;
 
-    private TalonFXInvertType inverted = TalonFXInvertType.Clockwise;
+    private boolean inverted = false;
     private boolean sensorInverted = false;
 
     private StatorCurrentLimitConfiguration statorCurrentLimit;
@@ -48,7 +47,7 @@ public class TalonFXConfig {
     public TalonFXConfig(TalonFXStatusFrames statusFrames, boolean reset, double allowableClosedLoopError, 
                          TalonFXFeedbackDevice feedbackDevice, NeutralMode neutralMode,
                          StatorCurrentLimitConfiguration statorCurrentLimit, SupplyCurrentLimitConfiguration supplyCurrentLimit,
-                         TalonFXInvertType inverted, boolean sensorInverted,
+                         boolean inverted, boolean sensorInverted,
                          int encoderCountsPerRev) {
         this.statusFrames = statusFrames;
         this.reset = reset;
@@ -81,7 +80,7 @@ public class TalonFXConfig {
     public TalonFXConfig(TalonFXStatusFrames statusFrames, boolean reset, double allowableClosedLoopError, 
                          TalonFXFeedbackDevice feedbackDevice, NeutralMode neutralMode,
                          StatorCurrentLimitConfiguration statorCurrentLimit, SupplyCurrentLimitConfiguration supplyCurrentLimit,
-                         TalonFXInvertType inverted, boolean sensorInverted,
+                         boolean inverted, boolean sensorInverted,
                          int encoderCountsPerRev,
                          PIDConfig PIDconfig) {
         this(statusFrames, reset, allowableClosedLoopError, 
@@ -113,7 +112,7 @@ public class TalonFXConfig {
     public TalonFXConfig(TalonFXStatusFrames statusFrames, boolean reset, double allowableClosedLoopError, 
                          TalonFXFeedbackDevice feedbackDevice, NeutralMode neutralMode,
                          StatorCurrentLimitConfiguration statorCurrentLimit, SupplyCurrentLimitConfiguration supplyCurrentLimit,
-                         TalonFXInvertType inverted, boolean sensorInverted,
+                         boolean inverted, boolean sensorInverted,
                          int encoderCountsPerRev,
                          PIDConfig PIDconfig,
                          Double maxVel, Double maxAccel, Integer sCurveStrength) {
@@ -146,7 +145,7 @@ public class TalonFXConfig {
     public TalonFXConfig(TalonFXStatusFrames statusFrames, boolean reset, double allowableClosedLoopError, 
                          TalonFXFeedbackDevice feedbackDevice, NeutralMode neutralMode,
                          StatorCurrentLimitConfiguration statorCurrentLimit, SupplyCurrentLimitConfiguration supplyCurrentLimit,
-                         TalonFXInvertType inverted, boolean sensorInverted,
+                         boolean inverted, boolean sensorInverted,
                          int encoderCountsPerRev,
                          PIDConfig PIDconfig,
                          SensorInitializationStrategy integratedSensorInitializationStrategy) {
@@ -181,7 +180,7 @@ public class TalonFXConfig {
     public TalonFXConfig(TalonFXStatusFrames statusFrames, boolean reset, double allowableClosedLoopError, 
                          TalonFXFeedbackDevice feedbackDevice, NeutralMode neutralMode,
                          StatorCurrentLimitConfiguration statorCurrentLimit, SupplyCurrentLimitConfiguration supplyCurrentLimit,
-                         TalonFXInvertType inverted, boolean sensorInverted,
+                         boolean inverted, boolean sensorInverted,
                          int encoderCountsPerRev,
                          PIDConfig PIDconfig,
                          SensorInitializationStrategy integratedSensorInitializationStrategy,
@@ -248,11 +247,11 @@ public class TalonFXConfig {
         this.neutralMode = neutralMode;
     }
 
-    public TalonFXInvertType getInverted() {
+    public boolean getInverted() {
         return this.inverted;
     }
 
-    public void setInverted(TalonFXInvertType inverted) {
+    public void setInverted(boolean inverted) {
         this.inverted = inverted;
     }
 

@@ -21,7 +21,11 @@ public class SwerveDrive {
                                          1.0/1.0, 
                                          1.0/1.0, 
                              0, 
-                                         new Translation2d[]{new Translation2d(), new Translation2d(), new Translation2d(), new Translation2d()});
+                                         new Translation2d[]{new Translation2d(), new Translation2d(), new Translation2d(), new Translation2d()},
+                                         new boolean[]{false, false, false, false},
+                                         new boolean[]{false, false, false, false},
+                                         new boolean[]{false, false, false, false},
+                                         new boolean[]{false, false, false, false});
     }
 
     public void drive(ChassisSpeeds chassisSpeeds) {

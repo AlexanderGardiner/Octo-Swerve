@@ -16,15 +16,32 @@ public class SwerveModule {
     private double turnEncoderTickToRadians;
     private double driveEncoderTickToMeters;
 
-    // TODO: Need to add option for inverted motor/encoder
-    //TODO: Need to add position of module in constructor
+    /** Creates a swerve module
+     * @param turnMotorType The type of the turn motor
+     * @param driveMotorType The type of the drive motor
+     * @param turnMotorCanID The canID of the turn motor
+     * @param driveMotorCanID The canID of the drive motor
+     * @param turnMotorPIDConfig The turn motor PID config
+     * @param driveMotorPIDConfig The drive motor PID config
+     * @param turnMotorEncoderCountsPerRev The encoder ticks per revolution for the turn motor
+     * @param driveMotorEncoderCountsPerRev The encoder ticks per revolution for the drive motor
+     * @param gearingTurnEncoderToOutput The gearing from the turn encoder to the output
+     * @param gearingDriveEncoderToOutput The gearing from the drive encoder to the output
+     * @param wheelRadius The wheel radius of the module
+     * @param turnMotorInverted Whether the turn motor is inverted
+     * @param turnEncoderInverted Whether the turn encoder is in phase (inverted)
+     * @param driveMotorInverted Whether the drive motor is inverted
+     * @param driveEncoderInverted Whether the drive encoder is in phase (inverted)
+     */
     public SwerveModule(MotorType turnMotorType, MotorType driveMotorType, 
                         int turnMotorCanID, int driveMotorCanID,
                         PIDConfig turnMotorPIDConfig, PIDConfig driveMotorPIDConfig,
                         int turnMotorEncoderCountsPerRev, int driveMotorEncoderCountsPerRev,
-                        double gearingTurnEncoderToOutput, double gearingDriveEncoderToOutput, int wheelRadius) {
-        turnMotor = new TurnMotor(turnMotorType, turnMotorCanID, turnMotorPIDConfig, driveMotorEncoderCountsPerRev);
-        driveMotor = new DriveMotor(driveMotorType, driveMotorCanID, driveMotorPIDConfig, driveMotorEncoderCountsPerRev);
+                        double gearingTurnEncoderToOutput, double gearingDriveEncoderToOutput, int wheelRadius,
+                        boolean turnMotorInverted, boolean turnEncoderInverted,
+                        boolean driveMotorInverted, boolean driveEncoderInverted) {
+        turnMotor = new TurnMotor(turnMotorType, turnMotorCanID, turnMotorPIDConfig, driveMotorEncoderCountsPerRev, turnMotorInverted, turnEncoderInverted);
+        driveMotor = new DriveMotor(driveMotorType, driveMotorCanID, driveMotorPIDConfig, driveMotorEncoderCountsPerRev, driveMotorInverted, driveEncoderInverted);
 
         turnEncoderTickToRadians = (2.0 * Math.PI * (1.0/gearingTurnEncoderToOutput)) / turnMotorEncoderCountsPerRev;
         driveEncoderTickToMeters = (2.0 * Math.PI * wheelRadius * (1.0/gearingDriveEncoderToOutput)) / driveMotorEncoderCountsPerRev;

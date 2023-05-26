@@ -32,6 +32,10 @@ public class DriveTrain {
      * @param gearingDriveEncoderToOutput The gearing from the drive encoder to the output
      * @param wheelRadius The radius of the wheels
      * @param modulePositions The positions of the modules relative to the center of the robot 
+     * @param turnMotorInverted Whether the turn motors' directions are inverted
+     * @param turnEncoderInverted Whether the turn encoders are not in phase (inverted)
+     * @param turnMotorInverted Whether the drive motors' directions are inverted
+     * @param turnEncoderInverted Whether the drive encoders are not in phase (inverted)
      * (positive x driving right and positive y driving forward)
      */
     public DriveTrain(MotorType turnMotorTypes, MotorType driveMotorTypes, 
@@ -39,19 +43,21 @@ public class DriveTrain {
                       PIDConfig[] turnMotorPIDConfigs, PIDConfig[] driveMotorPIDConfigs,
                       int turnMotorEncodersCountsPerRev, int driveMotorEncodersCountsPerRev,
                       double gearingTurnEncoderToOutput, double gearingDriveEncoderToOutput, int wheelRadius,
-                      Translation2d[] modulePositions) {
+                      Translation2d[] modulePositions,
+                      boolean[] turnMotorInverted, boolean[] turnEncoderInverted,
+                      boolean[] driveMotorInverted, boolean[] driveEncoderInverted) {
         for (int i=0; i<4; i++) {
-            swerveModules.add(new SwerveModule(turnMotorTypes,
-                                               driveMotorTypes,
-                                               turnMotorCanIDs[i],
-                                               driveMotorCanIDs[i],
+            swerveModules.add(new SwerveModule(turnMotorTypes, driveMotorTypes,
+                                               turnMotorCanIDs[i], driveMotorCanIDs[i],
                                                turnMotorPIDConfigs[i],
                                                driveMotorPIDConfigs[i],
                                                turnMotorEncodersCountsPerRev,
                                                driveMotorEncodersCountsPerRev,
                                                gearingTurnEncoderToOutput,
                                                driveMotorEncodersCountsPerRev,
-                                               wheelRadius));
+                                               wheelRadius,
+                                               turnMotorInverted[i], turnEncoderInverted[i],
+                                               driveMotorInverted[i], driveEncoderInverted[i]));
         }
 
         swerveDriveKinematics = new SwerveKinematics(modulePositions);
