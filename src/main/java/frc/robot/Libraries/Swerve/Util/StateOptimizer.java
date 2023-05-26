@@ -5,6 +5,11 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import frc.robot.Libraries.Util.MathUtil;
 
 public class StateOptimizer {
+    /** Calculates the shortest distance between 2 angles
+     * @param src The inital angle
+     * @param target The target angle
+     * @return The shortest difference between the angles
+     */
     public static double getAngleDiff(double src, double target) {
         double diff = target - src;
         if (Math.abs(diff) <= Math.PI) {
@@ -20,6 +25,11 @@ public class StateOptimizer {
         return diff;
     }
 
+    /** Gets the smallest difference between two angles including equivalent angles
+     * @param clampedAngle The inital angle
+     * @param target The target angle
+     * @return The smallest difference between two angles
+     */
     public static double getClosestAngle(double clampedAngle, double target) {
         double diff;
         double positiveTarget = target + Math.PI;
@@ -38,6 +48,11 @@ public class StateOptimizer {
         return diff;
     }
 
+    /** Optimizes the swerve states to take the most efficient route when turning
+     * @param state The target state of a module
+     * @param moduleAngle The current angle of the module
+     * @return An optimized state
+     */
     public static SwerveModuleState optimizeSwerveStates(SwerveModuleState state, double moduleAngle) {
         double clampedAng = MathUtil.clampAngle(moduleAngle);
         double targetRotation = state.angle.getRadians();
