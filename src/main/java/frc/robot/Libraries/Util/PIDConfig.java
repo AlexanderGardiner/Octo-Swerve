@@ -24,7 +24,7 @@ public class PIDConfig {
      * @param kI integral gain; output based on accumulated error to exponentiate kP.
      * @param kD derivative gain; typically used for damping.
      * @param kF feed forward constant.
-     * @param iZone The range allowed for kI
+     * @param iZone The range allowed for kI (Needs to be a double object so it can be null)
      *
      * @since 0.1.0
      */
@@ -40,7 +40,7 @@ public class PIDConfig {
      * <p>Constructs a PID configuration with the specified loop gain constants.
      * Has a default range value of [-1, 1] or full range.</p>
      *
-     * <p>Overload for {@link #PIDConfig(double, double, double, double, double)}.</p>
+     * <p>Overload for {@link #PIDConfig(double, double, double, double, Double)}.</p>
      *
      * @see #PIDConfig(double, double, double, double, double)
      * @since 0.1.0

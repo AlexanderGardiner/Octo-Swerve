@@ -17,7 +17,7 @@ public class PoseEstimator {
 
     /** Updates the robot's pose to its new position
      * @param modulePositions The current positions of the swerve modules (In meters and radians)
-     * @param gyroAngle The current robot gyro angle
+     * @param gyroAngle The current robot gyro angle in radians
      */
     public void updatePose(SwerveModulePosition[] modulePositions, Rotation2d gyroAngle) {
         double sumXFromModules = 0;

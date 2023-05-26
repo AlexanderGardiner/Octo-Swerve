@@ -19,15 +19,15 @@ public class SwerveModule {
     // TODO: Need to add option for inverted motor/encoder
     //TODO: Need to add position of module in constructor
     public SwerveModule(MotorType turnMotorType, MotorType driveMotorType, 
-                  int turnMotorCanID, int driveMotorCanID,
-                  PIDConfig turnMotorPIDConfig, PIDConfig driveMotorPIDConfig,
-                  int turnMotorEncoderCountsPerRev, int driveMotorEncoderCountsPerRev,
-                  int gearingTurnEncoderToOutput, int gearingDriveEncoderToOutput, int wheelRadius) {
+                        int turnMotorCanID, int driveMotorCanID,
+                        PIDConfig turnMotorPIDConfig, PIDConfig driveMotorPIDConfig,
+                        int turnMotorEncoderCountsPerRev, int driveMotorEncoderCountsPerRev,
+                        double gearingTurnEncoderToOutput, double gearingDriveEncoderToOutput, int wheelRadius) {
         turnMotor = new TurnMotor(turnMotorType, turnMotorCanID, turnMotorPIDConfig, driveMotorEncoderCountsPerRev);
         driveMotor = new DriveMotor(driveMotorType, driveMotorCanID, driveMotorPIDConfig, driveMotorEncoderCountsPerRev);
 
-        turnEncoderTickToRadians = (2 * Math.PI * (1/gearingTurnEncoderToOutput)) / turnMotorEncoderCountsPerRev;
-        driveEncoderTickToMeters = (2 * Math.PI * wheelRadius * (1/gearingDriveEncoderToOutput)) / driveMotorEncoderCountsPerRev;
+        turnEncoderTickToRadians = (2.0 * Math.PI * (1.0/gearingTurnEncoderToOutput)) / turnMotorEncoderCountsPerRev;
+        driveEncoderTickToMeters = (2.0 * Math.PI * wheelRadius * (1.0/gearingDriveEncoderToOutput)) / driveMotorEncoderCountsPerRev;
     }
 
     /** Sets the  target velocity of the module

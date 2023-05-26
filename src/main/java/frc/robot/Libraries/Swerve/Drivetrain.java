@@ -2,18 +2,22 @@ package frc.robot.Libraries.Swerve;
 
 import java.util.ArrayList;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import frc.robot.Libraries.Swerve.Math.SwerveKinematics;
+import frc.robot.Libraries.Swerve.Odometry.PoseEstimator;
 import frc.robot.Libraries.Swerve.Util.MotorType;
 import frc.robot.Libraries.Util.Gyro;
 import frc.robot.Libraries.Util.PIDConfig;
 
-public class Drivetrain {
+public class DriveTrain {
     private ArrayList<SwerveModule> swerveModules = new ArrayList<SwerveModule>();
     private SwerveKinematics swerveDriveKinematics;
     private Gyro gyro;
+    private PoseEstimator poseEstimator;
 
     /** Creates a swerve drivetrain object
      * @param turnMotorTypes The type of motor used to turn the modules
@@ -30,11 +34,11 @@ public class Drivetrain {
      * @param modulePositions The positions of the modules relative to the center of the robot 
      * (positive x driving right and positive y driving forward)
      */
-    public Drivetrain(MotorType turnMotorTypes, MotorType driveMotorTypes, 
+    public DriveTrain(MotorType turnMotorTypes, MotorType driveMotorTypes, 
                       int[] turnMotorCanIDs, int[] driveMotorCanIDs,
                       PIDConfig[] turnMotorPIDConfigs, PIDConfig[] driveMotorPIDConfigs,
                       int turnMotorEncodersCountsPerRev, int driveMotorEncodersCountsPerRev,
-                      int gearingTurnEncoderToOutput, int gearingDriveEncoderToOutput, int wheelRadius,
+                      double gearingTurnEncoderToOutput, double gearingDriveEncoderToOutput, int wheelRadius,
                       Translation2d[] modulePositions) {
         for (int i=0; i<4; i++) {
             swerveModules.add(new SwerveModule(turnMotorTypes,
@@ -52,6 +56,7 @@ public class Drivetrain {
 
         swerveDriveKinematics = new SwerveKinematics(modulePositions);
         gyro = new Gyro();
+        poseEstimator = new PoseEstimator(new Pose2d());
 
     }
 
@@ -68,5 +73,14 @@ public class Drivetrain {
         for (int i=0; i<4; i++) {
             swerveModules.get(i).setTargetState(swerveModuleStates[i]);
         }
+
+        ArrayList<SwerveModulePosition> modulePositions = new ArrayList<SwerveModulePosition>();
+
+        for (int i=0; i<4; i++) {
+            modulePositions.add(swerveModules.get(i).getModulePosition());
+        }
+
+        poseEstimator.updatePose(modulePositions.toArray(new SwerveModulePosition[modulePositions.size()]), 
+                                 gyro.getWrappedAngleRotation2D());
     }
 }
