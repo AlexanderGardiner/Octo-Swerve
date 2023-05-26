@@ -1,4 +1,4 @@
-package frc.robot.Libraries.Swerve.Util;
+package frc.robot.Libraries.Util;
 
 public class MathUtil {
     /**

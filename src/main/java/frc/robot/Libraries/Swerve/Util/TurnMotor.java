@@ -31,6 +31,7 @@ public class TurnMotor {
 
     private int encoderCountsPerRev;
 
+    // TODO: Need to add option for inverted motor/encoder
     /** Creates a turn motor object
      * @param motorType The type of the motor
      * @param canID The canID of the motor

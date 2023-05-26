@@ -16,6 +16,8 @@ public class SwerveModule {
     private double turnEncoderTickToRadians;
     private double driveEncoderTickToMeters;
 
+    // TODO: Need to add option for inverted motor/encoder
+    //TODO: Need to add position of module in constructor
     public SwerveModule(MotorType turnMotorType, MotorType driveMotorType, 
                   int turnMotorCanID, int driveMotorCanID,
                   PIDConfig turnMotorPIDConfig, PIDConfig driveMotorPIDConfig,

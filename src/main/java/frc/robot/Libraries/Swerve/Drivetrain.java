@@ -3,11 +3,17 @@ package frc.robot.Libraries.Swerve;
 import java.util.ArrayList;
 
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
+import frc.robot.Libraries.Swerve.Math.SwerveKinematics;
 import frc.robot.Libraries.Swerve.Util.MotorType;
+import frc.robot.Libraries.Util.Gyro;
 import frc.robot.Libraries.Util.PIDConfig;
 
 public class Drivetrain {
     private ArrayList<SwerveModule> swerveModules = new ArrayList<SwerveModule>();
+    private SwerveKinematics swerveDriveKinematics;
+    private Gyro gyro;
 
     /** Creates a swerve drivetrain object
      * @param turnMotorTypes The type of motor used to turn the modules
@@ -44,6 +50,19 @@ public class Drivetrain {
                                                wheelRadius));
         }
 
+        swerveDriveKinematics = new SwerveKinematics(modulePositions);
+        gyro = new Gyro();
 
+    }
+
+    public void drive(ChassisSpeeds chassisSpeeds, boolean fieldRelative) {
+        if (fieldRelative) {
+            chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(chassisSpeeds, gyro.getWrappedAngleRotation2D());
+        }
+        SwerveModuleState[] swerveModuleStates = swerveDriveKinematics.calculateFromChassisSpeeds(chassisSpeeds);
+
+        for (int i=0; i<4; i++) {
+            swerveModules.get(i).setTargetState(swerveModuleStates[i]);
+        }
     }
 }
