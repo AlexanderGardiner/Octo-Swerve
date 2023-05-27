@@ -3,10 +3,12 @@ package frc.robot.Libraries.Swerve;
 import java.util.ArrayList;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Libraries.Swerve.Math.SwerveKinematics;
 import frc.robot.Libraries.Swerve.Odometry.PoseEstimator;
 import frc.robot.Libraries.Swerve.Util.MotorType;
@@ -85,5 +87,6 @@ public class DriveTrain {
 
         poseEstimator.updatePose(modulePositions.toArray(new SwerveModulePosition[modulePositions.size()]), 
                                  gyro.getWrappedAngleRotation2D());
+
     }
 }
