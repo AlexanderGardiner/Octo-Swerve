@@ -2,11 +2,12 @@ package frc.robot.Subsystems.Swerve;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Libraries.Swerve.DriveTrain;
 import frc.robot.Libraries.Swerve.Util.MotorType;
 import frc.robot.Libraries.Util.PIDConfig;
 
-public class SwerveDrive {
+public class SwerveDrive extends SubsystemBase {
     DriveTrain driveTrain;
 
 
@@ -32,5 +33,9 @@ public class SwerveDrive {
 
     public void drive(ChassisSpeeds chassisSpeeds) {
         driveTrain.drive(chassisSpeeds, true);
+    }
+
+    public void initDefaultCommand() {
+        this.setDefaultCommand(null);
     }
 }
