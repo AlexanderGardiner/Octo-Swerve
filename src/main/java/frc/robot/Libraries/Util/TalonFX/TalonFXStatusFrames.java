@@ -1,9 +1,9 @@
 package frc.robot.Libraries.Util.TalonFX;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class TalonFXStatusFrames {
-    List<Integer> statusFrames;
+    ArrayList<Integer> statusFrames = new ArrayList<Integer>();
 
     /** Create a SparkMaxStatusFrames object
     * @param status1 Applied Motor Output, Fault Information, Limit Switch Information
@@ -34,7 +34,7 @@ public class TalonFXStatusFrames {
 
     }
 
-    public List<Integer> getFrames() {
+    public ArrayList<Integer> getFrames() {
         return this.statusFrames;
     }
 }

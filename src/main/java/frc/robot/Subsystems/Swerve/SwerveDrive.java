@@ -24,7 +24,7 @@ public class SwerveDrive extends SubsystemBase {
                                          1.0/1.0, 
                                          1.0/1.0, 
                              0, 
-                                         new Translation2d[]{new Translation2d(), new Translation2d(), new Translation2d(), new Translation2d()},
+                                         new Translation2d[]{new Translation2d(-1,1), new Translation2d(1,1), new Translation2d(-1,-1), new Translation2d(1,-1)},
                                          new boolean[]{false, false, false, false},
                                          new boolean[]{false, false, false, false},
                                          new boolean[]{false, false, false, false},

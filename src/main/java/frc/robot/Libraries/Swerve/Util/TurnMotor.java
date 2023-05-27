@@ -10,6 +10,7 @@ import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
@@ -65,7 +66,7 @@ public class TurnMotor {
             TalonFXSetup.setup(talonFX, talonFXConfig);
 
         } else if (this.motorType == MotorType.SparkMax) {
-            sparkMax = new CANSparkMax(canID, null);
+            sparkMax = new CANSparkMax(canID, CANSparkMaxLowLevel.MotorType.kBrushless);
 
             SparkMaxConfig sparkMaxConfig = new SparkMaxConfig(
                 new SparkMaxStatusFrames(100, 100, 10, 100, 100, 10, 100),

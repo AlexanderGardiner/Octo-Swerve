@@ -27,10 +27,9 @@ public class SwerveKinematics {
             Pose2d targetLocation = new Pose2d(chassisSpeeds.vxMetersPerSecond*0.02,
                                            chassisSpeeds.vyMetersPerSecond*0.02,
                                            new Rotation2d(chassisSpeeds.omegaRadiansPerSecond*0.02));
-        
 
             Translation2d targetModulePosition = new Translation2d(modulePositions[i].getX() * Math.cos(targetLocation.getRotation().getRadians())
-                                                                   - modulePositions[i].getY() * Math.sin(targetLocation.getRotation().getRadians()),
+                                                                   + modulePositions[i].getY() * Math.sin(targetLocation.getRotation().getRadians()),
                                                                    modulePositions[i].getY() * Math.cos(targetLocation.getRotation().getRadians())
                                                                   - modulePositions[i].getX() * Math.sin(targetLocation.getRotation().getRadians()));
 
@@ -39,8 +38,8 @@ public class SwerveKinematics {
                                                                 
             
 
-            double distanceToTargetModulePosition = Math.sqrt(Math.pow(targetModulePosition.getY(),2) + Math.pow(targetModulePosition.getX(), 2));
-            double angle = (Math.atan2(targetModulePosition.getY(), targetModulePosition.getX()) - (Math.PI/4)) % (2 * Math.PI);
+            double distanceToTargetModulePosition = Math.sqrt(Math.pow((targetModulePosition.getY()-modulePositions[i].getY()),2) + Math.pow((targetModulePosition.getX()-modulePositions[i].getX()), 2));
+            double angle = (Math.atan2(targetModulePosition.getX()-modulePositions[i].getX(), targetModulePosition.getY()-modulePositions[i].getY()));// - (Math.PI/4)) % (2 * Math.PI);
             moduleStates[i] = new SwerveModuleState(distanceToTargetModulePosition/0.02, new Rotation2d(angle));
 
         }

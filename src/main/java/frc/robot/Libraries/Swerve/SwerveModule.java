@@ -37,7 +37,8 @@ public class SwerveModule {
                         int turnMotorCanID, int driveMotorCanID,
                         PIDConfig turnMotorPIDConfig, PIDConfig driveMotorPIDConfig,
                         int turnMotorEncoderCountsPerRev, int driveMotorEncoderCountsPerRev,
-                        double gearingTurnEncoderToOutput, double gearingDriveEncoderToOutput, int wheelRadius,
+                        double gearingTurnEncoderToOutput, double gearingDriveEncoderToOutput, 
+                        int wheelRadius,
                         boolean turnMotorInverted, boolean turnEncoderInverted,
                         boolean driveMotorInverted, boolean driveEncoderInverted) {
         turnMotor = new TurnMotor(turnMotorType, turnMotorCanID, turnMotorPIDConfig, driveMotorEncoderCountsPerRev, turnMotorInverted, turnEncoderInverted);
@@ -47,7 +48,7 @@ public class SwerveModule {
         driveEncoderTickToMeters = (2.0 * Math.PI * wheelRadius * (1.0/gearingDriveEncoderToOutput)) / driveMotorEncoderCountsPerRev;
     }
 
-    /** Sets the  target velocity of the module
+    /** Sets the target velocity of the module
      * @param velocity The target velocity in ticks per 100ms;
      */
     public void setTargetVelocityMeters(double velocity) {

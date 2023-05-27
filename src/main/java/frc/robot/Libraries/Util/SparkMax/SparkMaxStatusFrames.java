@@ -1,9 +1,9 @@
 package frc.robot.Libraries.Util.SparkMax;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class SparkMaxStatusFrames {
-    List<Integer> statusFrames;
+    ArrayList<Integer> statusFrames = new ArrayList<Integer>();
 
     /** Create a SparkMaxStatusFrames object
     * @param periodicStatus0 Applied **** Output, Faults, Sticky Faults, Is Follower
@@ -26,7 +26,7 @@ public class SparkMaxStatusFrames {
 
     }
 
-    public List<Integer> getFrames() {
+    public ArrayList<Integer> getFrames() {
         return this.statusFrames;
     }
 }

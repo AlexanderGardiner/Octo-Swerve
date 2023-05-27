@@ -49,12 +49,9 @@ public class DriveTrain {
         for (int i=0; i<4; i++) {
             swerveModules.add(new SwerveModule(turnMotorTypes, driveMotorTypes,
                                                turnMotorCanIDs[i], driveMotorCanIDs[i],
-                                               turnMotorPIDConfigs[i],
-                                               driveMotorPIDConfigs[i],
-                                               turnMotorEncodersCountsPerRev,
-                                               driveMotorEncodersCountsPerRev,
-                                               gearingTurnEncoderToOutput,
-                                               driveMotorEncodersCountsPerRev,
+                                               turnMotorPIDConfigs[i], driveMotorPIDConfigs[i],
+                                               turnMotorEncodersCountsPerRev, driveMotorEncodersCountsPerRev,
+                                               gearingTurnEncoderToOutput, gearingDriveEncoderToOutput,
                                                wheelRadius,
                                                turnMotorInverted[i], turnEncoderInverted[i],
                                                driveMotorInverted[i], driveEncoderInverted[i]));
@@ -66,7 +63,7 @@ public class DriveTrain {
 
     }
 
-    /** Drives the robot
+    /** Drives the robot and updates the robot's pose
      * @param chassisSpeeds The target speed of the robot (x, y, and theta)
      * @param fieldRelative Whether the movement is field relative
      */

@@ -54,6 +54,7 @@ public class TalonFXConfig {
         this.allowableClosedLoopError = allowableClosedLoopError;
 
         this.feedbackDevice = feedbackDevice;
+        this.neutralMode = neutralMode;
 
         this.statorCurrentLimit = statorCurrentLimit;
         this.supplyCurrentLimit = supplyCurrentLimit;
