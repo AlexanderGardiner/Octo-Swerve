@@ -24,12 +24,14 @@ public class SwerveControl extends CommandBase{
         var ySpeed = 0.0;
         var rot = 0.0;
 
+        double xAxis = leftJoystick.getRawAxis(0);
+        double yAxis = leftJoystick.getRawAxis(1);
         // Get speeds from joysticks
-        xSpeed = MathUtil.fitDeadband(-leftJoystick.getRawAxis(0), 0.04) * swerveDrive.getMaxSpeed();
-        ySpeed = MathUtil.fitDeadband(-leftJoystick.getRawAxis(1), 0.04) * swerveDrive.getMaxSpeed();
+        xSpeed = -1 * Math.signum(xAxis) * Math.pow(MathUtil.fitDeadband(xAxis, 0.1),2) * swerveDrive.getMaxSpeed();
+        ySpeed = -1 * Math.signum(yAxis) * Math.pow(MathUtil.fitDeadband(yAxis, 0.1),2) * swerveDrive.getMaxSpeed();
 
         // Calculate the deadband
-        rot = MathUtil.fitDeadband(-rightJoystick.getRawAxis(4), 0.04) * swerveDrive.getMaxAngularSpeed();
+        rot = MathUtil.fitDeadband(-rightJoystick.getRawAxis(4), 0.1) * swerveDrive.getMaxAngularSpeed();
 
         swerveDrive.drive(new ChassisSpeeds(xSpeed, ySpeed, rot));
     }

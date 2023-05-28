@@ -51,10 +51,10 @@ public class SwerveModule {
     }
 
     /** Sets the target velocity of the module
-     * @param velocity The target velocity in ticks per 100ms;
+     * @param velocity The target velocity in m/s;
      */
     public void setTargetVelocityMeters(double velocity) {
-        driveMotor.setTargetVelocityTicks(velocity);
+        driveMotor.setTargetVelocityTicks((velocity/driveEncoderTickToMeters)/10.0);
     }
 
     /** Sets the  target angle of the module

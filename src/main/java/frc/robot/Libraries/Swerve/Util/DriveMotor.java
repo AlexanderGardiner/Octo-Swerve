@@ -100,7 +100,9 @@ public class DriveMotor {
      */
     public double getEncoderPositionTicks() {
         if (this.simulated) {
-            this.simulatedEncoderPositionTicks += simulatedEncoderVelocityTicksPer100ms * (Timer.getFPGATimestamp() - lastTimeSimulatedEncoderPositionUpdated)/10.0;
+            this.simulatedEncoderPositionTicks += simulatedEncoderVelocityTicksPer100ms * (Timer.getFPGATimestamp() - lastTimeSimulatedEncoderPositionUpdated)*10.0;
+            lastTimeSimulatedEncoderPositionUpdated = Timer.getFPGATimestamp();
+            
             return this.simulatedEncoderPositionTicks;
         }
 
@@ -131,8 +133,10 @@ public class DriveMotor {
      */
     public void setTargetVelocityTicks(double velocity) {
         if (this.simulated) {
-            this.simulatedEncoderPositionTicks += simulatedEncoderVelocityTicksPer100ms * (Timer.getFPGATimestamp() - lastTimeSimulatedEncoderPositionUpdated)/10.0;
+            this.simulatedEncoderPositionTicks += simulatedEncoderVelocityTicksPer100ms * (Timer.getFPGATimestamp() - lastTimeSimulatedEncoderPositionUpdated)*10.0;
             this.simulatedEncoderVelocityTicksPer100ms = velocity;    
+
+            lastTimeSimulatedEncoderPositionUpdated = Timer.getFPGATimestamp();
         } else {
             if (this.motorType == MotorType.TalonFX) {
                 talonFX.set(ControlMode.Velocity, velocity);

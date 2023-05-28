@@ -9,7 +9,6 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Libraries.Swerve.Math.SwerveKinematics;
 import frc.robot.Libraries.Swerve.Odometry.PoseEstimator;
 import frc.robot.Libraries.Swerve.Util.MotorType;
@@ -79,7 +78,6 @@ public class DriveTrain {
      * @param fieldRelative Whether the movement is field relative
      */
     public void drive(ChassisSpeeds chassisSpeeds, boolean fieldRelative) {
-        SmartDashboard.putString("chassisspeeds",chassisSpeeds.toString());
         if (fieldRelative) {
             if (simulated) {
                 chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(chassisSpeeds, new Rotation2d(simulatedRotation));
@@ -88,7 +86,6 @@ public class DriveTrain {
             }
             
         }
-        SmartDashboard.putString("chassisspeedsfieldrelative",chassisSpeeds.toString());
         
         SwerveModuleState[] swerveModuleStates = swerveDriveKinematics.calculateFromChassisSpeeds(chassisSpeeds);
 
@@ -107,8 +104,6 @@ public class DriveTrain {
             poseEstimator.updatePose(modulePositions, 
                                  new Rotation2d(simulatedRotation));
             simulatedRotationSpeed = chassisSpeeds.omegaRadiansPerSecond;
-            SmartDashboard.putNumber("simulated rotation speed", simulatedRotationSpeed);
-            SmartDashboard.putNumber("simulated rotation", simulatedRotation);
             lastTimeSimulatedRotationUpdated = Timer.getFPGATimestamp();
         } else {
             poseEstimator.updatePose(modulePositions, 

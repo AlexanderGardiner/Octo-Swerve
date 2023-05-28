@@ -37,6 +37,8 @@ public class PoseEstimator {
                                 * Math.cos(modulePositions.get(i).angle.plus(gyroAngle).getRadians());
         }
 
+        previousModulePositions = modulePositions;
+
         double averageXFromModules = sumXFromModules / modulePositions.size();
         double averageYFromModules = sumYFromModules / modulePositions.size();
 
@@ -46,7 +48,7 @@ public class PoseEstimator {
                                       + averageYFromModules,
                                       gyroAngle);
 
-        previousModulePositions = modulePositions;
+        
     }
 
     /**
