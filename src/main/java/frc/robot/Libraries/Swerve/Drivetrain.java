@@ -3,10 +3,13 @@ package frc.robot.Libraries.Swerve;
 import java.util.ArrayList;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Libraries.Swerve.Math.SwerveKinematics;
 import frc.robot.Libraries.Swerve.Odometry.PoseEstimator;
 import frc.robot.Libraries.Swerve.Util.MotorType;
@@ -18,6 +21,10 @@ public class DriveTrain {
     private SwerveKinematics swerveDriveKinematics;
     private Gyro gyro;
     private PoseEstimator poseEstimator;
+    private boolean simulated;
+    private double simulatedRotation = 0; // Radians
+    private double simulatedRotationSpeed = 0; // Radians per second
+    private double lastTimeSimulatedRotationUpdated = 0;
 
     /** Creates a swerve drivetrain object
      * @param turnMotorTypes The type of motor used to turn the modules
@@ -37,6 +44,7 @@ public class DriveTrain {
      * @param turnMotorInverted Whether the drive motors' directions are inverted
      * @param turnEncoderInverted Whether the drive encoders are not in phase (inverted)
      * (positive x driving right and positive y driving forward)
+     * @param simulated Whether the drivetrain is simulated
      */
     public DriveTrain(MotorType turnMotorTypes, MotorType driveMotorTypes, 
                       int[] turnMotorCanIDs, int[] driveMotorCanIDs,
@@ -45,7 +53,8 @@ public class DriveTrain {
                       double gearingTurnEncoderToOutput, double gearingDriveEncoderToOutput, double wheelRadius,
                       Translation2d[] modulePositions,
                       boolean[] turnMotorInverted, boolean[] turnEncoderInverted,
-                      boolean[] driveMotorInverted, boolean[] driveEncoderInverted) {
+                      boolean[] driveMotorInverted, boolean[] driveEncoderInverted,
+                      boolean simulated) {
         for (int i=0; i<4; i++) {
             swerveModules.add(new SwerveModule(turnMotorTypes, driveMotorTypes,
                                                turnMotorCanIDs[i], driveMotorCanIDs[i],
@@ -54,12 +63,14 @@ public class DriveTrain {
                                                gearingTurnEncoderToOutput, gearingDriveEncoderToOutput,
                                                wheelRadius,
                                                turnMotorInverted[i], turnEncoderInverted[i],
-                                               driveMotorInverted[i], driveEncoderInverted[i]));
+                                               driveMotorInverted[i], driveEncoderInverted[i],
+                                               simulated));
         }
 
         swerveDriveKinematics = new SwerveKinematics(modulePositions);
         gyro = new Gyro();
         poseEstimator = new PoseEstimator(new Pose2d());
+        this.simulated = simulated;
 
     }
 
@@ -68,9 +79,17 @@ public class DriveTrain {
      * @param fieldRelative Whether the movement is field relative
      */
     public void drive(ChassisSpeeds chassisSpeeds, boolean fieldRelative) {
+        SmartDashboard.putString("chassisspeeds",chassisSpeeds.toString());
         if (fieldRelative) {
-            chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(chassisSpeeds, gyro.getWrappedAngleRotation2D());
+            if (simulated) {
+                chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(chassisSpeeds, new Rotation2d(simulatedRotation));
+            } else {
+                chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(chassisSpeeds, gyro.getWrappedAngleRotation2D());
+            }
+            
         }
+        SmartDashboard.putString("chassisspeedsfieldrelative",chassisSpeeds.toString());
+        
         SwerveModuleState[] swerveModuleStates = swerveDriveKinematics.calculateFromChassisSpeeds(chassisSpeeds);
 
         for (int i=0; i<4; i++) {
@@ -83,8 +102,19 @@ public class DriveTrain {
             modulePositions.add(swerveModules.get(i).getModulePosition());
         }
 
-        poseEstimator.updatePose(modulePositions, 
+        if (simulated) {
+            simulatedRotation += simulatedRotationSpeed * (Timer.getFPGATimestamp()-lastTimeSimulatedRotationUpdated);
+            poseEstimator.updatePose(modulePositions, 
+                                 new Rotation2d(simulatedRotation));
+            simulatedRotationSpeed = chassisSpeeds.omegaRadiansPerSecond;
+            SmartDashboard.putNumber("simulated rotation speed", simulatedRotationSpeed);
+            SmartDashboard.putNumber("simulated rotation", simulatedRotation);
+            lastTimeSimulatedRotationUpdated = Timer.getFPGATimestamp();
+        } else {
+            poseEstimator.updatePose(modulePositions, 
                                  gyro.getWrappedAngleRotation2D());
+        }
+        
 
     }
 

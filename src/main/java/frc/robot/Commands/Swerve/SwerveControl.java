@@ -18,18 +18,18 @@ public class SwerveControl extends CommandBase{
     @Override
     public void execute() {
         var leftJoystick = ControlMap.DRIVER_LEFT;
-        var rightJoystick = ControlMap.DRIVER_RIGHT;
+        var rightJoystick = ControlMap.DRIVER_LEFT;
 
         var xSpeed = 0.0;
         var ySpeed = 0.0;
         var rot = 0.0;
 
         // Get speeds from joysticks
-        xSpeed = MathUtil.fitDeadband(-leftJoystick.getY(), 0.04) * swerveDrive.getMaxSpeed();
-        ySpeed = MathUtil.fitDeadband(-leftJoystick.getX(), 0.04) * swerveDrive.getMaxSpeed();
+        xSpeed = MathUtil.fitDeadband(-leftJoystick.getRawAxis(0), 0.04) * swerveDrive.getMaxSpeed();
+        ySpeed = MathUtil.fitDeadband(-leftJoystick.getRawAxis(1), 0.04) * swerveDrive.getMaxSpeed();
 
         // Calculate the deadband
-        rot = MathUtil.fitDeadband(rightJoystick.getX(), 0.04) * swerveDrive.getMaxAngularSpeed();
+        rot = MathUtil.fitDeadband(-rightJoystick.getRawAxis(4), 0.04) * swerveDrive.getMaxAngularSpeed();
 
         swerveDrive.drive(new ChassisSpeeds(xSpeed, ySpeed, rot));
     }

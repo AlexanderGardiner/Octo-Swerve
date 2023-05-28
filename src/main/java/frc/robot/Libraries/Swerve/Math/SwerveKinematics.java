@@ -39,7 +39,7 @@ public class SwerveKinematics {
             
 
             double distanceToTargetModulePosition = Math.sqrt(Math.pow((targetModulePosition.getY()-modulePositions[i].getY()),2) + Math.pow((targetModulePosition.getX()-modulePositions[i].getX()), 2));
-            double angle = (Math.atan2(targetModulePosition.getX()-modulePositions[i].getX(), targetModulePosition.getY()-modulePositions[i].getY()));// - (Math.PI/4)) % (2 * Math.PI);
+            double angle = (Math.atan2(targetModulePosition.getY()-modulePositions[i].getY(), targetModulePosition.getX()-modulePositions[i].getX()));
             moduleStates[i] = new SwerveModuleState(distanceToTargetModulePosition/0.02, new Rotation2d(angle));
 
         }

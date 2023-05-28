@@ -32,6 +32,7 @@ public class SwerveModule {
      * @param turnEncoderInverted Whether the turn encoder is in phase (inverted)
      * @param driveMotorInverted Whether the drive motor is inverted
      * @param driveEncoderInverted Whether the drive encoder is in phase (inverted)
+     * @param simulated Whether the module is simulated
      */
     public SwerveModule(MotorType turnMotorType, MotorType driveMotorType, 
                         int turnMotorCanID, int driveMotorCanID,
@@ -40,9 +41,10 @@ public class SwerveModule {
                         double gearingTurnEncoderToOutput, double gearingDriveEncoderToOutput, 
                         double wheelRadius,
                         boolean turnMotorInverted, boolean turnEncoderInverted,
-                        boolean driveMotorInverted, boolean driveEncoderInverted) {
-        turnMotor = new TurnMotor(turnMotorType, turnMotorCanID, turnMotorPIDConfig, driveMotorEncoderCountsPerRev, turnMotorInverted, turnEncoderInverted, true);
-        driveMotor = new DriveMotor(driveMotorType, driveMotorCanID, driveMotorPIDConfig, driveMotorEncoderCountsPerRev, driveMotorInverted, driveEncoderInverted, true);
+                        boolean driveMotorInverted, boolean driveEncoderInverted,
+                        boolean simulated) {
+        turnMotor = new TurnMotor(turnMotorType, turnMotorCanID, turnMotorPIDConfig, driveMotorEncoderCountsPerRev, turnMotorInverted, turnEncoderInverted, simulated);
+        driveMotor = new DriveMotor(driveMotorType, driveMotorCanID, driveMotorPIDConfig, driveMotorEncoderCountsPerRev, driveMotorInverted, driveEncoderInverted, simulated);
 
         turnEncoderTickToRadians = (2.0 * Math.PI * (1.0/gearingTurnEncoderToOutput)) / turnMotorEncoderCountsPerRev;
         driveEncoderTickToMeters = (2.0 * Math.PI * wheelRadius * (1.0/gearingDriveEncoderToOutput)) / driveMotorEncoderCountsPerRev;
