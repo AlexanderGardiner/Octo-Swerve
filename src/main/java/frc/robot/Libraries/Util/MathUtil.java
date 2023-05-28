@@ -38,4 +38,37 @@ public class MathUtil {
         }
         return angle;
     }
+
+    /**
+     * <p>Fits value between -1 and 1 but eliminates noise between the deadband.</p>
+     *
+     * <p>Generally used for eliminating noise in joystick readings by setting the
+     * output to zero when within a certain deadband amount of zero. Non-joystick
+     * values are also limited between -1 and 1 so as to use in a motor set.</p>
+     *
+     * @param val the value to fit inside the valid range and outside the deadband.
+     * @param deadband the amount of tolerance around zero in which
+     *                 values are set to zero.
+     * @return the value fitted to the range.
+     *
+     * @since 0.1.0
+     */
+    public static double fitDeadband(double val, double deadband) {
+        if (!(Math.abs(val) < deadband)) {
+            if (val > 0) {
+                if (val >= 1) {
+                    return 1;
+                } else {
+                    return (val - deadband) * 1 / (1 - deadband);
+                }
+            } else if (val < 0) {
+                if (val <= -1) {
+                    return -1;
+                } else {
+                    return (val + deadband)* 1 / (1 - deadband);
+                }
+            }
+        }
+        return 0;
+    }
 }

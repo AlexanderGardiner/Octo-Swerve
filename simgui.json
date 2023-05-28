@@ -1,7 +1,8 @@
 {
   "NTProvider": {
     "types": {
-      "/FMSInfo": "FMSInfo"
+      "/FMSInfo": "FMSInfo",
+      "/SmartDashboard/Field": "Field2d"
     }
   },
   "NetworkTables": {
@@ -10,6 +11,9 @@
         "open": true
       },
       "SmartDashboard": {
+        "Field": {
+          "open": true
+        },
         "open": true
       }
     }

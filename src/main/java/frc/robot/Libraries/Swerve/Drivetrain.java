@@ -3,12 +3,10 @@ package frc.robot.Libraries.Swerve;
 import java.util.ArrayList;
 
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Libraries.Swerve.Math.SwerveKinematics;
 import frc.robot.Libraries.Swerve.Odometry.PoseEstimator;
 import frc.robot.Libraries.Swerve.Util.MotorType;
@@ -44,7 +42,7 @@ public class DriveTrain {
                       int[] turnMotorCanIDs, int[] driveMotorCanIDs,
                       PIDConfig[] turnMotorPIDConfigs, PIDConfig[] driveMotorPIDConfigs,
                       int turnMotorEncodersCountsPerRev, int driveMotorEncodersCountsPerRev,
-                      double gearingTurnEncoderToOutput, double gearingDriveEncoderToOutput, int wheelRadius,
+                      double gearingTurnEncoderToOutput, double gearingDriveEncoderToOutput, double wheelRadius,
                       Translation2d[] modulePositions,
                       boolean[] turnMotorInverted, boolean[] turnEncoderInverted,
                       boolean[] driveMotorInverted, boolean[] driveEncoderInverted) {
@@ -85,8 +83,15 @@ public class DriveTrain {
             modulePositions.add(swerveModules.get(i).getModulePosition());
         }
 
-        poseEstimator.updatePose(modulePositions.toArray(new SwerveModulePosition[modulePositions.size()]), 
+        poseEstimator.updatePose(modulePositions, 
                                  gyro.getWrappedAngleRotation2D());
 
+    }
+
+    /** Gets the robot estimated pose o  the field
+     * @return The robot's pose
+     */
+    public Pose2d getPose2d() {
+        return poseEstimator.getPose2d();
     }
 }

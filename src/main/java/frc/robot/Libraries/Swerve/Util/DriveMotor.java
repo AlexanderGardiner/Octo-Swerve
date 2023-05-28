@@ -7,12 +7,12 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
-import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMax.IdleMode;
 
+import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Libraries.Util.PIDConfig;
 import frc.robot.Libraries.Util.SparkMax.SparkMaxConfig;
 import frc.robot.Libraries.Util.SparkMax.SparkMaxEncoderType;
@@ -30,7 +30,11 @@ public class DriveMotor {
 
     private int encoderCountsPerRev;
 
-    // TODO: Need to add option for inverted motor/encoder
+    private boolean simulated;
+    private double simulatedEncoderPositionTicks = 0;
+    private double simulatedEncoderVelocityTicksPer100ms;
+    private double lastTimeSimulatedEncoderPositionUpdated = 0;
+
     /** Creates a drive motor object
      * @param motorType The type of the motor
      * @param canID The canID of the motor
@@ -39,9 +43,14 @@ public class DriveMotor {
      * @param motorInverted Whether the motor is inverted
      * @param encoderInverted Whether the encoder is is in phase (inverted)
      */
-    public DriveMotor(MotorType motorType, int canID, PIDConfig PIDconfig, int encoderCountsPerRev, boolean motorInverted, boolean encoderInverted) {
+    public DriveMotor(MotorType motorType, int canID, PIDConfig PIDconfig, int encoderCountsPerRev, boolean motorInverted, boolean encoderInverted, boolean simulated) {
         this.motorType = motorType;
         this.encoderCountsPerRev = encoderCountsPerRev;
+        this.simulated = simulated;
+
+        if (simulated) {
+            lastTimeSimulatedEncoderPositionUpdated = Timer.getFPGATimestamp();
+        }
 
         if (this.motorType == MotorType.TalonFX) {
             talonFX = new WPI_TalonFX(canID);
@@ -90,6 +99,11 @@ public class DriveMotor {
      * @return The encoder position in ticks
      */
     public double getEncoderPositionTicks() {
+        if (this.simulated) {
+            this.simulatedEncoderPositionTicks += simulatedEncoderVelocityTicksPer100ms * (Timer.getFPGATimestamp() - lastTimeSimulatedEncoderPositionUpdated)/10.0;
+            return this.simulatedEncoderPositionTicks;
+        }
+
         if (this.motorType == MotorType.TalonFX) {
             return talonFX.getSensorCollection().getIntegratedSensorPosition();
         } else {
@@ -101,10 +115,14 @@ public class DriveMotor {
      * @return The encoder velocity in ticks per 100ms
      */
     public double getEncoderVelocityTicks() {
+        if (this.simulated) {
+            return this.simulatedEncoderVelocityTicksPer100ms;
+        }
+
         if (this.motorType == MotorType.TalonFX) {
             return talonFX.getSensorCollection().getIntegratedSensorVelocity();
         } else {
-            return (sparkMax.getAlternateEncoder(encoderCountsPerRev).getVelocity()*encoderCountsPerRev)/600;
+            return (sparkMax.getAlternateEncoder(encoderCountsPerRev).getVelocity()*encoderCountsPerRev)/600.0;
         }
     }
 
@@ -112,10 +130,15 @@ public class DriveMotor {
      * @param velocity The target velocity in ticks per 100ms
      */
     public void setTargetVelocityTicks(double velocity) {
-        if (this.motorType == MotorType.TalonFX) {
-            talonFX.set(ControlMode.Velocity, velocity);
+        if (this.simulated) {
+            this.simulatedEncoderPositionTicks += simulatedEncoderVelocityTicksPer100ms * (Timer.getFPGATimestamp() - lastTimeSimulatedEncoderPositionUpdated)/10.0;
+            this.simulatedEncoderVelocityTicksPer100ms = velocity;    
         } else {
-            sparkMax.getPIDController().setReference((velocity*600)/encoderCountsPerRev, ControlType.kVelocity);
-        }
+            if (this.motorType == MotorType.TalonFX) {
+                talonFX.set(ControlMode.Velocity, velocity);
+            } else {
+                sparkMax.getPIDController().setReference((velocity*600)/encoderCountsPerRev, ControlType.kVelocity);
+            }
+        } 
     }
 }

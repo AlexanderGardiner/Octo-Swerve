@@ -38,11 +38,11 @@ public class SwerveModule {
                         PIDConfig turnMotorPIDConfig, PIDConfig driveMotorPIDConfig,
                         int turnMotorEncoderCountsPerRev, int driveMotorEncoderCountsPerRev,
                         double gearingTurnEncoderToOutput, double gearingDriveEncoderToOutput, 
-                        int wheelRadius,
+                        double wheelRadius,
                         boolean turnMotorInverted, boolean turnEncoderInverted,
                         boolean driveMotorInverted, boolean driveEncoderInverted) {
-        turnMotor = new TurnMotor(turnMotorType, turnMotorCanID, turnMotorPIDConfig, driveMotorEncoderCountsPerRev, turnMotorInverted, turnEncoderInverted);
-        driveMotor = new DriveMotor(driveMotorType, driveMotorCanID, driveMotorPIDConfig, driveMotorEncoderCountsPerRev, driveMotorInverted, driveEncoderInverted);
+        turnMotor = new TurnMotor(turnMotorType, turnMotorCanID, turnMotorPIDConfig, driveMotorEncoderCountsPerRev, turnMotorInverted, turnEncoderInverted, true);
+        driveMotor = new DriveMotor(driveMotorType, driveMotorCanID, driveMotorPIDConfig, driveMotorEncoderCountsPerRev, driveMotorInverted, driveEncoderInverted, true);
 
         turnEncoderTickToRadians = (2.0 * Math.PI * (1.0/gearingTurnEncoderToOutput)) / turnMotorEncoderCountsPerRev;
         driveEncoderTickToMeters = (2.0 * Math.PI * wheelRadius * (1.0/gearingDriveEncoderToOutput)) / driveMotorEncoderCountsPerRev;

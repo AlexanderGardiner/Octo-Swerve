@@ -31,6 +31,9 @@ public class TurnMotor {
     private CANSparkMax sparkMax;
 
     private int encoderCountsPerRev;
+    
+    private boolean simulated;
+    private double simulatedEncoderPositionTicks;
 
     /** Creates a turn motor object
      * @param motorType The type of the motor
@@ -39,10 +42,12 @@ public class TurnMotor {
      * @param encoderCountsPerRev The ticks per revolution of the encoder
      * @param motorInverted Whether the motor is inverted
      * @param encoderInverted Whether the encoder is is in phase (inverted)
+     * @param simulated Whether the motor is simulated
      */
-    public TurnMotor(MotorType motorType, int canID, PIDConfig PIDconfig, int encoderCountsPerRev, boolean motorInverted, boolean encoderInverted) {
+    public TurnMotor(MotorType motorType, int canID, PIDConfig PIDconfig, int encoderCountsPerRev, boolean motorInverted, boolean encoderInverted, boolean simulated) {
         this.motorType = motorType;
         this.encoderCountsPerRev = encoderCountsPerRev;
+        this.simulated = simulated;
 
         if (this.motorType == MotorType.TalonFX) {
             talonFX = new WPI_TalonFX(canID);
@@ -91,8 +96,12 @@ public class TurnMotor {
      * @return The encoder position in ticks
      */
     public double getEncoderPositionTicks() {
+        if (this.simulated) {
+            return this.simulatedEncoderPositionTicks;
+        }
+
         if (this.motorType == MotorType.TalonFX) {
-            return talonFX.getSensorCollection().getIntegratedSensorAbsolutePosition();
+            return talonFX.getSensorCollection().getIntegratedSensorAbsolutePosition();         
         } else {
             return sparkMax.getAbsoluteEncoder(Type.kDutyCycle).getPosition();
         }
@@ -102,10 +111,14 @@ public class TurnMotor {
      * @param position The target position in ticks
      */
     public void setTargetPositionTicks(double position) {
-        if (this.motorType == MotorType.TalonFX) {
-            talonFX.set(ControlMode.Position, position);
+        if (this.simulated) {
+            this.simulatedEncoderPositionTicks = position;
         } else {
-            sparkMax.getPIDController().setReference(position/encoderCountsPerRev, ControlType.kPosition);
-        }
+            if (this.motorType == MotorType.TalonFX) {
+                talonFX.set(ControlMode.Position, position);
+            } else {
+                sparkMax.getPIDController().setReference(position/encoderCountsPerRev, ControlType.kPosition);
+            }
+        }   
     }
 }
