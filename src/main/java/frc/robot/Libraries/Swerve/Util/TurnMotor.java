@@ -55,12 +55,12 @@ public class TurnMotor {
             ArrayList<Integer> list = new ArrayList<Integer>();
             list.add(1);
             TalonFXConfig talonFXConfig = new TalonFXConfig(
-                new TalonFXStatusFrames(100, 10, 10, 100, 100, 100, 10, 100, 100, 10),
+                new TalonFXStatusFrames(100, 10, 10, 100, 10, 100, 10, 100, 100, 10),
                 true,
                 0,
                 TalonFXFeedbackDevice.IntegratedSensor,
                 NeutralMode.Brake,
-                new StatorCurrentLimitConfiguration(true, 30, 30, 50),
+                new StatorCurrentLimitConfiguration(true, 25, 30, 50),
                 new SupplyCurrentLimitConfiguration(true, 30, 30, 50),
                 motorInverted,
                 encoderInverted,
@@ -74,8 +74,8 @@ public class TurnMotor {
             sparkMax = new CANSparkMax(canID, CANSparkMaxLowLevel.MotorType.kBrushless);
 
             SparkMaxConfig sparkMaxConfig = new SparkMaxConfig(
-                new SparkMaxStatusFrames(100, 100, 10, 100, 100, 10, 100),
-                0,
+                new SparkMaxStatusFrames(100, 100, 10, 100, 10, 10, 100),
+                1000,
                 true,
                 SparkMaxEncoderType.Absolute,
                 IdleMode.kBrake,
@@ -117,7 +117,7 @@ public class TurnMotor {
             if (this.motorType == MotorType.TalonFX) {
                 talonFX.set(ControlMode.Position, position);
             } else {
-                sparkMax.getPIDController().setReference(position/encoderCountsPerRev, ControlType.kPosition);
+                sparkMax.getPIDController().setReference(position, ControlType.kPosition);
             }
         }   
     }

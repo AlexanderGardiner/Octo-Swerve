@@ -58,13 +58,13 @@ public class DriveMotor {
             ArrayList<Integer> list = new ArrayList<Integer>();
             list.add(1);
             TalonFXConfig talonFXConfig = new TalonFXConfig(
-                new TalonFXStatusFrames(100, 10, 10, 100, 100, 100, 10, 100, 100, 10),
+                new TalonFXStatusFrames(100, 10, 10, 100, 10, 100, 10, 100, 100, 10),
                 true,
                 0,
                 TalonFXFeedbackDevice.IntegratedSensor,
                 NeutralMode.Brake,
-                new StatorCurrentLimitConfiguration(true, 30, 30, 50),
-                new SupplyCurrentLimitConfiguration(true, 30, 30, 50),
+                new StatorCurrentLimitConfiguration(true, 55, 30, 50),
+                new SupplyCurrentLimitConfiguration(true, 60, 30, 50),
                 motorInverted,
                 encoderInverted,
                 encoderCountsPerRev,
@@ -77,13 +77,13 @@ public class DriveMotor {
             sparkMax = new CANSparkMax(canID, null);
 
             SparkMaxConfig sparkMaxConfig = new SparkMaxConfig(
-                new SparkMaxStatusFrames(100, 100, 10, 100, 100, 10, 100),
-                0,
+                new SparkMaxStatusFrames(100, 100, 10, 100, 10, 10, 100),
+                1000,
                 true,
                 SparkMaxEncoderType.Alternate,
                 IdleMode.kBrake,
                 30,
-                30,
+                60,
                 motorInverted,
                 encoderInverted,
                 encoderCountsPerRev,
@@ -109,7 +109,7 @@ public class DriveMotor {
         if (this.motorType == MotorType.TalonFX) {
             return talonFX.getSensorCollection().getIntegratedSensorPosition();
         } else {
-            return sparkMax.getAlternateEncoder(encoderCountsPerRev).getPosition()*encoderCountsPerRev;
+            return sparkMax.getAlternateEncoder(encoderCountsPerRev).getPosition();
         }
     }
 
@@ -124,7 +124,7 @@ public class DriveMotor {
         if (this.motorType == MotorType.TalonFX) {
             return talonFX.getSensorCollection().getIntegratedSensorVelocity();
         } else {
-            return (sparkMax.getAlternateEncoder(encoderCountsPerRev).getVelocity()*encoderCountsPerRev)/600.0;
+            return (sparkMax.getAlternateEncoder(encoderCountsPerRev).getVelocity())/600.0;
         }
     }
 
@@ -141,7 +141,7 @@ public class DriveMotor {
             if (this.motorType == MotorType.TalonFX) {
                 talonFX.set(ControlMode.Velocity, velocity);
             } else {
-                sparkMax.getPIDController().setReference((velocity*600)/encoderCountsPerRev, ControlType.kVelocity);
+                sparkMax.getPIDController().setReference((velocity*600), ControlType.kVelocity);
             }
         } 
     }

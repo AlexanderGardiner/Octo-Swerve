@@ -27,19 +27,25 @@ public class SwerveDrive extends SubsystemBase {
                                          MotorType.TalonFX, 
                                          new int[]{1,3,5,7}, 
                                          new int[]{2,4,6,8}, 
-                                         new PIDConfig[]{new PIDConfig(0, 0, 0, 0, Double.valueOf(0)),new PIDConfig(0, 0, 0, 0, Double.valueOf(0)),new PIDConfig(0, 0, 0, 0, Double.valueOf(0)),new PIDConfig(0, 0, 0, 0, Double.valueOf(0))}, 
-                                         new PIDConfig[]{new PIDConfig(0, 0, 0, 0, Double.valueOf(0)),new PIDConfig(0, 0, 0, 0, Double.valueOf(0)),new PIDConfig(0, 0, 0, 0, Double.valueOf(0)),new PIDConfig(0, 0, 0, 0, Double.valueOf(0))}, 
-          4096, 
-         4096, 
+                                         new PIDConfig[]{new PIDConfig(5, .0, 0.02, Double.valueOf(0)),
+                                                         new PIDConfig(5, .0, 0.02, Double.valueOf(0)),
+                                                         new PIDConfig(5, .0, 0.02, Double.valueOf(0)),
+                                                         new PIDConfig(5, .0, 0.02, Double.valueOf(0))}, 
+                                         new PIDConfig[]{new PIDConfig(0.1, 0.00, 0.0, 0.08, Double.valueOf(0)),
+                                                         new PIDConfig(0.1, 0.00, 0.0, 0.08, Double.valueOf(0)),
+                                                         new PIDConfig(0.1, 0.00, 0.0, 0.08, Double.valueOf(0)),
+                                                         new PIDConfig(0.1, 0.00, 0.0, 0.08, Double.valueOf(0))}, 
+          1, 
+         2048, 
                                          1.0/1.0, 
-                                         1.0/1.0, 
-                             0.1, 
+                                         11.0/40.0, 
+                                         0.038, 
                                          new Translation2d[]{new Translation2d(1,1), new Translation2d(1,-1), new Translation2d(-1,1), new Translation2d(-1,-1)},
                                          new boolean[]{false, false, false, false},
                                          new boolean[]{false, false, false, false},
                                          new boolean[]{false, false, false, false},
                                          new boolean[]{false, false, false, false},
-                                         true);
+                                         false);
     }
 
     public void drive(ChassisSpeeds chassisSpeeds) {
