@@ -60,8 +60,8 @@ public class Robot extends TimedRobot {
 
     }
     SwerveDrive.getInstance();
-    // SwerveDrive.getInstance().drive(new ChassisSpeeds(0,2,0));
-   CommandScheduler.getInstance().setDefaultCommand(SwerveDrive.getInstance(), new SwerveControl());
+
+    CommandScheduler.getInstance().setDefaultCommand(SwerveDrive.getInstance(), new SwerveControl());
   }
 
   @Override

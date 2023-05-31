@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.photonvision.PhotonPoseEstimator.PoseStrategy;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -11,6 +12,7 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Libraries.Swerve.Math.SwerveKinematics;
 import frc.robot.Libraries.Swerve.Odometry.PoseEstimator;
 import frc.robot.Libraries.Swerve.Util.MotorType;
@@ -26,6 +28,9 @@ public class DriveTrain {
     private double simulatedRotation = 0; // Radians
     private double simulatedRotationSpeed = 0; // Radians per second
     private double lastTimeSimulatedRotationUpdated = 0;
+    private Pose2d targetPose2d = new Pose2d();
+    private PIDController translationPIDController;
+    private PIDController rotationPidController;
 
     /** Creates a swerve drivetrain object
      * @param turnMotorTypes The type of motor used to turn the modules
@@ -46,6 +51,9 @@ public class DriveTrain {
      * @param turnEncoderInverted Whether the drive encoders are not in phase (inverted)
      * (positive x driving right and positive y driving forward)
      * @param simulated Whether the drivetrain is simulated
+     * @param initalPose2d The inital pose of the robot on the field
+     * @param translationPIDController The pid controller for correcting error in translations of the robot
+     * @param rotationPIDController The pid controller for correcting error in rotations of the robot
      */
     public DriveTrain(MotorType turnMotorTypes, MotorType driveMotorTypes, 
                       int[] turnMotorCanIDs, int[] driveMotorCanIDs,
@@ -55,7 +63,9 @@ public class DriveTrain {
                       Translation2d[] modulePositions,
                       boolean[] turnMotorInverted, boolean[] turnEncoderInverted,
                       boolean[] driveMotorInverted, boolean[] driveEncoderInverted,
-                      boolean simulated) {
+                      boolean simulated,
+                      Pose2d initalPose2d,
+                      PIDController translationPIDController, PIDController rotationPIDController) {
         for (int i=0; i<4; i++) {
             swerveModules.add(new SwerveModule(turnMotorTypes, driveMotorTypes,
                                                turnMotorCanIDs[i], driveMotorCanIDs[i],
@@ -70,8 +80,12 @@ public class DriveTrain {
 
         swerveDriveKinematics = new SwerveKinematics(modulePositions);
         gyro = new Gyro();
-        poseEstimator = new PoseEstimator(new Pose2d());
+        poseEstimator = new PoseEstimator(initalPose2d);
+        targetPose2d = initalPose2d;
         this.simulated = simulated;
+        this.translationPIDController = translationPIDController;
+        this.rotationPidController = rotationPIDController;
+        this.rotationPidController.enableContinuousInput(-Math.PI, Math.PI);
 
     }
 
@@ -80,15 +94,32 @@ public class DriveTrain {
      * @param fieldRelative Whether the movement is field relative
      */
     public void drive(ChassisSpeeds chassisSpeeds, boolean fieldRelative) {
+        
         if (fieldRelative) {
             if (simulated) {
                 chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(chassisSpeeds, new Rotation2d(simulatedRotation));
             } else {
                 chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(chassisSpeeds, gyro.getWrappedAngleRotation2D());
             }
-            
+
+
+            targetPose2d = new Pose2d(targetPose2d.getX()+chassisSpeeds.vxMetersPerSecond*0.02,
+                                  targetPose2d.getY()+chassisSpeeds.vyMetersPerSecond*0.02,
+                                  targetPose2d.getRotation().plus(new Rotation2d(chassisSpeeds.omegaRadiansPerSecond*0.02)));
+
+            Pose2d currentPose = poseEstimator.getPose2d();
+
+            SmartDashboard.putString("Target Pose 2D", targetPose2d.toString());
+            SmartDashboard.putString("Current Pose 2D", currentPose.toString());
+
+            chassisSpeeds = new ChassisSpeeds(translationPIDController.calculate(currentPose.getX(), targetPose2d.getX())/0.02,
+                                            translationPIDController.calculate(currentPose.getY(), targetPose2d.getY())/0.02,
+                                            rotationPidController.calculate(currentPose.getRotation().getRadians(), targetPose2d.getRotation().getRadians())/0.02);
+
+                
         }
         
+        chassisSpeeds = new ChassisSpeeds(chassisSpeeds.vxMetersPerSecond, chassisSpeeds.vyMetersPerSecond, chassisSpeeds.omegaRadiansPerSecond);
         SwerveModuleState[] swerveModuleStates = swerveDriveKinematics.calculateFromChassisSpeeds(chassisSpeeds);
 
         for (int i=0; i<4; i++) {
@@ -131,6 +162,8 @@ public class DriveTrain {
         for (int i=0; i<4; i++) {
             modulePositions.add(swerveModules.get(i).getModulePosition());
         }
+
+        this.targetPose2d = pose2d;
 
         poseEstimator.resetPose2d(pose2d, modulePositions);
     } 
