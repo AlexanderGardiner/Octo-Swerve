@@ -3,7 +3,6 @@ package frc.robot.Subsystems.Swerve;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Libraries.Swerve.DriveTrain;
 import frc.robot.Libraries.Swerve.Util.MotorType;
@@ -50,7 +49,6 @@ public class SwerveDrive extends SubsystemBase {
     }
 
     public void drive(ChassisSpeeds chassisSpeeds, boolean fieldRelative) {
-        SmartDashboard.putString("target speeds better", chassisSpeeds.toString());
         driveTrain.drive(chassisSpeeds, fieldRelative);
     }
 

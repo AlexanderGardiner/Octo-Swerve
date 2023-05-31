@@ -26,6 +26,7 @@ public class SwerveControl extends CommandBase{
 
         double xAxis = leftJoystick.getRawAxis(0);
         double yAxis = leftJoystick.getRawAxis(1);
+
         // Get speeds from joysticks
         xSpeed = -1 * Math.signum(yAxis) * Math.pow(MathUtil.fitDeadband(yAxis, 0.1),2) * swerveDrive.getMaxSpeed();
         ySpeed = -1 * Math.signum(xAxis) * Math.pow(MathUtil.fitDeadband(xAxis, 0.1),2) * swerveDrive.getMaxSpeed();
@@ -33,6 +34,7 @@ public class SwerveControl extends CommandBase{
         // Calculate the deadband
         rot = MathUtil.fitDeadband(-rightJoystick.getRawAxis(0), 0.1) * swerveDrive.getMaxAngularSpeed();
 
+        // Drive
         swerveDrive.drive(new ChassisSpeeds(xSpeed, ySpeed, rot),true);
     }
 }

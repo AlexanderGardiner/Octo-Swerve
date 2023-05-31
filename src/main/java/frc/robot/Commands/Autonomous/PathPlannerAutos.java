@@ -32,6 +32,6 @@ public class PathPlannerAutos {
 
 
     public static CommandBase TestPath() {
-        return autoBuilder.fullAuto(PathPlanner.loadPathGroup("Test Path", new PathConstraints(0.5, 0.1)));
+        return autoBuilder.fullAuto(PathPlanner.loadPathGroup("Test Path", new PathConstraints(4, 3)));
     }
 }

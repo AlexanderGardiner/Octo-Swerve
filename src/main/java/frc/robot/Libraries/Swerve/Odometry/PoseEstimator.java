@@ -30,24 +30,27 @@ public class PoseEstimator {
         double sumXFromModules = 0;
         double sumYFromModules = 0;
 
+        // Adding up all of the translations of the swerve modules
         for (int i=0; i<modulePositions.size(); i++) {
             sumXFromModules += (modulePositions.get(i).distanceMeters-previousModulePositions.get(i).distanceMeters) 
-                                * Math.cos(modulePositions.get(i).angle.minus(gyroAngle).minus(gyroOffset).getRadians());
+                                * Math.cos(modulePositions.get(i).angle.minus(gyroAngle).plus(gyroOffset).getRadians());
 
             sumYFromModules -= (modulePositions.get(i).distanceMeters-previousModulePositions.get(i).distanceMeters) 
-                                * Math.sin(modulePositions.get(i).angle.minus(gyroAngle).minus(gyroOffset).getRadians());
+                                * Math.sin(modulePositions.get(i).angle.minus(gyroAngle).plus(gyroOffset).getRadians());
         }
 
         previousModulePositions = modulePositions;
 
+        // Averaging the translations of the swerve modules
         double averageXFromModules = sumXFromModules / modulePositions.size();
         double averageYFromModules = sumYFromModules / modulePositions.size();
 
+        // Applying average translations to the robot pose
         this.currentPose = new Pose2d(this.currentPose.getX() 
                                       + averageXFromModules,
                                       this.currentPose.getY() 
                                       + averageYFromModules,
-                                      gyroAngle);
+                                      gyroAngle.minus(gyroOffset));
 
         
     }
@@ -63,7 +66,7 @@ public class PoseEstimator {
      * @param pose2d The pose to reset to
      */
     public void resetPose2d(Pose2d pose2d, ArrayList<SwerveModulePosition> modulePositions) {
-        this.gyroOffset = pose2d.getRotation().minus(currentPose.getRotation());
+        this.gyroOffset = pose2d.getRotation().plus(currentPose.getRotation());
         this.currentPose = pose2d;
 
         this.previousModulePositions = modulePositions; 
