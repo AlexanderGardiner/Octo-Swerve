@@ -3,6 +3,7 @@ package frc.robot.Subsystems.Swerve;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Libraries.Swerve.DriveTrain;
 import frc.robot.Libraries.Swerve.Util.MotorType;
@@ -40,16 +41,21 @@ public class SwerveDrive extends SubsystemBase {
                                          1.0/1.0, 
                                          11.0/40.0, 
                                          0.038, 
-                                         new Translation2d[]{new Translation2d(1,1), new Translation2d(1,-1), new Translation2d(-1,1), new Translation2d(-1,-1)},
+                                         new Translation2d[]{new Translation2d(-1,1), new Translation2d(1,1), new Translation2d(-1,-1), new Translation2d(1,-1)},
                                          new boolean[]{false, false, false, false},
                                          new boolean[]{false, false, false, false},
                                          new boolean[]{false, false, false, false},
                                          new boolean[]{false, false, false, false},
-                                         false);
+                                         true);
+    }
+
+    public void drive(ChassisSpeeds chassisSpeeds, boolean fieldRelative) {
+        SmartDashboard.putString("target speeds better", chassisSpeeds.toString());
+        driveTrain.drive(chassisSpeeds, fieldRelative);
     }
 
     public void drive(ChassisSpeeds chassisSpeeds) {
-        driveTrain.drive(chassisSpeeds, true);
+        this.drive(chassisSpeeds, false);
     }
 
     public void initDefaultCommand() {
@@ -74,5 +80,9 @@ public class SwerveDrive extends SubsystemBase {
 
     public Pose2d getPose2d() {
         return driveTrain.getPose2d();
+    }
+
+    public void resetPose2d(Pose2d pose2d) {
+        this.driveTrain.resetPose2d(pose2d);
     }
 }

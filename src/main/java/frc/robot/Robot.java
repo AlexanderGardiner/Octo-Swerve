@@ -4,11 +4,13 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.Commands.Autonomous.PathPlannerAutos;
 import frc.robot.Commands.Swerve.SwerveControl;
 import frc.robot.Subsystems.Swerve.SwerveDrive;
 
@@ -37,7 +39,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = null;
+    m_autonomousCommand = PathPlannerAutos.TestPath();
 
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
@@ -58,7 +60,8 @@ public class Robot extends TimedRobot {
 
     }
     SwerveDrive.getInstance();
-    CommandScheduler.getInstance().setDefaultCommand(SwerveDrive.getInstance(), new SwerveControl());
+    // SwerveDrive.getInstance().drive(new ChassisSpeeds(0,2,0));
+   CommandScheduler.getInstance().setDefaultCommand(SwerveDrive.getInstance(), new SwerveControl());
   }
 
   @Override

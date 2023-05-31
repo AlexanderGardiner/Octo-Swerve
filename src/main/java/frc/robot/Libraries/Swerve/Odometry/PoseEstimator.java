@@ -9,6 +9,7 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 public class PoseEstimator {
     Pose2d currentPose;
     ArrayList<SwerveModulePosition> previousModulePositions = new ArrayList<SwerveModulePosition>();
+    Rotation2d gyroOffset = new Rotation2d();
 
     /** Creates a new pose estimator
      * @param initalPose The inital pose the robot starts at
@@ -31,10 +32,10 @@ public class PoseEstimator {
 
         for (int i=0; i<modulePositions.size(); i++) {
             sumXFromModules += (modulePositions.get(i).distanceMeters-previousModulePositions.get(i).distanceMeters) 
-                                * Math.sin(modulePositions.get(i).angle.plus(gyroAngle).getRadians());
+                                * Math.cos(modulePositions.get(i).angle.minus(gyroAngle).minus(gyroOffset).getRadians());
 
-            sumYFromModules += (modulePositions.get(i).distanceMeters-previousModulePositions.get(i).distanceMeters) 
-                                * Math.cos(modulePositions.get(i).angle.plus(gyroAngle).getRadians());
+            sumYFromModules -= (modulePositions.get(i).distanceMeters-previousModulePositions.get(i).distanceMeters) 
+                                * Math.sin(modulePositions.get(i).angle.minus(gyroAngle).minus(gyroOffset).getRadians());
         }
 
         previousModulePositions = modulePositions;
@@ -51,10 +52,20 @@ public class PoseEstimator {
         
     }
 
-    /**
+    /** Gets the current robot pose
      * @return The current robot pose
      */
     public Pose2d getPose2d() {
         return this.currentPose;
+    }
+
+    /** Resets the current robot pose
+     * @param pose2d The pose to reset to
+     */
+    public void resetPose2d(Pose2d pose2d, ArrayList<SwerveModulePosition> modulePositions) {
+        this.gyroOffset = pose2d.getRotation().minus(currentPose.getRotation());
+        this.currentPose = pose2d;
+
+        this.previousModulePositions = modulePositions; 
     }
 }

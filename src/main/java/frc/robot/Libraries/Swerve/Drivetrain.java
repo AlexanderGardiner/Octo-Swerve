@@ -2,6 +2,8 @@ package frc.robot.Libraries.Swerve;
 
 import java.util.ArrayList;
 
+import org.photonvision.PhotonPoseEstimator.PoseStrategy;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -113,10 +115,23 @@ public class DriveTrain {
 
     }
 
-    /** Gets the robot estimated pose o  the field
+    /** Gets the robot estimated pose on the field
      * @return The robot's pose
      */
     public Pose2d getPose2d() {
         return poseEstimator.getPose2d();
     }
+
+    /** Resets the robot pose
+     * @param pose2d The pose to reset to
+     */
+    public void resetPose2d(Pose2d pose2d) {
+        ArrayList<SwerveModulePosition> modulePositions = new ArrayList<SwerveModulePosition>();
+
+        for (int i=0; i<4; i++) {
+            modulePositions.add(swerveModules.get(i).getModulePosition());
+        }
+
+        poseEstimator.resetPose2d(pose2d, modulePositions);
+    } 
 }
