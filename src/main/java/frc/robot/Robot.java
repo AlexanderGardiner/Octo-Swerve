@@ -43,11 +43,16 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
+    
     CommandScheduler.getInstance().cancelAll();
     CommandScheduler.getInstance().removeDefaultCommand(SwerveDrive.getInstance());
 
-    m_autonomousCommand = PathPlannerAutos.TestPath();
+    SwerveDrive.getInstance().resetGyro();
+    SwerveDrive.getInstance().setGyroOffset(0);
+    SwerveDrive.getInstance().setPoseEstimatorGyroOffset(new Rotation2d());
 
+    m_autonomousCommand = PathPlannerAutos.TestPath();
+    
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
@@ -57,17 +62,25 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {}
 
   @Override
-  public void autonomousExit() {
-  }
+  public void autonomousExit() {}
 
   @Override
   public void teleopInit() {
+    SwerveDrive.getInstance().setPoseEstimatorGyroOffset(new Rotation2d());
+    
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
+      SwerveDrive.getInstance().setGyroOffset(-PathPlannerAutos.startingGyroAngle);
       
 
+    } else {
+      SwerveDrive.getInstance().resetGyro();
     }
-    SwerveDrive.getInstance();
+
+    
+    // SwerveDrive.getInstance().resetPose2d(new Pose2d(SwerveDrive.getInstance().getPose2d().getX(),
+    //                                       SwerveDrive.getInstance().getPose2d().getY(),
+    //                                       SwerveDrive.getInstance().getPose2d().getRotation().plus(new Rotation2d(Math.toRadians(PathPlannerAutos.robotInitalRotation)))));;
     CommandScheduler.getInstance().setDefaultCommand(SwerveDrive.getInstance(), new SwerveControl());
   }
 

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class PoseEstimator {
     Pose2d currentPose;
@@ -25,6 +26,7 @@ public class PoseEstimator {
     /** Updates the robot's pose to its new position
      * @param modulePositions The current positions of the swerve modules (In meters and radians)
      * @param gyroAngle The current robot gyro angle in radians
+     * @param gyroOffset The gyro offset in degrees
      */
     public void updatePose(ArrayList<SwerveModulePosition> modulePositions, Rotation2d gyroAngle) {
         double sumXFromModules = 0;
@@ -33,10 +35,10 @@ public class PoseEstimator {
         // Adding up all of the translations of the swerve modules
         for (int i=0; i<modulePositions.size(); i++) {
             sumXFromModules += (modulePositions.get(i).distanceMeters-previousModulePositions.get(i).distanceMeters) 
-                                * Math.cos(modulePositions.get(i).angle.minus(gyroAngle).plus(gyroOffset).getRadians());
+                                * Math.cos(modulePositions.get(i).angle.minus(gyroAngle).minus(gyroOffset).getRadians());
 
             sumYFromModules -= (modulePositions.get(i).distanceMeters-previousModulePositions.get(i).distanceMeters) 
-                                * Math.sin(modulePositions.get(i).angle.minus(gyroAngle).plus(gyroOffset).getRadians());
+                                * Math.sin(modulePositions.get(i).angle.minus(gyroAngle).minus(gyroOffset).getRadians());
         }
 
         previousModulePositions = modulePositions;
@@ -50,13 +52,10 @@ public class PoseEstimator {
                                       + averageXFromModules,
                                       this.currentPose.getY() 
                                       + averageYFromModules,
-                                      gyroAngle.minus(gyroOffset));
+                                      gyroAngle.plus(gyroOffset));
 
-        
-    }
-
-    public void updatePose(Rotation2d gyroAngle) {
-        this.updatePose(previousModulePositions, gyroAngle);
+        SmartDashboard.putString("current pose", currentPose.toString());
+        SmartDashboard.putString("gyro angle", gyroAngle.toString());
     }
 
     /** Gets the current robot pose
@@ -67,12 +66,20 @@ public class PoseEstimator {
     }
 
     /** Resets the current robot pose
-     * @param pose2d The pose to reset to
+     * @param pose2d The pose to reset to (Angle is CW postitive)
      */
     public void resetPose2d(Pose2d pose2d, ArrayList<SwerveModulePosition> modulePositions) {
-        this.gyroOffset = pose2d.getRotation().plus(currentPose.getRotation());
+        this.gyroOffset = pose2d.getRotation().minus(currentPose.getRotation());
         this.currentPose = pose2d;
 
+        SmartDashboard.putString("pose to reset to", pose2d.toString());
+        SmartDashboard.putString("current pose", currentPose.toString());
+        SmartDashboard.putString("gyro offset", gyroOffset.toString());
         this.previousModulePositions = modulePositions; 
     }
+
+    public void setGyroOffset(Rotation2d gyroOffset) {
+        this.gyroOffset = gyroOffset;
+    }
+
 }

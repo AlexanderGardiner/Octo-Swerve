@@ -2,6 +2,7 @@ package frc.robot.Subsystems.Swerve;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -94,5 +95,17 @@ public class SwerveDrive extends SubsystemBase {
 
     public void setTargetPose2d(Pose2d pose2d) {
         this.driveTrain.setTargetPose2d(pose2d);
+    }
+
+    public Rotation2d getGyroRotation() {
+        return this.driveTrain.getUnwrappedGyroRotation();
+    }
+
+    public void setPoseEstimatorGyroOffset(Rotation2d gyroOffset) {
+        this.driveTrain.setPoseEstimatorGyroOffset(gyroOffset);
+    }
+
+    public void resetGyro() {
+        driveTrain.resetGyro();
     }
 }

@@ -100,18 +100,12 @@ public class DriveTrain {
                                   targetPose2d.getY()+chassisSpeeds.vyMetersPerSecond*0.02,
                                   targetPose2d.getRotation().plus(new Rotation2d(chassisSpeeds.omegaRadiansPerSecond*0.02)));
 
-            chassisSpeeds = new ChassisSpeeds(translationPIDController.calculate(currentPose.getX(), targetPose2d.getX())/0.02,
-                                            translationPIDController.calculate(currentPose.getY(), targetPose2d.getY())/0.02,
-                                            rotationPidController.calculate(currentPose.getRotation().getRadians(), targetPose2d.getRotation().getRadians())/0.02);
+            // chassisSpeeds = new ChassisSpeeds(translationPIDController.calculate(currentPose.getX(), targetPose2d.getX())/0.02,
+            //                                 translationPIDController.calculate(currentPose.getY(), targetPose2d.getY())/0.02,
+            //                                 rotationPidController.calculate(currentPose.getRotation().getRadians(), targetPose2d.getRotation().getRadians())/0.02);
 
             chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(chassisSpeeds, gyro.getWrappedAngleRotation2D());
-
-            
-
-            
-
-            
-                
+   
         }
         
         chassisSpeeds = new ChassisSpeeds(chassisSpeeds.vxMetersPerSecond, chassisSpeeds.vyMetersPerSecond, chassisSpeeds.omegaRadiansPerSecond);
@@ -142,6 +136,13 @@ public class DriveTrain {
         return poseEstimator.getPose2d();
     }
 
+    /** Gets the unwrapped rotation
+     * @return The unwrapped rotation of the gyro
+     */
+    public Rotation2d getUnwrappedGyroRotation() {
+        return this.gyro.getWrappedAngleRotation2D();
+    }
+
     /** Resets the robot pose
      * @param pose2d The pose to reset to
      */
@@ -155,7 +156,6 @@ public class DriveTrain {
         this.targetPose2d = pose2d;
 
         poseEstimator.resetPose2d(pose2d, modulePositions);
-        gyro.setAngleOffset(pose2d.getRotation().getDegrees() - poseEstimator.getPose2d().getRotation().getDegrees());
     } 
 
     /** Offset the gyro
@@ -170,5 +170,15 @@ public class DriveTrain {
      */
     public void setTargetPose2d(Pose2d pose2d) {
         this.targetPose2d = pose2d;
+    }
+
+    public void setPoseEstimatorGyroOffset(Rotation2d gyroOffset) {
+        this.poseEstimator.setGyroOffset(gyroOffset);
+    }
+
+    /** Resets the robot's gyro
+     */
+    public void resetGyro() {
+        gyro.reset();
     }
 }

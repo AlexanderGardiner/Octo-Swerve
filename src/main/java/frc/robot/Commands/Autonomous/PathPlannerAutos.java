@@ -16,8 +16,9 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Subsystems.Swerve.SwerveDrive;
 
 public class PathPlannerAutos {
-    // Degrees
-    public static double robotInitalRotation = 0;
+    // The starting gyro angle in degrees (CW positive)
+    public static double startingGyroAngle;
+
     private static final Map<String, Command> eventMap = new HashMap<>(Map.ofEntries(
         Map.entry("LogTest", new InstantCommand(() -> SmartDashboard.putString("Log", "Test")))
     ));
@@ -25,8 +26,8 @@ public class PathPlannerAutos {
     public static final SwerveAutoBuilder autoBuilder = new SwerveAutoBuilder(
         SwerveDrive.getInstance()::getPose2d,
         SwerveDrive.getInstance()::resetPose2d,
-        new PIDConstants(0.9, 0, 0),
         new PIDConstants(1, 0, 0),
+        new PIDConstants(0.9, 0, 0),
         SwerveDrive.getInstance()::drive,
         eventMap,
         true,
@@ -35,7 +36,7 @@ public class PathPlannerAutos {
 
 
     public static CommandBase TestPath() {
-        robotInitalRotation = 180;
-        return autoBuilder.fullAuto(PathPlanner.loadPathGroup("Test Path", new PathConstraints(4, 1)));
+        startingGyroAngle = -90;
+        return autoBuilder.fullAuto(PathPlanner.loadPathGroup("Test Path", new PathConstraints(4, 3)));
     }
 }

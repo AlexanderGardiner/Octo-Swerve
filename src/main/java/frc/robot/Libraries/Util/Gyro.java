@@ -10,14 +10,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Gyro {
     private AHRS navX;
     private boolean simulated;
+
+    // Degrees (ccw positive)
     private double simulatedAngleDegrees;
-    private double simulatedAngleOffset = 0;
+    private double simulatedAngleAdjustment = 0;
     private double simulatedRotationSpeed = 0; // Radians per second
     private double lastTimeSimulatedRotationUpdated = 0;
 
     /** Creates a gyro wrapper class for a navX connected to a robotrio
      * @param simulated Whether the gyro is simulated
-     * @param initialAngle The starting angle the robot starts at
+     * @param initialAngle The starting angle the robot starts at in degrees (ccw positive)
      */
     public Gyro(boolean simulated, double initialAngle) {
         this.navX = new AHRS(SPI.Port.kMXP);
@@ -35,7 +37,7 @@ public class Gyro {
         if (simulated) {
             simulatedAngleDegrees += simulatedRotationSpeed * (Timer.getFPGATimestamp()-lastTimeSimulatedRotationUpdated);
             lastTimeSimulatedRotationUpdated = Timer.getFPGATimestamp();
-            return simulatedAngleDegrees + simulatedAngleOffset;
+            return simulatedAngleDegrees + simulatedAngleAdjustment;
         } else {
             return this.navX.getAngle();
         }    
@@ -67,7 +69,7 @@ public class Gyro {
 
     public void setAngleOffset(double angleOffset) {
         if (simulated) {
-            simulatedAngleOffset = angleOffset;
+            simulatedAngleAdjustment = angleOffset;
         } else {
             navX.setAngleAdjustment(angleOffset);
         }
@@ -78,5 +80,22 @@ public class Gyro {
         simulatedAngleDegrees += simulatedRotationSpeed * (Timer.getFPGATimestamp()-lastTimeSimulatedRotationUpdated);
         lastTimeSimulatedRotationUpdated = Timer.getFPGATimestamp();
         this.simulatedRotationSpeed = rotationSpeed;
+    }
+
+    public double getAngleAdjustment() {
+        if (simulated) {
+            return simulatedAngleAdjustment;
+        } else {
+            return navX.getAngleAdjustment();
+        }
+    }
+
+    public void reset() {
+        if (simulated) {
+            simulatedAngleDegrees = 0;
+        } else {
+            navX.reset();
+        }
+        
     }
 }
