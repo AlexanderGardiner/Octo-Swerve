@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class PoseEstimator {
     Pose2d currentPose;
@@ -54,8 +53,6 @@ public class PoseEstimator {
                                       + averageYFromModules,
                                       gyroAngle.plus(gyroOffset));
 
-        SmartDashboard.putString("current pose", currentPose.toString());
-        SmartDashboard.putString("gyro angle", gyroAngle.toString());
     }
 
     /** Gets the current robot pose
@@ -71,10 +68,6 @@ public class PoseEstimator {
     public void resetPose2d(Pose2d pose2d, ArrayList<SwerveModulePosition> modulePositions) {
         this.gyroOffset = pose2d.getRotation().minus(currentPose.getRotation());
         this.currentPose = pose2d;
-
-        SmartDashboard.putString("pose to reset to", pose2d.toString());
-        SmartDashboard.putString("current pose", currentPose.toString());
-        SmartDashboard.putString("gyro offset", gyroOffset.toString());
         this.previousModulePositions = modulePositions; 
     }
 

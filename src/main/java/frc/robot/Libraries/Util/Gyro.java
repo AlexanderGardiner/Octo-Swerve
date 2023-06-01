@@ -5,7 +5,6 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Gyro {
     private AHRS navX;
@@ -62,7 +61,6 @@ public class Gyro {
      * @return The wrapped angle as a rotation 2D
      */
     public Rotation2d getWrappedAngleRotation2D() {
-        SmartDashboard.putNumber("wrapped angle", getWrappedAngleDegrees());
         return new Rotation2d(Math.toRadians(getWrappedAngleDegrees()));
         
     }
