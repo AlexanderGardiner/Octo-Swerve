@@ -89,6 +89,7 @@ public class DriveTrain {
      */
     public void drive(ChassisSpeeds chassisSpeeds, boolean fieldRelative) {
         if (fieldRelative) {
+            // Calculates the target position and feeds it into a pid loop to ensure accurate driving then calculates the robot relative speeds
             Pose2d currentPose = poseEstimator.getPose2d();
 
             targetPose2d = new Pose2d(targetPose2d.getX()+chassisSpeeds.vxMetersPerSecond*0.02,
@@ -98,18 +99,18 @@ public class DriveTrain {
             chassisSpeeds = new ChassisSpeeds(translationPIDController.calculate(currentPose.getX(), targetPose2d.getX())/0.02,
                                             translationPIDController.calculate(currentPose.getY(), targetPose2d.getY())/0.02,
                                             rotationPidController.calculate(currentPose.getRotation().getRadians(), targetPose2d.getRotation().getRadians())/0.02);
-
+                                 
             chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(chassisSpeeds, gyro.getWrappedAngleRotation2D());
-   
         }
         
-        chassisSpeeds = new ChassisSpeeds(chassisSpeeds.vxMetersPerSecond, chassisSpeeds.vyMetersPerSecond, chassisSpeeds.omegaRadiansPerSecond);
+        // Sets the swerve modules to the target states
         SwerveModuleState[] swerveModuleStates = swerveDriveKinematics.calculateFromChassisSpeeds(chassisSpeeds);
 
         for (int i=0; i<4; i++) {
             swerveModules.get(i).setTargetState(swerveModuleStates[i]);
         }
 
+        // Updates current pose from current module states
         ArrayList<SwerveModulePosition> modulePositions = new ArrayList<SwerveModulePosition>();
 
         for (int i=0; i<4; i++) {
@@ -161,12 +162,15 @@ public class DriveTrain {
     }
 
     /** Sets the target pose2d of the drivetrain
-     * @param pose2d The target pose of the drivetrain
+     * @param pose2d The target pose of the drivetrain (Positive x away from drivers, positive y to the left of drivers, ccw positive)
      */
     public void setTargetPose2d(Pose2d pose2d) {
         this.targetPose2d = pose2d;
     }
 
+    /** Sets the gyro offset that the pose estimator uses to avoid resetting the gyro
+     * @param gyroOffset The offset to set (ccw positive)
+     */
     public void setPoseEstimatorGyroOffset(Rotation2d gyroOffset) {
         this.poseEstimator.setGyroOffset(gyroOffset);
     }
