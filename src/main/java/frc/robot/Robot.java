@@ -4,6 +4,10 @@
 
 package frc.robot;
 
+import org.opencv.core.RotatedRect;
+
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -39,6 +43,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
+    CommandScheduler.getInstance().cancelAll();
+    CommandScheduler.getInstance().removeDefaultCommand(SwerveDrive.getInstance());
+
     m_autonomousCommand = PathPlannerAutos.TestPath();
 
     if (m_autonomousCommand != null) {
@@ -50,7 +57,8 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {}
 
   @Override
-  public void autonomousExit() {}
+  public void autonomousExit() {
+  }
 
   @Override
   public void teleopInit() {
@@ -60,7 +68,6 @@ public class Robot extends TimedRobot {
 
     }
     SwerveDrive.getInstance();
-
     CommandScheduler.getInstance().setDefaultCommand(SwerveDrive.getInstance(), new SwerveControl());
   }
 

@@ -25,9 +25,7 @@ public class DriveTrain {
     private Gyro gyro;
     private PoseEstimator poseEstimator;
     private boolean simulated;
-    private double simulatedRotation = 0; // Radians
-    private double simulatedRotationSpeed = 0; // Radians per second
-    private double lastTimeSimulatedRotationUpdated = 0;
+    
     private Pose2d targetPose2d = new Pose2d();
     private PIDController translationPIDController;
     private PIDController rotationPidController;
@@ -79,7 +77,7 @@ public class DriveTrain {
         }
 
         swerveDriveKinematics = new SwerveKinematics(modulePositions);
-        gyro = new Gyro();
+        gyro = new Gyro(simulated, 0);
         poseEstimator = new PoseEstimator(initalPose2d);
         targetPose2d = initalPose2d;
         this.simulated = simulated;
@@ -96,26 +94,23 @@ public class DriveTrain {
     public void drive(ChassisSpeeds chassisSpeeds, boolean fieldRelative) {
         
         if (fieldRelative) {
-            if (simulated) {
-                chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(chassisSpeeds, new Rotation2d(simulatedRotation));
-            } else {
-                chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(chassisSpeeds, gyro.getWrappedAngleRotation2D());
-            }
-
+            Pose2d currentPose = poseEstimator.getPose2d();
 
             targetPose2d = new Pose2d(targetPose2d.getX()+chassisSpeeds.vxMetersPerSecond*0.02,
                                   targetPose2d.getY()+chassisSpeeds.vyMetersPerSecond*0.02,
                                   targetPose2d.getRotation().plus(new Rotation2d(chassisSpeeds.omegaRadiansPerSecond*0.02)));
 
-            Pose2d currentPose = poseEstimator.getPose2d();
-
-            SmartDashboard.putString("Target Pose 2D", targetPose2d.toString());
-            SmartDashboard.putString("Current Pose 2D", currentPose.toString());
-
             chassisSpeeds = new ChassisSpeeds(translationPIDController.calculate(currentPose.getX(), targetPose2d.getX())/0.02,
                                             translationPIDController.calculate(currentPose.getY(), targetPose2d.getY())/0.02,
                                             rotationPidController.calculate(currentPose.getRotation().getRadians(), targetPose2d.getRotation().getRadians())/0.02);
 
+            chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(chassisSpeeds, gyro.getWrappedAngleRotation2D());
+
+            
+
+            
+
+            
                 
         }
         
@@ -132,18 +127,12 @@ public class DriveTrain {
             modulePositions.add(swerveModules.get(i).getModulePosition());
         }
 
-        if (simulated) {
-            simulatedRotation += simulatedRotationSpeed * (Timer.getFPGATimestamp()-lastTimeSimulatedRotationUpdated);
-            poseEstimator.updatePose(modulePositions, 
-                                 new Rotation2d(simulatedRotation));
-            simulatedRotationSpeed = chassisSpeeds.omegaRadiansPerSecond;
-            lastTimeSimulatedRotationUpdated = Timer.getFPGATimestamp();
-        } else {
-            poseEstimator.updatePose(modulePositions, 
+        poseEstimator.updatePose(modulePositions, 
                                  gyro.getWrappedAngleRotation2D());
-        }
         
-
+        if (simulated) {
+            gyro.setSimulatedRotationSpeed(Math.toDegrees(chassisSpeeds.omegaRadiansPerSecond));
+        }
     }
 
     /** Gets the robot estimated pose on the field
@@ -166,5 +155,20 @@ public class DriveTrain {
         this.targetPose2d = pose2d;
 
         poseEstimator.resetPose2d(pose2d, modulePositions);
+        gyro.setAngleOffset(pose2d.getRotation().getDegrees() - poseEstimator.getPose2d().getRotation().getDegrees());
     } 
+
+    /** Offset the gyro
+     * @param gyroOffset The amount to offset the gyro by in degrees
+     */
+    public void setGyroOffset(double gyroOffset) {
+        gyro.setAngleOffset(gyroOffset);
+    }
+
+    /** Sets the target pose2d of the drivetrain
+     * @param pose2d The target pose of the drivetrain
+     */
+    public void setTargetPose2d(Pose2d pose2d) {
+        this.targetPose2d = pose2d;
+    }
 }

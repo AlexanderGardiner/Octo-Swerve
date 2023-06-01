@@ -55,6 +55,10 @@ public class PoseEstimator {
         
     }
 
+    public void updatePose(Rotation2d gyroAngle) {
+        this.updatePose(previousModulePositions, gyroAngle);
+    }
+
     /** Gets the current robot pose
      * @return The current robot pose
      */
