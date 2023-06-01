@@ -84,11 +84,10 @@ public class DriveTrain {
     }
 
     /** Drives the robot and updates the robot's pose
-     * @param chassisSpeeds The target speed of the robot (x, y, and theta)
+     * @param chassisSpeeds The target speed of the robot (Positive x away from drivers, positive y to the left of drivers, ccw positive)
      * @param fieldRelative Whether the movement is field relative
      */
     public void drive(ChassisSpeeds chassisSpeeds, boolean fieldRelative) {
-        
         if (fieldRelative) {
             Pose2d currentPose = poseEstimator.getPose2d();
 
@@ -96,9 +95,9 @@ public class DriveTrain {
                                   targetPose2d.getY()+chassisSpeeds.vyMetersPerSecond*0.02,
                                   targetPose2d.getRotation().plus(new Rotation2d(chassisSpeeds.omegaRadiansPerSecond*0.02)));
 
-            // chassisSpeeds = new ChassisSpeeds(translationPIDController.calculate(currentPose.getX(), targetPose2d.getX())/0.02,
-            //                                 translationPIDController.calculate(currentPose.getY(), targetPose2d.getY())/0.02,
-            //                                 rotationPidController.calculate(currentPose.getRotation().getRadians(), targetPose2d.getRotation().getRadians())/0.02);
+            chassisSpeeds = new ChassisSpeeds(translationPIDController.calculate(currentPose.getX(), targetPose2d.getX())/0.02,
+                                            translationPIDController.calculate(currentPose.getY(), targetPose2d.getY())/0.02,
+                                            rotationPidController.calculate(currentPose.getRotation().getRadians(), targetPose2d.getRotation().getRadians())/0.02);
 
             chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(chassisSpeeds, gyro.getWrappedAngleRotation2D());
    
@@ -155,10 +154,10 @@ public class DriveTrain {
     } 
 
     /** Offset the gyro
-     * @param gyroOffset The amount to offset the gyro by in degrees
+     * @param gyroOffset The amount to offset the gyro by in degrees (ccw positive)
      */
-    public void setGyroOffset(double gyroOffset) {
-        gyro.setAngleOffset(gyroOffset);
+    public void setGyroAngleAdjustment(double angleAdjustment) {
+        gyro.setAngleAdjustment(angleAdjustment);
     }
 
     /** Sets the target pose2d of the drivetrain

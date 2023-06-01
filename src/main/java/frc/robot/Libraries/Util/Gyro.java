@@ -30,7 +30,7 @@ public class Gyro {
     }
 
     /** Gets the continuous angle of the gyro
-     * @return The continuous angle of the gyro in degrees (It goes beyond 1 full rotation)
+     * @return The continuous angle of the gyro in degrees (It goes beyond 1 full rotation) (ccw positive)
      */
     public double getContinuousAngleDegrees() {
         if (simulated) {
@@ -43,14 +43,14 @@ public class Gyro {
     }
 
     /** Gets the wrapped angle of the gyro
-     * @return The wrapped angle of the gyro in degrees (It is limited between 0 and 360)
+     * @return The wrapped angle of the gyro in degrees (It is limited between 0 and 360) (ccw positive)
      */
     public double getWrappedAngleDegrees() {
         return MathUtil.wrapToCircle(getContinuousAngleDegrees(), 360);
     }
 
     /** Gets the unwrapped angle of the gyro as a rotation 2D
-     * @return The unwrapped angle as a rotation 2D
+     * @return The unwrapped angle as a rotation 2D (ccw positive)
      */
     public Rotation2d getRotation2d() {
         return new Rotation2d(Math.toRadians(getContinuousAngleDegrees()));
@@ -58,28 +58,36 @@ public class Gyro {
     }
 
     /** Gets the wrapped angle of the gyro
-     * @return The wrapped angle as a rotation 2D
+     * @return The wrapped angle as a rotation 2D (ccw positive)
      */
     public Rotation2d getWrappedAngleRotation2D() {
         return new Rotation2d(Math.toRadians(getWrappedAngleDegrees()));
         
     }
 
-    public void setAngleOffset(double angleOffset) {
+    /** Sets the angle adjustment of the gyro (ccw positive)
+     * @param angleAdjustment
+     */
+    public void setAngleAdjustment(double angleAdjustment) {
         if (simulated) {
-            simulatedAngleAdjustment = angleOffset;
+            simulatedAngleAdjustment = angleAdjustment;
         } else {
-            navX.setAngleAdjustment(angleOffset);
+            navX.setAngleAdjustment(angleAdjustment);
         }
-        
     }
 
+    /** Sets the simulated rotation speed of the gyro
+     * @param rotationSpeed The simulated rotation speed of the gyro (ccw positive)
+     */
     public void setSimulatedRotationSpeed(double rotationSpeed) {
         simulatedAngleDegrees += simulatedRotationSpeed * (Timer.getFPGATimestamp()-lastTimeSimulatedRotationUpdated);
         lastTimeSimulatedRotationUpdated = Timer.getFPGATimestamp();
         this.simulatedRotationSpeed = rotationSpeed;
     }
 
+    /** Gets the angle adjustment of the gyro
+     * @return The current angle adjustment of the gyro (ccw positive)
+     */
     public double getAngleAdjustment() {
         if (simulated) {
             return simulatedAngleAdjustment;
@@ -88,6 +96,8 @@ public class Gyro {
         }
     }
 
+    /** Resets the gyro yaw to 0
+     */
     public void reset() {
         if (simulated) {
             simulatedAngleDegrees = 0;

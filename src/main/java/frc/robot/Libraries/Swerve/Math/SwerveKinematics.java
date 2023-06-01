@@ -17,8 +17,8 @@ public class SwerveKinematics {
     }
 
     /** Calculates the swerve module states to reach a target chassisSpeeds
-     * @param chassisSpeeds The target chassisSpeeds (Positive x away from drivers, positive y to the left of drivers)
-     * @return The calculated swerve module states (For the robot gyro being zeroed facing away from the drivers)
+     * @param chassisSpeeds The target chassisSpeeds (Positive x away from drivers, positive y to the left of drivers, ccw positive)
+     * @return The calculated swerve module states (For the robot gyro zeroed facing away from the drivers)
      */
     public SwerveModuleState[] calculateFromChassisSpeeds(ChassisSpeeds chassisSpeeds) {
         SwerveModuleState[] moduleStates = {new SwerveModuleState(), new SwerveModuleState(), new SwerveModuleState(), new SwerveModuleState()};

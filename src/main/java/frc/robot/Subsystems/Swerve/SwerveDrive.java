@@ -89,8 +89,8 @@ public class SwerveDrive extends SubsystemBase {
         this.driveTrain.resetPose2d(pose2d);
     }
 
-    public void setGyroOffset(double gyroOffset) {
-        this.driveTrain.setGyroOffset(gyroOffset);
+    public void setGyroAngleAdjustment(double angleAdjustment) {
+        this.driveTrain.setGyroAngleAdjustment(angleAdjustment);
     }
 
     public void setTargetPose2d(Pose2d pose2d) {

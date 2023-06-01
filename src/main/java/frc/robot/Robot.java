@@ -48,7 +48,7 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().removeDefaultCommand(SwerveDrive.getInstance());
 
     SwerveDrive.getInstance().resetGyro();
-    SwerveDrive.getInstance().setGyroOffset(0);
+    SwerveDrive.getInstance().setGyroAngleAdjustment(0);
     SwerveDrive.getInstance().setPoseEstimatorGyroOffset(new Rotation2d());
 
     m_autonomousCommand = PathPlannerAutos.TestPath();
@@ -70,7 +70,7 @@ public class Robot extends TimedRobot {
     
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
-      SwerveDrive.getInstance().setGyroOffset(-PathPlannerAutos.startingGyroAngle);
+      SwerveDrive.getInstance().setGyroAngleAdjustment(-PathPlannerAutos.startingGyroAngle);
       
 
     } else {
