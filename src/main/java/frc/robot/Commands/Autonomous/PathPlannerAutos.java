@@ -35,7 +35,7 @@ public class PathPlannerAutos {
 
 
     public static CommandBase TestPath() {
-        startingGyroAngle = -90;
+        startingGyroAngle = 90;
         return autoBuilder.fullAuto(PathPlanner.loadPathGroup("Test Path", new PathConstraints(4, 3)));
     }
 }

@@ -4,11 +4,7 @@
 
 package frc.robot;
 
-import org.opencv.core.RotatedRect;
-
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -46,10 +42,11 @@ public class Robot extends TimedRobot {
     
     CommandScheduler.getInstance().cancelAll();
     CommandScheduler.getInstance().removeDefaultCommand(SwerveDrive.getInstance());
-
-    SwerveDrive.getInstance().resetGyro();
-    SwerveDrive.getInstance().setGyroAngleAdjustment(0);
     SwerveDrive.getInstance().setPoseEstimatorGyroOffset(new Rotation2d());
+    SwerveDrive.getInstance().setGyroAngleAdjustment(0);
+    SwerveDrive.getInstance().resetGyro();
+    
+    
 
     m_autonomousCommand = PathPlannerAutos.TestPath();
     
@@ -76,6 +73,8 @@ public class Robot extends TimedRobot {
     } else {
       SwerveDrive.getInstance().resetGyro();
     }
+
+    SwerveDrive.getInstance().setTargetPose2d(SwerveDrive.getInstance().getPose2d());
 
     
     // SwerveDrive.getInstance().resetPose2d(new Pose2d(SwerveDrive.getInstance().getPose2d().getX(),
