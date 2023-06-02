@@ -1,11 +1,15 @@
 package frc.robot.Libraries.Util;
 
 /**
- * <p>Stores a PIDF configuration through loop gain constants.</p>
+ * <p>
+ * Stores a PIDF configuration through loop gain constants.
+ * </p>
  *
- * <p>Terms may be accessed or changed through standard getters/setters.
+ * <p>
+ * Terms may be accessed or changed through standard getters/setters.
  * Contains helper method to apply terms to a given CTRE motor controller.
- * Should be used in all places where PIDF loops are needed.</p>
+ * Should be used in all places where PIDF loops are needed.
+ * </p>
  *
  * @since 0.1.0
  */
@@ -20,11 +24,13 @@ public class PIDConfig {
     /**
      * Constructs a PID configuration with the specified loop gain constants.
      *
-     * @param kP proportional gain; output proportional to current error.
-     * @param kI integral gain; output based on accumulated error to exponentiate kP.
-     * @param kD derivative gain; typically used for damping.
-     * @param kF feed forward constant.
-     * @param iZone The range allowed for kI (Needs to be a double object so it can be null)
+     * @param kP    proportional gain; output proportional to current error.
+     * @param kI    integral gain; output based on accumulated error to exponentiate
+     *              kP.
+     * @param kD    derivative gain; typically used for damping.
+     * @param kF    feed forward constant.
+     * @param iZone The range allowed for kI (Needs to be a double object so it can
+     *              be null)
      *
      * @since 0.1.0
      */
@@ -37,10 +43,14 @@ public class PIDConfig {
     }
 
     /**
-     * <p>Constructs a PID configuration with the specified loop gain constants.
-     * Has a default range value of [-1, 1] or full range.</p>
+     * <p>
+     * Constructs a PID configuration with the specified loop gain constants.
+     * Has a default range value of [-1, 1] or full range.
+     * </p>
      *
-     * <p>Overload for {@link #PIDConfig(double, double, double, double, Double)}.</p>
+     * <p>
+     * Overload for {@link #PIDConfig(double, double, double, double, Double)}.
+     * </p>
      *
      * @see #PIDConfig(double, double, double, double, double)
      * @since 0.1.0
@@ -50,10 +60,14 @@ public class PIDConfig {
     }
 
     /**
-     * <p>Constructs a PID configuration with the specified loop gain constants.
-     * Has a default range value of [-1, 1] or full range and no feed forward.</p>
+     * <p>
+     * Constructs a PID configuration with the specified loop gain constants.
+     * Has a default range value of [-1, 1] or full range and no feed forward.
+     * </p>
      *
-     * <p>Overload for {@link #PIDConfig(double, double, double, double, double)}.</p>
+     * <p>
+     * Overload for {@link #PIDConfig(double, double, double, double, double)}.
+     * </p>
      *
      * @see #PIDConfig(double, double, double, double, double)
      * @since 0.1.0

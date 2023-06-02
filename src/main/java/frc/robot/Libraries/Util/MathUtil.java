@@ -2,12 +2,16 @@ package frc.robot.Libraries.Util;
 
 public class MathUtil {
     /**
-     * <p>Wraps a circular angle value to within one circle.</p>
+     * <p>
+     * Wraps a circular angle value to within one circle.
+     * </p>
      *
-     * <p>Customizable number of angle units per circle. Angle is
-     * equivalent and wrapped to the positive [0, fullCircle] range.</p>
+     * <p>
+     * Customizable number of angle units per circle. Angle is
+     * equivalent and wrapped to the positive [0, fullCircle] range.
+     * </p>
      *
-     * @param angle the raw angle units to wrap.
+     * @param angle      the raw angle units to wrap.
      * @param fullCircle the number of angle units to be one circle.
      * @return the wrapped angle in corresponding angle units.
      */
@@ -17,10 +21,11 @@ public class MathUtil {
     }
 
     /**
-     * Checks if a value is within a certain tolerance of a target. Directions irrelevant.
+     * Checks if a value is within a certain tolerance of a target. Directions
+     * irrelevant.
      *
-     * @param value the current value for which to check.
-     * @param target the target to check the value against.
+     * @param value     the current value for which to check.
+     * @param target    the target to check the value against.
      * @param tolerance the tolerance (positive and negative directions)
      *                  around the target that is acceptable error
      *                  for the value to be "within tolerance".
@@ -40,13 +45,18 @@ public class MathUtil {
     }
 
     /**
-     * <p>Fits value between -1 and 1 but eliminates noise between the deadband.</p>
+     * <p>
+     * Fits value between -1 and 1 but eliminates noise between the deadband.
+     * </p>
      *
-     * <p>Generally used for eliminating noise in joystick readings by setting the
+     * <p>
+     * Generally used for eliminating noise in joystick readings by setting the
      * output to zero when within a certain deadband amount of zero. Non-joystick
-     * values are also limited between -1 and 1 so as to use in a motor set.</p>
+     * values are also limited between -1 and 1 so as to use in a motor set.
+     * </p>
      *
-     * @param val the value to fit inside the valid range and outside the deadband.
+     * @param val      the value to fit inside the valid range and outside the
+     *                 deadband.
      * @param deadband the amount of tolerance around zero in which
      *                 values are set to zero.
      * @return the value fitted to the range.
@@ -65,7 +75,7 @@ public class MathUtil {
                 if (val <= -1) {
                     return -1;
                 } else {
-                    return (val + deadband)* 1 / (1 - deadband);
+                    return (val + deadband) * 1 / (1 - deadband);
                 }
             }
         }

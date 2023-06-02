@@ -19,20 +19,17 @@ public class PathPlannerAutos {
     public static double startingGyroAngle;
 
     private static final Map<String, Command> eventMap = new HashMap<>(Map.ofEntries(
-        Map.entry("LogTest", new InstantCommand(() -> SmartDashboard.putString("Log", "Test")))
-    ));
+            Map.entry("LogTest", new InstantCommand(() -> SmartDashboard.putString("Log", "Test")))));
 
     public static final SwerveAutoBuilder autoBuilder = new SwerveAutoBuilder(
-        SwerveDrive.getInstance()::getPose2d,
-        SwerveDrive.getInstance()::resetPose2d,
-        new PIDConstants(1, 0, 0),
-        new PIDConstants(0.9, 0, 0),
-        SwerveDrive.getInstance()::drive,
-        eventMap,
-        true,
-        SwerveDrive.getInstance()
-    );
-
+            SwerveDrive.getInstance()::getPose2d,
+            SwerveDrive.getInstance()::resetPose2d,
+            new PIDConstants(1, 0, 0),
+            new PIDConstants(0.9, 0, 0),
+            SwerveDrive.getInstance()::drive,
+            eventMap,
+            true,
+            SwerveDrive.getInstance());
 
     public static CommandBase TestPath() {
         startingGyroAngle = 90;

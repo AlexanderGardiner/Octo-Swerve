@@ -11,8 +11,11 @@ public class PoseEstimator {
     ArrayList<SwerveModulePosition> previousModulePositions = new ArrayList<SwerveModulePosition>();
     Rotation2d gyroOffset = new Rotation2d();
 
-    /** Creates a new pose estimator
-     * @param initalPose The inital pose the robot starts at (Positive x away from drivers, positive y to the left of drivers, ccw positive)
+    /**
+     * Creates a new pose estimator
+     * 
+     * @param initalPose The inital pose the robot starts at (Positive x away from
+     *                   drivers, positive y to the left of drivers, ccw positive)
      */
     public PoseEstimator(Pose2d initalPose) {
         this.currentPose = initalPose;
@@ -22,21 +25,24 @@ public class PoseEstimator {
         previousModulePositions.add(new SwerveModulePosition());
     }
 
-    /** Updates the robot's pose to its new position
-     * @param modulePositions The current positions of the swerve modules (In meters and radians)
-     * @param gyroAngle The current robot gyro angle in radians (ccw positive)
+    /**
+     * Updates the robot's pose to its new position
+     * 
+     * @param modulePositions The current positions of the swerve modules (In meters
+     *                        and radians)
+     * @param gyroAngle       The current robot gyro angle in radians (ccw positive)
      */
     public void updatePose(ArrayList<SwerveModulePosition> modulePositions, Rotation2d gyroAngle) {
         double sumXFromModules = 0;
         double sumYFromModules = 0;
 
         // Adding up all of the translations of the swerve modules
-        for (int i=0; i<modulePositions.size(); i++) {
-            sumXFromModules += (modulePositions.get(i).distanceMeters-previousModulePositions.get(i).distanceMeters) 
-                                * Math.cos(modulePositions.get(i).angle.minus(gyroAngle).minus(gyroOffset).getRadians());
+        for (int i = 0; i < modulePositions.size(); i++) {
+            sumXFromModules += (modulePositions.get(i).distanceMeters - previousModulePositions.get(i).distanceMeters)
+                    * Math.cos(modulePositions.get(i).angle.minus(gyroAngle).minus(gyroOffset).getRadians());
 
-            sumYFromModules -= (modulePositions.get(i).distanceMeters-previousModulePositions.get(i).distanceMeters) 
-                                * Math.sin(modulePositions.get(i).angle.minus(gyroAngle).minus(gyroOffset).getRadians());
+            sumYFromModules -= (modulePositions.get(i).distanceMeters - previousModulePositions.get(i).distanceMeters)
+                    * Math.sin(modulePositions.get(i).angle.minus(gyroAngle).minus(gyroOffset).getRadians());
         }
 
         previousModulePositions = modulePositions;
@@ -46,32 +52,41 @@ public class PoseEstimator {
         double averageYFromModules = sumYFromModules / modulePositions.size();
 
         // Applying average translations to the robot pose
-        this.currentPose = new Pose2d(this.currentPose.getX() 
-                                      + averageXFromModules,
-                                      this.currentPose.getY() 
-                                      + averageYFromModules,
-                                      gyroAngle.plus(gyroOffset));
+        this.currentPose = new Pose2d(this.currentPose.getX()
+                + averageXFromModules,
+                this.currentPose.getY()
+                        + averageYFromModules,
+                gyroAngle.plus(gyroOffset));
 
     }
 
-    /** Gets the current robot pose
-     * @return The current robot pose (Positive x away from drivers, positive y to the left of drivers, ccw positive)
+    /**
+     * Gets the current robot pose
+     * 
+     * @return The current robot pose (Positive x away from drivers, positive y to
+     *         the left of drivers, ccw positive)
      */
     public Pose2d getPose2d() {
         return this.currentPose;
     }
 
-    /** Resets the current robot pose (Does not reset the gyro, uses an offset) 
-     * (Positive x away from drivers, positive y to the left of drivers, ccw positive)
+    /**
+     * Resets the current robot pose (Does not reset the gyro, uses an offset)
+     * (Positive x away from drivers, positive y to the left of drivers, ccw
+     * positive)
+     * 
      * @param pose2d The pose to reset to <b>(Angle is cw postitive)<b>
      */
     public void resetPose2d(Pose2d pose2d, ArrayList<SwerveModulePosition> modulePositions) {
         this.gyroOffset = pose2d.getRotation().minus(currentPose.getRotation());
         this.currentPose = pose2d;
-        this.previousModulePositions = modulePositions; 
+        this.previousModulePositions = modulePositions;
     }
 
-    /** Sets the gyro offset that is used to avoid resetting the gyro when resetting the pose
+    /**
+     * Sets the gyro offset that is used to avoid resetting the gyro when resetting
+     * the pose
+     * 
      * @param gyroOffset The offset to set (ccw positive)
      */
     public void setGyroOffset(Rotation2d gyroOffset) {

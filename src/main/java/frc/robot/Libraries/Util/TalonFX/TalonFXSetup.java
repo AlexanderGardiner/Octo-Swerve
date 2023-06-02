@@ -4,23 +4,27 @@ import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 public class TalonFXSetup {
-    /** Sets up a TalonFX with the supplied config
-     * @param talonFX The TalonFX to apply the config to
+    /**
+     * Sets up a TalonFX with the supplied config
+     * 
+     * @param talonFX       The TalonFX to apply the config to
      * @param talonFXConfig The config to apply
      */
     public static void setup(WPI_TalonFX talonFX, TalonFXConfig talonFXConfig) {
         if (talonFXConfig.getReset()) {
             talonFX.configFactoryDefault();
         }
-        for (int i=0; i<talonFXConfig.getStatusFrames().getFrames().size(); i++) {
-            talonFX.setStatusFramePeriod(StatusFrameEnhanced.values()[i], talonFXConfig.getStatusFrames().getFrames().get(i));
+        for (int i = 0; i < talonFXConfig.getStatusFrames().getFrames().size(); i++) {
+            talonFX.setStatusFramePeriod(StatusFrameEnhanced.values()[i],
+                    talonFXConfig.getStatusFrames().getFrames().get(i));
         }
 
         talonFX.configAllowableClosedloopError(0, talonFXConfig.getAllowableClosedLoopError());
         talonFX.configSelectedFeedbackSensor(talonFXConfig.getFeedbackDevice(), 0, 10);
 
-        if (talonFXConfig.getIntegratedSensorInitializationStrategy()!=null) {
-            talonFX.configIntegratedSensorInitializationStrategy(talonFXConfig.getIntegratedSensorInitializationStrategy());
+        if (talonFXConfig.getIntegratedSensorInitializationStrategy() != null) {
+            talonFX.configIntegratedSensorInitializationStrategy(
+                    talonFXConfig.getIntegratedSensorInitializationStrategy());
         }
 
         talonFX.setNeutralMode(talonFXConfig.getNeutralMode());
@@ -35,7 +39,7 @@ public class TalonFXSetup {
         talonFX.configMotionAcceleration(talonFXConfig.getMaxAccel());
         talonFX.configMotionSCurveStrength(talonFXConfig.getSCurveStrength());
 
-        if (talonFXConfig.getPIDconfig().getIZone()!=null) {
+        if (talonFXConfig.getPIDconfig().getIZone() != null) {
             talonFX.config_IntegralZone(0, talonFXConfig.getPIDconfig().getIZone());
         }
 
@@ -43,6 +47,6 @@ public class TalonFXSetup {
         talonFX.config_kI(0, talonFXConfig.getPIDconfig().getI());
         talonFX.config_kD(0, talonFXConfig.getPIDconfig().getD());
         talonFX.config_kF(0, talonFXConfig.getPIDconfig().getF());
-        
-    }   
+
+    }
 }

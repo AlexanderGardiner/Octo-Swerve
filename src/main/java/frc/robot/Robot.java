@@ -1,7 +1,3 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot;
 
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -29,46 +25,48 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+  }
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+  }
 
   @Override
-  public void disabledExit() {}
+  public void disabledExit() {
+  }
 
   @Override
   public void autonomousInit() {
-    
+
     CommandScheduler.getInstance().cancelAll();
     CommandScheduler.getInstance().removeDefaultCommand(SwerveDrive.getInstance());
     SwerveDrive.getInstance().setPoseEstimatorGyroOffset(new Rotation2d());
     SwerveDrive.getInstance().setGyroAngleAdjustment(0);
     SwerveDrive.getInstance().resetGyro();
-    
-    
 
     m_autonomousCommand = PathPlannerAutos.TestPath();
-    
+
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
   }
 
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+  }
 
   @Override
-  public void autonomousExit() {}
+  public void autonomousExit() {
+  }
 
   @Override
   public void teleopInit() {
     SwerveDrive.getInstance().setPoseEstimatorGyroOffset(new Rotation2d());
-    
+
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
       SwerveDrive.getInstance().setGyroAngleAdjustment(-PathPlannerAutos.startingGyroAngle);
-      
 
     } else {
       SwerveDrive.getInstance().resetGyro();
@@ -76,18 +74,21 @@ public class Robot extends TimedRobot {
 
     SwerveDrive.getInstance().setTargetPose2d(SwerveDrive.getInstance().getPose2d());
 
-    
-    // SwerveDrive.getInstance().resetPose2d(new Pose2d(SwerveDrive.getInstance().getPose2d().getX(),
-    //                                       SwerveDrive.getInstance().getPose2d().getY(),
-    //                                       SwerveDrive.getInstance().getPose2d().getRotation().plus(new Rotation2d(Math.toRadians(PathPlannerAutos.robotInitalRotation)))));;
+    // SwerveDrive.getInstance().resetPose2d(new
+    // Pose2d(SwerveDrive.getInstance().getPose2d().getX(),
+    // SwerveDrive.getInstance().getPose2d().getY(),
+    // SwerveDrive.getInstance().getPose2d().getRotation().plus(new
+    // Rotation2d(Math.toRadians(PathPlannerAutos.robotInitalRotation)))));;
     CommandScheduler.getInstance().setDefaultCommand(SwerveDrive.getInstance(), new SwerveControl());
   }
 
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+  }
 
   @Override
-  public void teleopExit() {}
+  public void teleopExit() {
+  }
 
   @Override
   public void testInit() {
@@ -95,10 +96,12 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic() {
+  }
 
   @Override
-  public void testExit() {}
+  public void testExit() {
+  }
 
   @Override
   public void simulationPeriodic() {
