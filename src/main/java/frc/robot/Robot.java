@@ -1,6 +1,9 @@
 package frc.robot;
 
+import com.pathplanner.lib.server.PathPlannerServer;
+
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -17,6 +20,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     SmartDashboard.putData("Field", field);
+    PathPlannerServer.startServer(5811);
   }
 
   @Override
@@ -41,7 +45,11 @@ public class Robot extends TimedRobot {
 
     CommandScheduler.getInstance().cancelAll();
     CommandScheduler.getInstance().removeDefaultCommand(SwerveDrive.getInstance());
-    SwerveDrive.getInstance().setPoseEstimatorGyroOffset(new Rotation2d());
+
+    if (DriverStation.getAlliance() == DriverStation.Alliance.Red) {
+      SwerveDrive.getInstance().setPoseEstimatorGyroOffset(new Rotation2d(Math.PI));
+    }
+
     SwerveDrive.getInstance().setGyroAngleAdjustment(0);
     SwerveDrive.getInstance().resetGyro();
 

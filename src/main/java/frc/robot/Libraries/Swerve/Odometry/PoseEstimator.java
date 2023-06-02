@@ -93,4 +93,13 @@ public class PoseEstimator {
         this.gyroOffset = gyroOffset;
     }
 
+    /**
+     * Updates the current pose from an accurate pose measurement
+     * 
+     * @param poseMeasurement The pose to update the current pose with
+     */
+    public void addPoseMeasurement(Pose2d poseMeasurement) {
+        this.currentPose = poseMeasurement;
+    }
+
 }

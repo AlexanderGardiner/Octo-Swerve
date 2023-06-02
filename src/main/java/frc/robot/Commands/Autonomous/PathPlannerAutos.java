@@ -24,15 +24,15 @@ public class PathPlannerAutos {
     public static final SwerveAutoBuilder autoBuilder = new SwerveAutoBuilder(
             SwerveDrive.getInstance()::getPose2d,
             SwerveDrive.getInstance()::resetPose2d,
-            new PIDConstants(1, 0, 0),
-            new PIDConstants(0.9, 0, 0),
+            new PIDConstants(5, 0, 0),
+            new PIDConstants(1.5, 0, 0),
             SwerveDrive.getInstance()::drive,
             eventMap,
             true,
             SwerveDrive.getInstance());
 
     public static CommandBase TestPath() {
-        startingGyroAngle = 90;
+        startingGyroAngle = 180;
         return autoBuilder.fullAuto(PathPlanner.loadPathGroup("Test Path", new PathConstraints(4, 3)));
     }
 }
