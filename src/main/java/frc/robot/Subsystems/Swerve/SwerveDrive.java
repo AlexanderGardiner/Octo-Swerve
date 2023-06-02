@@ -108,4 +108,8 @@ public class SwerveDrive extends SubsystemBase {
     public void resetGyro() {
         driveTrain.resetGyro();
     }
+
+    public void setSimulatedGyroAngle(double simulatedAngle) {
+        driveTrain.setSimulatedGyroAngle(simulatedAngle);
+    }
 }

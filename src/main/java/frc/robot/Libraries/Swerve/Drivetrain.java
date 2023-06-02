@@ -118,11 +118,13 @@ public class DriveTrain {
                     targetPose2d.getY() + chassisSpeeds.vyMetersPerSecond * 0.02,
                     targetPose2d.getRotation().plus(new Rotation2d(chassisSpeeds.omegaRadiansPerSecond * 0.02)));
 
-            chassisSpeeds = new ChassisSpeeds(
-                    translationPIDController.calculate(currentPose.getX(), targetPose2d.getX()) / 0.02,
-                    translationPIDController.calculate(currentPose.getY(), targetPose2d.getY()) / 0.02,
-                    rotationPidController.calculate(currentPose.getRotation().getRadians(),
-                            targetPose2d.getRotation().getRadians()) / 0.02);
+            // chassisSpeeds = new ChassisSpeeds(
+            // translationPIDController.calculate(currentPose.getX(), targetPose2d.getX()) /
+            // 0.02,
+            // translationPIDController.calculate(currentPose.getY(), targetPose2d.getY()) /
+            // 0.02,
+            // rotationPidController.calculate(currentPose.getRotation().getRadians(),
+            // targetPose2d.getRotation().getRadians()) / 0.02);
 
             chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(chassisSpeeds, gyro.getWrappedAngleRotation2D());
         }
@@ -217,5 +219,14 @@ public class DriveTrain {
      */
     public void resetGyro() {
         gyro.reset();
+    }
+
+    /**
+     * Sets the simulated angle of the gyro (degrees ccw positive)
+     * 
+     * @param simulatedAngle
+     */
+    public void setSimulatedGyroAngle(double simulatedAngle) {
+        gyro.setSimulatedAngle(simulatedAngle);
     }
 }
