@@ -85,8 +85,16 @@ public class SwerveDrive extends SubsystemBase {
         return driveTrain.getPose2d();
     }
 
+    public Pose2d getAllianceRelativePose2d() {
+        return driveTrain.getAllianceRelativePose2d();
+    }
+
     public void resetPose2d(Pose2d pose2d) {
         this.driveTrain.resetPose2d(pose2d);
+    }
+
+    public void resetAllianceRelativePose2d(Pose2d pose2d) {
+        this.driveTrain.resetAllianceRelativePose2d(pose2d);
     }
 
     public void setGyroAngleAdjustment(double angleAdjustment) {

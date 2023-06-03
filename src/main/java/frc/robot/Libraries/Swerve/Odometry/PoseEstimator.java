@@ -5,12 +5,15 @@ import java.util.ArrayList;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class PoseEstimator {
     Pose2d currentPose;
     ArrayList<SwerveModulePosition> previousModulePositions = new ArrayList<SwerveModulePosition>();
     Rotation2d gyroOffset = new Rotation2d();
+    private static final double FIELD_WIDTH_METERS = 16.485;
+    private static final double FIELD_HEIGHT_METERS = 8.02;
 
     /**
      * Creates a new pose estimator
@@ -74,6 +77,24 @@ public class PoseEstimator {
     }
 
     /**
+     * Gets the current robot pose, if the alliance is red then the 0,0 point shifts
+     * to the top right corner when looking at a field2d widget
+     * 
+     * @return The alliance relative pose
+     */
+    public Pose2d getPose2dAllianceRelative() {
+        Pose2d allianceRelativePose = currentPose;
+        SmartDashboard.putString("Current Pose1", currentPose.toString() + "TEST");
+        if (DriverStation.getAlliance() == DriverStation.Alliance.Red) {
+            allianceRelativePose = new Pose2d(FIELD_WIDTH_METERS - currentPose.getX(),
+                    FIELD_HEIGHT_METERS - currentPose.getY(),
+                    currentPose.getRotation().plus(new Rotation2d(Math.PI)));
+        }
+        SmartDashboard.putString("alliance relative pose2d", allianceRelativePose.toString() + "TEST!");
+        return allianceRelativePose;
+    }
+
+    /**
      * Resets the current robot pose (Does not reset the gyro, uses an offset)
      * (Positive x away from drivers, positive y to the left of drivers, cw
      * positive)
@@ -85,6 +106,22 @@ public class PoseEstimator {
         this.gyroOffset = pose2d.getRotation().minus(currentPose.getRotation());
         this.currentPose = pose2d;
         this.previousModulePositions = modulePositions;
+    }
+
+    /**
+     * Resets the current robot pose, if the alliance is red then the 0,0 point
+     * shifts to the top right corner when looking at a field2d widget
+     * 
+     * @param pose2d          The current alliance relative robot pose
+     * @param modulePositions The current swerve module positions
+     */
+    public void resetPose2dAllianceRelative(Pose2d pose2d, ArrayList<SwerveModulePosition> modulePositions) {
+        Pose2d fieldRelativePose = pose2d;
+        if (DriverStation.getAlliance() == DriverStation.Alliance.Red) {
+            fieldRelativePose = new Pose2d(FIELD_WIDTH_METERS - pose2d.getX(),
+                    FIELD_HEIGHT_METERS - pose2d.getY(), pose2d.getRotation().minus(new Rotation2d(Math.PI)));
+        }
+        resetPose2d(fieldRelativePose, previousModulePositions);
     }
 
     /**

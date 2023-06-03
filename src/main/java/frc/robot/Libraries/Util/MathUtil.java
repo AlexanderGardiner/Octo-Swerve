@@ -81,4 +81,20 @@ public class MathUtil {
         }
         return 0;
     }
+
+    /**
+     * Flips an angle over the y axis
+     * 
+     * @param angle The angle in degrees
+     * @return The flipped angle
+     */
+    public static double flipAngleOverYAxis(double angle) {
+        double radians = Math.toRadians(angle);
+        double sin = Math.sin(radians);
+        double cos = Math.cos(radians);
+        double mirroredCos = -cos;
+        double mirroredRadians = Math.atan2(sin, mirroredCos);
+        double mirroredAngle = Math.toDegrees(mirroredRadians);
+        return mirroredAngle;
+    }
 }

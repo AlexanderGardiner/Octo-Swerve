@@ -118,13 +118,13 @@ public class DriveTrain {
                     targetPose2d.getY() + chassisSpeeds.vyMetersPerSecond * 0.02,
                     targetPose2d.getRotation().plus(new Rotation2d(chassisSpeeds.omegaRadiansPerSecond * 0.02)));
 
-            // chassisSpeeds = new ChassisSpeeds(
-            // translationPIDController.calculate(currentPose.getX(), targetPose2d.getX()) /
-            // 0.02,
-            // translationPIDController.calculate(currentPose.getY(), targetPose2d.getY()) /
-            // 0.02,
-            // rotationPidController.calculate(currentPose.getRotation().getRadians(),
-            // targetPose2d.getRotation().getRadians()) / 0.02);
+            chassisSpeeds = new ChassisSpeeds(
+                    translationPIDController.calculate(currentPose.getX(), targetPose2d.getX()) /
+                            0.02,
+                    translationPIDController.calculate(currentPose.getY(), targetPose2d.getY()) /
+                            0.02,
+                    rotationPidController.calculate(currentPose.getRotation().getRadians(),
+                            targetPose2d.getRotation().getRadians()) / 0.02);
 
             chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(chassisSpeeds, gyro.getWrappedAngleRotation2D());
         }
@@ -161,6 +161,16 @@ public class DriveTrain {
     }
 
     /**
+     * Gets the current robot pose, if the alliance is red then the 0,0 point shifts
+     * to the top right corner when looking at a field2d widget
+     * 
+     * @return The current robot pose
+     */
+    public Pose2d getAllianceRelativePose2d() {
+        return poseEstimator.getPose2dAllianceRelative();
+    }
+
+    /**
      * Gets the unwrapped rotation
      * 
      * @return The unwrapped rotation of the gyro
@@ -184,6 +194,24 @@ public class DriveTrain {
         this.targetPose2d = pose2d;
 
         poseEstimator.resetPose2d(pose2d, modulePositions);
+    }
+
+    /**
+     * Resets the robot pose, if the alliance is red then the 0,0 point
+     * shifts to the top right corner when looking at a field2d widget
+     * 
+     * @param pose2d The current robot pose
+     */
+    public void resetAllianceRelativePose2d(Pose2d pose2d) {
+        ArrayList<SwerveModulePosition> modulePositions = new ArrayList<SwerveModulePosition>();
+
+        for (int i = 0; i < 4; i++) {
+            modulePositions.add(swerveModules.get(i).getModulePosition());
+        }
+
+        this.targetPose2d = pose2d;
+
+        poseEstimator.resetPose2dAllianceRelative(pose2d, modulePositions);
     }
 
     /**
