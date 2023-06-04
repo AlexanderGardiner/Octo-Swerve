@@ -1,6 +1,7 @@
 package frc.robot.Commands.Swerve;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.ControlMap;
 import frc.robot.Libraries.Util.MathUtil;
@@ -30,6 +31,11 @@ public class SwerveControl extends CommandBase {
         // Get speeds from joysticks
         xSpeed = -1 * Math.signum(yAxis) * Math.pow(MathUtil.fitDeadband(yAxis, 0.1), 2) * swerveDrive.getMaxSpeed();
         ySpeed = -1 * Math.signum(xAxis) * Math.pow(MathUtil.fitDeadband(xAxis, 0.1), 2) * swerveDrive.getMaxSpeed();
+
+        if (DriverStation.getAlliance() == DriverStation.Alliance.Red) {
+            xSpeed = xSpeed * -1;
+            ySpeed = ySpeed * -1;
+        }
 
         // Calculate the deadband
         rot = MathUtil.fitDeadband(-rightJoystick.getRawAxis(0), 0.1) * swerveDrive.getMaxAngularSpeed();

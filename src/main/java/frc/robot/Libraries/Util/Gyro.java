@@ -5,7 +5,6 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Gyro {
     private AHRS navX;
@@ -44,8 +43,6 @@ public class Gyro {
             simulatedAngleDegrees += simulatedRotationSpeed
                     * (Timer.getFPGATimestamp() - lastTimeSimulatedRotationUpdated);
             lastTimeSimulatedRotationUpdated = Timer.getFPGATimestamp();
-            SmartDashboard.putNumber("Gyro angle degrees", simulatedAngleAdjustment + simulatedAngleDegrees);
-            SmartDashboard.putNumber("Gyro offset", simulatedAngleAdjustment);
             return simulatedAngleDegrees + simulatedAngleAdjustment;
         } else {
             return this.navX.getAngle();

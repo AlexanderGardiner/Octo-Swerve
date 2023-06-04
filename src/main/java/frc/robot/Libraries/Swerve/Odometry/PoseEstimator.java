@@ -6,7 +6,6 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class PoseEstimator {
     Pose2d currentPose;
@@ -71,8 +70,6 @@ public class PoseEstimator {
      *         the left of drivers, ccw positive)
      */
     public Pose2d getPose2d() {
-        SmartDashboard.putString("Current Pose", currentPose.toString());
-        SmartDashboard.putString("Pose estimator gyro offset", gyroOffset.toString());
         return this.currentPose;
     }
 
@@ -84,13 +81,11 @@ public class PoseEstimator {
      */
     public Pose2d getPose2dAllianceRelative() {
         Pose2d allianceRelativePose = currentPose;
-        SmartDashboard.putString("Current Pose1", currentPose.toString() + "TEST");
         if (DriverStation.getAlliance() == DriverStation.Alliance.Red) {
             allianceRelativePose = new Pose2d(FIELD_WIDTH_METERS - currentPose.getX(),
                     FIELD_HEIGHT_METERS - currentPose.getY(),
                     currentPose.getRotation().plus(new Rotation2d(Math.PI)));
         }
-        SmartDashboard.putString("alliance relative pose2d", allianceRelativePose.toString() + "TEST!");
         return allianceRelativePose;
     }
 
@@ -102,7 +97,6 @@ public class PoseEstimator {
      * @param pose2d The pose to reset to <b>(Angle is cw postitive)<b>
      */
     public void resetPose2d(Pose2d pose2d, ArrayList<SwerveModulePosition> modulePositions) {
-        SmartDashboard.putString("Pose to reset to", pose2d.toString());
         this.gyroOffset = pose2d.getRotation().minus(currentPose.getRotation());
         this.currentPose = pose2d;
         this.previousModulePositions = modulePositions;
