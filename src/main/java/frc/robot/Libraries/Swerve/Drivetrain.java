@@ -9,6 +9,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Libraries.Swerve.Math.SwerveKinematics;
 import frc.robot.Libraries.Swerve.Odometry.PoseEstimator;
 import frc.robot.Libraries.Swerve.Util.MotorType;
@@ -87,10 +88,12 @@ public class DriveTrain {
                     turnMotorInverted[i], turnEncoderInverted[i],
                     driveMotorInverted[i], driveEncoderInverted[i],
                     simulated));
+            SmartDashboard.putData("Swerve Module " + i, swerveModules.get(i));
         }
 
         swerveDriveKinematics = new SwerveKinematics(modulePositions);
         gyro = new Gyro(simulated, 0);
+        SmartDashboard.putData("Gyro", gyro);
         poseEstimator = new PoseEstimator(initalPose2d);
         targetPose2d = initalPose2d;
         this.simulated = simulated;

@@ -2,16 +2,21 @@ package frc.robot.Libraries.Util;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.hal.SimDouble;
+import edu.wpi.first.hal.simulation.SimDeviceDataJNI;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.util.sendable.Sendable;
+import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Timer;
 
-public class Gyro {
+public class Gyro implements Sendable {
     private AHRS navX;
     private boolean simulated;
 
     // Degrees (ccw positive)
-    private double simulatedAngleDegrees;
+    int dev;
+    SimDouble simulatedAngleDegrees;
     private double simulatedAngleAdjustment = 0;
     private double simulatedRotationSpeed = 0; // Radians per second
     private double lastTimeSimulatedRotationUpdated = 0;
@@ -27,7 +32,9 @@ public class Gyro {
         this.navX = new AHRS(SPI.Port.kMXP);
         this.simulated = simulated;
         if (simulated) {
-            this.simulatedAngleDegrees = initialAngle;
+            dev = SimDeviceDataJNI.getSimDeviceHandle("navX-Sensor[0]");
+            simulatedAngleDegrees = new SimDouble(SimDeviceDataJNI.getSimValueHandle(dev, "Yaw"));
+            simulatedAngleDegrees.set(initialAngle);
         }
 
     }
@@ -40,10 +47,10 @@ public class Gyro {
      */
     public double getContinuousAngleDegrees() {
         if (simulated) {
-            simulatedAngleDegrees += simulatedRotationSpeed
-                    * (Timer.getFPGATimestamp() - lastTimeSimulatedRotationUpdated);
+            simulatedAngleDegrees.set(simulatedAngleDegrees.get() + simulatedRotationSpeed
+                    * (Timer.getFPGATimestamp() - lastTimeSimulatedRotationUpdated));
             lastTimeSimulatedRotationUpdated = Timer.getFPGATimestamp();
-            return simulatedAngleDegrees + simulatedAngleAdjustment;
+            return simulatedAngleDegrees.get() + simulatedAngleAdjustment;
         } else {
             return this.navX.getAngle();
         }
@@ -98,7 +105,9 @@ public class Gyro {
      * @param rotationSpeed The simulated rotation speed of the gyro (ccw positive)
      */
     public void setSimulatedRotationSpeed(double rotationSpeed) {
-        simulatedAngleDegrees += simulatedRotationSpeed * (Timer.getFPGATimestamp() - lastTimeSimulatedRotationUpdated);
+
+        simulatedAngleDegrees.set(simulatedAngleDegrees.get()
+                + simulatedRotationSpeed * (Timer.getFPGATimestamp() - lastTimeSimulatedRotationUpdated));
         lastTimeSimulatedRotationUpdated = Timer.getFPGATimestamp();
         this.simulatedRotationSpeed = rotationSpeed;
     }
@@ -121,7 +130,8 @@ public class Gyro {
      */
     public void reset() {
         if (simulated) {
-            simulatedAngleDegrees = 0;
+            simulatedAngleDegrees.set(0);
+
         } else {
             navX.reset();
         }
@@ -134,6 +144,17 @@ public class Gyro {
      * @param simulatedAngle
      */
     public void setSimulatedAngle(double simulatedAngle) {
-        this.simulatedAngleDegrees = simulatedAngle;
+        this.simulatedAngleDegrees.set(simulatedAngle);
+    }
+
+    /**
+     * Sets the sendable properties
+     * 
+     * @param builder
+     */
+    @Override
+    public void initSendable(SendableBuilder builder) {
+        builder.addDoubleProperty("Yaw", () -> getContinuousAngleDegrees(), null);
+
     }
 }

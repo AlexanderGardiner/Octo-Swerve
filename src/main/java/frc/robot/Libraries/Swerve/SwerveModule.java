@@ -3,13 +3,15 @@ package frc.robot.Libraries.Swerve;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.util.sendable.Sendable;
+import edu.wpi.first.util.sendable.SendableBuilder;
 import frc.robot.Libraries.Swerve.Util.DriveMotor;
 import frc.robot.Libraries.Swerve.Util.MotorType;
 import frc.robot.Libraries.Swerve.Util.StateOptimizer;
 import frc.robot.Libraries.Swerve.Util.TurnMotor;
 import frc.robot.Libraries.Util.PIDConfig;
 
-public class SwerveModule {
+public class SwerveModule implements Sendable {
     TurnMotor turnMotor;
     DriveMotor driveMotor;
 
@@ -133,6 +135,19 @@ public class SwerveModule {
         SwerveModuleState optimizedState = StateOptimizer.optimizeSwerveStates(state, getAngleRadians());
         setTargetVelocityMeters(optimizedState.speedMetersPerSecond);
         setTargetAngleRadians(optimizedState.angle.getRadians());
+    }
+
+    /**
+     * Sets the sendable properties
+     * 
+     * @param builder
+     */
+    @Override
+    public void initSendable(SendableBuilder builder) {
+        builder.addDoubleProperty("Driver Encoder Distance (m)", () -> getDistanceMeters(), null);
+        builder.addDoubleProperty("Driver Encoder Velocity (m/s)", () -> getVelocityMeters(), null);
+        builder.addDoubleProperty("Turn Encoder Angle (radians)", () -> getAngleRadians(), null);
+
     }
 
 }
