@@ -27,8 +27,15 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
+
     double startTime = Timer.getFPGATimestamp();
     CommandScheduler.getInstance().run();
+
+    if (DriverStation.getAlliance() == DriverStation.Alliance.Red) {
+      SmartDashboard.putBoolean("IsRed", true);
+    } else {
+      SmartDashboard.putBoolean("IsRed", false);
+    }
 
     SmartDashboard.putNumber("Time for loop (ms)", (Timer.getFPGATimestamp() - startTime) * 1000);
   }

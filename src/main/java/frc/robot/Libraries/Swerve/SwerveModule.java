@@ -144,9 +144,9 @@ public class SwerveModule implements Sendable {
      */
     @Override
     public void initSendable(SendableBuilder builder) {
-        builder.addDoubleProperty("Driver Encoder Distance (m)", () -> getDistanceMeters(), null);
-        builder.addDoubleProperty("Driver Encoder Velocity (m/s)", () -> getVelocityMeters(), null);
-        builder.addDoubleProperty("Turn Encoder Angle (radians)", () -> getAngleRadians(), null);
+        builder.addDoubleProperty("Drive-Encoder-Distance-(m)", () -> getDistanceMeters(), null);
+        builder.addDoubleProperty("Drive-Encoder-Velocity-(m/s)", () -> getVelocityMeters(), null);
+        builder.addDoubleProperty("Turn-Encoder-Angle-(radians)", () -> getAngleRadians(), null);
 
     }
 

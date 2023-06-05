@@ -1,6 +1,5 @@
 package frc.robot.Subsystems.Swerve;
 
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -49,8 +48,8 @@ public class SwerveDrive extends SubsystemBase {
                 new boolean[] { false, false, false, false },
                 true,
                 new Pose2d(),
-                new PIDController(.9, 0, 0),
-                new PIDController(.8, 0, 0));
+                new PIDConfig(0.9, 0.8, 0, 0, Double.valueOf(0.1)),
+                new PIDConfig(0.9, 0.7, 0, 0, Double.valueOf(0.5)));
     }
 
     public void drive(ChassisSpeeds chassisSpeeds, boolean fieldRelative) {

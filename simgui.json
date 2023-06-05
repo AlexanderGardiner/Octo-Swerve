@@ -30,7 +30,13 @@
         "Field": {
           "open": true
         },
+        "Gyro": {
+          "open": true
+        },
         "PPSwerveControllerCommand": {
+          "open": true
+        },
+        "Swerve-Module-0": {
           "open": true
         },
         "open": true

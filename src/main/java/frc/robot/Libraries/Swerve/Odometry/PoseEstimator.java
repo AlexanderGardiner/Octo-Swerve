@@ -11,8 +11,8 @@ public class PoseEstimator {
     Pose2d currentPose;
     ArrayList<SwerveModulePosition> previousModulePositions = new ArrayList<SwerveModulePosition>();
     Rotation2d gyroOffset = new Rotation2d();
-    private static final double FIELD_WIDTH_METERS = 16.485;
-    private static final double FIELD_HEIGHT_METERS = 8.02;
+    private static final double FIELD_WIDTH_METERS = 16.46;
+    private static final double FIELD_HEIGHT_METERS = 8.01;
 
     /**
      * Creates a new pose estimator

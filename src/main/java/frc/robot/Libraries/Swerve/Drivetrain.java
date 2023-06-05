@@ -14,6 +14,7 @@ import frc.robot.Libraries.Swerve.Math.SwerveKinematics;
 import frc.robot.Libraries.Swerve.Odometry.PoseEstimator;
 import frc.robot.Libraries.Swerve.Util.MotorType;
 import frc.robot.Libraries.Util.Gyro;
+import frc.robot.Libraries.Util.MathUtil;
 import frc.robot.Libraries.Util.PIDConfig;
 
 public class DriveTrain {
@@ -77,7 +78,7 @@ public class DriveTrain {
             boolean[] driveMotorInverted, boolean[] driveEncoderInverted,
             boolean simulated,
             Pose2d initalPose2d,
-            PIDController translationPIDController, PIDController rotationPIDController) {
+            PIDConfig translationPIDConfig, PIDConfig rotationPIDConfig) {
         for (int i = 0; i < 4; i++) {
             swerveModules.add(new SwerveModule(turnMotorTypes, driveMotorTypes,
                     turnMotorCanIDs[i], driveMotorCanIDs[i],
@@ -88,7 +89,7 @@ public class DriveTrain {
                     turnMotorInverted[i], turnEncoderInverted[i],
                     driveMotorInverted[i], driveEncoderInverted[i],
                     simulated));
-            SmartDashboard.putData("Swerve Module " + i, swerveModules.get(i));
+            SmartDashboard.putData("Swerve-Module-" + i, swerveModules.get(i));
         }
 
         swerveDriveKinematics = new SwerveKinematics(modulePositions);
@@ -97,8 +98,14 @@ public class DriveTrain {
         poseEstimator = new PoseEstimator(initalPose2d);
         targetPose2d = initalPose2d;
         this.simulated = simulated;
-        this.translationPIDController = translationPIDController;
-        this.rotationPidController = rotationPIDController;
+        this.translationPIDController = new PIDController(translationPIDConfig.getP(), translationPIDConfig.getI(),
+                translationPIDConfig.getD());
+        this.translationPIDController.setIntegratorRange(-translationPIDConfig.getIZone(),
+                translationPIDConfig.getIZone());
+        this.rotationPidController = new PIDController(rotationPIDConfig.getP(), rotationPIDConfig.getI(),
+                rotationPIDConfig.getD());
+        this.rotationPidController.setIntegratorRange(-rotationPIDConfig.getIZone(),
+                rotationPIDConfig.getIZone());
         this.rotationPidController.enableContinuousInput(-Math.PI, Math.PI);
 
     }
@@ -129,6 +136,17 @@ public class DriveTrain {
                     rotationPidController.calculate(currentPose.getRotation().getRadians(),
                             targetPose2d.getRotation().getRadians()) / 0.02);
 
+            if (MathUtil.isWithinTolerance(chassisSpeeds.vxMetersPerSecond, 0, 0.01)) {
+                chassisSpeeds.vxMetersPerSecond = 0;
+            }
+
+            if (MathUtil.isWithinTolerance(chassisSpeeds.vyMetersPerSecond, 0, 0.01)) {
+                chassisSpeeds.vyMetersPerSecond = 0;
+            }
+
+            if (MathUtil.isWithinTolerance(chassisSpeeds.omegaRadiansPerSecond, 0, 0.01)) {
+                chassisSpeeds.omegaRadiansPerSecond = 0;
+            }
             chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(chassisSpeeds, gyro.getWrappedAngleRotation2D());
         }
 
