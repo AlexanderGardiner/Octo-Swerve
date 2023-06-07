@@ -119,4 +119,8 @@ public class SwerveDrive extends SubsystemBase {
     public void setSimulatedGyroAngle(double simulatedAngle) {
         driveTrain.setSimulatedGyroAngle(simulatedAngle);
     }
+
+    public void setPoseEstimatorPose2d(Pose2d pose2d) {
+        driveTrain.setPoseEstimatorPose2d(pose2d);
+    }
 }

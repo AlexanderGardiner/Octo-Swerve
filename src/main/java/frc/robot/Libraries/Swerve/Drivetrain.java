@@ -281,4 +281,8 @@ public class DriveTrain {
     public void setSimulatedGyroAngle(double simulatedAngle) {
         gyro.setSimulatedAngle(simulatedAngle);
     }
+
+    public void setPoseEstimatorPose2d(Pose2d pose2d) {
+        poseEstimator.addPoseMeasurement(pose2d);
+    }
 }
