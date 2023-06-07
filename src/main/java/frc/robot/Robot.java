@@ -2,7 +2,6 @@ package frc.robot;
 
 import com.pathplanner.lib.server.PathPlannerServer;
 
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
@@ -82,11 +81,13 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    SwerveDrive.getInstance().setPoseEstimatorGyroOffset(new Rotation2d());
 
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     } else {
+      if (DriverStation.getAlliance() == DriverStation.Alliance.Red) {
+        SwerveDrive.getInstance().setGyroAngleAdjustment(180);
+      }
       SwerveDrive.getInstance().resetGyro();
     }
 

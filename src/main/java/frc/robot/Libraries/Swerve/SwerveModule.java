@@ -9,6 +9,7 @@ import frc.robot.Libraries.Swerve.Util.DriveMotor;
 import frc.robot.Libraries.Swerve.Util.MotorType;
 import frc.robot.Libraries.Swerve.Util.StateOptimizer;
 import frc.robot.Libraries.Swerve.Util.TurnMotor;
+import frc.robot.Libraries.Util.MathUtil;
 import frc.robot.Libraries.Util.PIDConfig;
 
 public class SwerveModule implements Sendable {
@@ -132,9 +133,14 @@ public class SwerveModule implements Sendable {
      * @param state The target state (in m/s and radians)
      */
     public void setTargetState(SwerveModuleState state) {
-        SwerveModuleState optimizedState = StateOptimizer.optimizeSwerveStates(state, getAngleRadians());
-        setTargetVelocityMeters(optimizedState.speedMetersPerSecond);
-        setTargetAngleRadians(optimizedState.angle.getRadians());
+        if (!MathUtil.isWithinTolerance(state.speedMetersPerSecond, 0, 0.05)) {
+            SwerveModuleState optimizedState = StateOptimizer.optimizeSwerveStates(state, getAngleRadians());
+            setTargetVelocityMeters(optimizedState.speedMetersPerSecond);
+            setTargetAngleRadians(optimizedState.angle.getRadians());
+        } else {
+            setTargetVelocityMeters(0);
+        }
+
     }
 
     /**
