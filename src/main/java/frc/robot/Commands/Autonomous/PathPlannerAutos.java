@@ -40,4 +40,12 @@ public class PathPlannerAutos {
         SwerveDrive.getInstance().setPoseEstimatorPose2d(pathgroup.get(0).getInitialHolonomicPose());
         return autoBuilder.fullAuto(pathgroup);
     }
+
+    public static CommandBase TestPath1() {
+        startingGyroAngle = 90;
+
+        List<PathPlannerTrajectory> pathgroup = PathPlanner.loadPathGroup("Test Path1", new PathConstraints(4, 3));
+        SwerveDrive.getInstance().setPoseEstimatorPose2d(pathgroup.get(0).getInitialHolonomicPose());
+        return autoBuilder.fullAuto(pathgroup);
+    }
 }

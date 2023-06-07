@@ -11,7 +11,8 @@
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
-      "/SmartDashboard/Field": "Field2d"
+      "/SmartDashboard/Field": "Field2d",
+      "/SmartDashboard/autonomous": "String Chooser"
     },
     "windows": {
       "/SmartDashboard/Field": {
@@ -43,6 +44,9 @@
           "open": true
         },
         "Swerve-Module-1": {
+          "open": true
+        },
+        "autonomous": {
           "open": true
         },
         "open": true
