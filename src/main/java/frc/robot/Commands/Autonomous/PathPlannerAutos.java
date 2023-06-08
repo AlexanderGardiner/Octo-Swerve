@@ -10,11 +10,13 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.auto.PIDConstants;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.Libraries.Util.MathUtil;
 import frc.robot.Subsystems.Swerve.SwerveDrive;
 
 public class PathPlannerAutos {
@@ -40,6 +42,13 @@ public class PathPlannerAutos {
 
             List<PathPlannerTrajectory> pathgroup = PathPlanner.loadPathGroup("Test Path", new PathConstraints(4, 3));
             SwerveDrive.getInstance().setPoseEstimatorPose2d(pathgroup.get(0).getInitialHolonomicPose());
+            SwerveDrive.getInstance().resetGyro();
+            if (DriverStation.getAlliance() == DriverStation.Alliance.Red) {
+                SwerveDrive.getInstance()
+                        .setGyroAngleAdjustment(MathUtil.flipAngleOverYAxis(PathPlannerAutos.startingGyroAngle));
+            } else {
+                SwerveDrive.getInstance().setGyroAngleAdjustment(PathPlannerAutos.startingGyroAngle);
+            }
             CommandScheduler.getInstance().schedule(autoBuilder.fullAuto(pathgroup));
         });
     }
@@ -50,6 +59,13 @@ public class PathPlannerAutos {
 
             List<PathPlannerTrajectory> pathgroup = PathPlanner.loadPathGroup("Test Path1", new PathConstraints(4, 3));
             SwerveDrive.getInstance().setPoseEstimatorPose2d(pathgroup.get(0).getInitialHolonomicPose());
+            SwerveDrive.getInstance().resetGyro();
+            if (DriverStation.getAlliance() == DriverStation.Alliance.Red) {
+                SwerveDrive.getInstance()
+                        .setGyroAngleAdjustment(MathUtil.flipAngleOverYAxis(PathPlannerAutos.startingGyroAngle));
+            } else {
+                SwerveDrive.getInstance().setGyroAngleAdjustment(PathPlannerAutos.startingGyroAngle);
+            }
             CommandScheduler.getInstance().schedule(autoBuilder.fullAuto(pathgroup));
         });
     }

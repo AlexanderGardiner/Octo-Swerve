@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Commands.Autonomous.PathPlannerAutos;
 import frc.robot.Commands.Swerve.SwerveControl;
-import frc.robot.Libraries.Util.MathUtil;
 import frc.robot.Subsystems.Swerve.SwerveDrive;
 
 public class Robot extends TimedRobot {
@@ -80,13 +79,8 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().removeDefaultCommand(SwerveDrive.getInstance());
 
     m_autonomousCommand = autoChooser.getSelected();
-    SwerveDrive.getInstance().resetGyro();
 
-    if (DriverStation.getAlliance() == DriverStation.Alliance.Red) {
-      SwerveDrive.getInstance().setGyroAngleAdjustment(MathUtil.flipAngleOverYAxis(PathPlannerAutos.startingGyroAngle));
-    } else {
-      SwerveDrive.getInstance().setGyroAngleAdjustment(PathPlannerAutos.startingGyroAngle);
-    }
+    
 
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
