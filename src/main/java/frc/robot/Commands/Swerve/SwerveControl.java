@@ -10,12 +10,25 @@ import frc.robot.Subsystems.Swerve.SwerveDrive;
 public class SwerveControl extends CommandBase {
     SwerveDrive swerveDrive;
 
+    /**
+     * Creates a new swerve control command and adds the swervedrive subsystme as a
+     * requirement
+     */
     public SwerveControl() {
         this.swerveDrive = SwerveDrive.getInstance();
 
         this.addRequirements(swerveDrive);
     }
 
+    /**
+     * Runs every robot loop while the command is running
+     * <ul>
+     * <li>Gets speeds from the joysticks</li>
+     * <li>Applies deadbands and square the speeds to give better control</li>
+     * <li>Flips the speeds if on the opposite alliance</li>
+     * <li>Drives the robot with the calculated speeds</li>
+     * </ul>
+     */
     @Override
     public void execute() {
         var leftJoystick = ControlMap.DRIVER_LEFT;
