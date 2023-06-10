@@ -26,6 +26,13 @@ public class Robot extends TimedRobot {
 
   private OperatingSystemMXBean osBean = ManagementFactory.getPlatformMXBean(OperatingSystemMXBean.class);
 
+  /**
+   * Runs on robot startup
+   * <ul>
+   * <li>Initalizes Autonomous Selector and field2d</li>
+   * <li>Starts pathplanner server</li>
+   * </ul>
+   */
   @Override
   public void robotInit() {
     autoChooser = new SendableChooser<Command>();
@@ -39,6 +46,12 @@ public class Robot extends TimedRobot {
 
   }
 
+  /**
+   * Runs every robot loop
+   * <ul>
+   * <li>Updates logging</li>
+   * </ul>
+   */
   @Override
   public void robotPeriodic() {
     CANStatus canBus = new CANStatus();
@@ -57,21 +70,42 @@ public class Robot extends TimedRobot {
     }
 
     SmartDashboard.putNumber("Time for loop (ms)", (Timer.getFPGATimestamp() - startTime) * 1000);
+
+    field.setRobotPose(SwerveDrive.getInstance().getPose2d());
   }
 
+  /**
+   * Runs when the robot is disabled
+   * <ul>
+   * <li>Logs that the robot is disabled
+   * </ul>
+   */
   @Override
   public void disabledInit() {
     SmartDashboard.putString("Time-Left", "Robot Disabled");
   }
 
+  /**
+   * Runs every robot loop when the robot is disabled
+   */
   @Override
   public void disabledPeriodic() {
   }
 
+  /**
+   * Runs when the robot exits disabled mode
+   */
   @Override
   public void disabledExit() {
   }
 
+  /**
+   * Runs when the robot enters autonomous mode
+   * <ul>
+   * <li>Cancels current commands</li>
+   * <li>Removes default commands</li>
+   * <li>Runs selected auto command</li>
+   */
   @Override
   public void autonomousInit() {
     SmartDashboard.putString("Time-Left", "Robot In Auto");
@@ -80,21 +114,33 @@ public class Robot extends TimedRobot {
 
     m_autonomousCommand = autoChooser.getSelected();
 
-    
-
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
   }
 
+  /**
+   * Runs every robot loop when the robot is in autonomous
+   */
   @Override
   public void autonomousPeriodic() {
   }
 
+  /**
+   * Runs when the robot exists autonomous smode
+   */
   @Override
   public void autonomousExit() {
   }
 
+  /**
+   * Runs when the robot the robot enters teleop
+   * <ul>
+   * <li>Resets gyro if not coming from autonomous</li>
+   * <li>Sets the target pose2d for the drive pid loop</li>
+   * <li>Starts default commands</li>
+   * </ul>
+   */
   @Override
   public void teleopInit() {
     teleopTimer = Timer.getFPGATimestamp();
@@ -112,30 +158,21 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().setDefaultCommand(SwerveDrive.getInstance(), new SwerveControl());
   }
 
+  /**
+   * Runs every robot loop when the robot is in teleop
+   * <ul>
+   * <li>Logs the time left in teleop</li>
+   * </l>
+   */
   @Override
   public void teleopPeriodic() {
     SmartDashboard.putString("Time-Left", Double.valueOf(135 - (Timer.getFPGATimestamp() - teleopTimer)).toString());
   }
 
+  /**
+   * Runs when the robot exits teleop
+   */
   @Override
   public void teleopExit() {
-  }
-
-  @Override
-  public void testInit() {
-    CommandScheduler.getInstance().cancelAll();
-  }
-
-  @Override
-  public void testPeriodic() {
-  }
-
-  @Override
-  public void testExit() {
-  }
-
-  @Override
-  public void simulationPeriodic() {
-    field.setRobotPose(SwerveDrive.getInstance().getPose2d());
   }
 }

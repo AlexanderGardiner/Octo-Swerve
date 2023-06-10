@@ -15,6 +15,11 @@ public class SwerveDrive extends SubsystemBase {
     private double maxSpeed = 5;
     private double maxAngularSpeed = Math.PI;
 
+    /**
+     * Gets the current instance of the swerve drive subsystem if it doesn't exist
+     * 
+     * @return The current instance of swerve drive
+     */
     public static SwerveDrive getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new SwerveDrive();
@@ -22,6 +27,9 @@ public class SwerveDrive extends SubsystemBase {
         return INSTANCE;
     }
 
+    /**
+     * Creates a new swerve drive using the drivetrain class
+     */
     public SwerveDrive() {
         this.driveTrain = new DriveTrain(MotorType.SparkMax,
                 MotorType.TalonFX,
@@ -52,74 +60,153 @@ public class SwerveDrive extends SubsystemBase {
                 new PIDConfig(0.7, 0, 0, 0, Double.valueOf(0)));
     }
 
+    /**
+     * Drives the robot using the drivetrain class
+     * 
+     * @param chassisSpeeds The target chassisSpeeds (Positive x away from drivers,
+     *                      positive y to the left of drivers, ccw positive)
+     * @param fieldRelative Whether the chassisSpeeds are field relative
+     */
     public void drive(ChassisSpeeds chassisSpeeds, boolean fieldRelative) {
         driveTrain.drive(chassisSpeeds, fieldRelative);
     }
 
+    /**
+     * Drives the robot not field relative
+     * 
+     * @param chassisSpeeds The target chassisSpeeds
+     */
     public void drive(ChassisSpeeds chassisSpeeds) {
         this.drive(chassisSpeeds, false);
     }
 
-    public void initDefaultCommand() {
-        this.setDefaultCommand(null);
-    }
-
+    /**
+     * Sets the max translation speed of the robot
+     * 
+     * @param maxSpeed The max speed in m/s
+     */
     public void setMaxSpeed(double maxSpeed) {
         this.maxSpeed = maxSpeed;
     }
 
+    /**
+     * Gets the max translation speed of the robot
+     * 
+     * @return The max speed in m/s
+     */
     public double getMaxSpeed() {
         return this.maxSpeed;
     }
 
+    /**
+     * Sets the max rotation speed of the robot
+     * 
+     * @param maxSpeed The max speed in rad/s
+     */
     public void setMaxAngularSpeed(double maxAngularSpeed) {
         this.maxAngularSpeed = maxAngularSpeed;
     }
 
+    /**
+     * Gets the max rotation speed of the robot
+     * 
+     * @return The max speed in rad/s
+     */
     public double getMaxAngularSpeed() {
         return this.maxAngularSpeed;
     }
 
+    /**
+     * Gets the current estimated pose2d on the field
+     * 
+     * @return The estimated pose2d
+     */
     public Pose2d getPose2d() {
         return driveTrain.getPose2d();
     }
 
+    /**
+     * Gets the current estimated alliance relative pose2d
+     * 
+     * @return The estimated alliance relative pose2d
+     */
     public Pose2d getAllianceRelativePose2d() {
         return driveTrain.getAllianceRelativePose2d();
     }
 
+    /**
+     * Resets the estimated pose2d
+     * 
+     * @param pose2d The pose to reset to
+     */
     public void resetPose2d(Pose2d pose2d) {
         this.driveTrain.resetPose2d(pose2d);
     }
 
+    /**
+     * Resets the estimated alliance relative pose2d
+     * 
+     * @param pose2d The pose to reset to
+     */
     public void resetAllianceRelativePose2d(Pose2d pose2d) {
         this.driveTrain.resetAllianceRelativePose2d(pose2d);
     }
 
+    /**
+     * Sets the gyro angle adjustment
+     * 
+     * @param angleAdjustment The gyro angle adjustment in degrees
+     */
     public void setGyroAngleAdjustment(double angleAdjustment) {
         this.driveTrain.setGyroAngleAdjustment(angleAdjustment);
     }
 
+    /**
+     * Sets the target pose2d for translation and rotation pid loops
+     * 
+     * @param pose2d The target pose2d
+     */
     public void setTargetPose2d(Pose2d pose2d) {
         this.driveTrain.setTargetPose2d(pose2d);
     }
 
+    /**
+     * Gets the current unwrapped gyro rotation
+     * 
+     * @return The current gyro rotation (ccw positive)
+     */
     public Rotation2d getGyroRotation() {
         return this.driveTrain.getUnwrappedGyroRotation();
     }
 
+    /**
+     * Sets the gyro offset for the pose estimator
+     * 
+     * @param gyroOffset The gyro offset (ccw positive)
+     */
     public void setPoseEstimatorGyroOffset(Rotation2d gyroOffset) {
         this.driveTrain.setPoseEstimatorGyroOffset(gyroOffset);
     }
 
+    /**
+     * Resets the gyro
+     */
     public void resetGyro() {
         driveTrain.resetGyro();
     }
 
+    /**
+     * Sets the simulated gyro angle
+     * 
+     * @param simulatedAngle The simulated gyro angle in degrees (ccw positive)
+     */
     public void setSimulatedGyroAngle(double simulatedAngle) {
         driveTrain.setSimulatedGyroAngle(simulatedAngle);
     }
 
+    /**
+     * Sets the estimated pose of the pose estimator
+     */
     public void setPoseEstimatorPose2d(Pose2d pose2d) {
         driveTrain.setPoseEstimatorPose2d(pose2d);
     }
