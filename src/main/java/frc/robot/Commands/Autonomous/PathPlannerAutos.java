@@ -59,21 +59,22 @@ public class PathPlannerAutos {
      */
     public static CommandBase TestPath() {
         return new InstantCommand(() -> {
-            List<PathPlannerTrajectory> pathgroup = PathPlanner.loadPathGroup("Test Path", new PathConstraints(4, 3));
+            // List<PathPlannerTrajectory> pathgroup = PathPlanner.loadPathGroup("Test
+            // Path", new PathConstraints(4, 3));
 
-            startingGyroAngle = 90;
-            SwerveDrive.getInstance().setPoseEstimatorPose2d(pathgroup.get(0).getInitialHolonomicPose());
+            // startingGyroAngle = 90;
+            // SwerveDrive.getInstance().setPoseEstimatorPose2d(pathgroup.get(0).getInitialHolonomicPose());
 
-            SwerveDrive.getInstance().resetGyro();
+            // SwerveDrive.getInstance().resetGyro();
 
-            if (DriverStation.getAlliance() == DriverStation.Alliance.Red) {
-                SwerveDrive.getInstance()
-                        .setGyroAngleAdjustment(MathUtil.flipAngleOverYAxis(PathPlannerAutos.startingGyroAngle));
-            } else {
-                SwerveDrive.getInstance().setGyroAngleAdjustment(PathPlannerAutos.startingGyroAngle);
-            }
+            // if (DriverStation.getAlliance() == DriverStation.Alliance.Red) {
+            // SwerveDrive.getInstance()
+            // .setGyroAngleAdjustment(MathUtil.flipAngleOverYAxis(PathPlannerAutos.startingGyroAngle));
+            // } else {
+            // SwerveDrive.getInstance().setGyroAngleAdjustment(PathPlannerAutos.startingGyroAngle);
+            // }
 
-            CommandScheduler.getInstance().schedule(autoBuilder.fullAuto(pathgroup));
+            // CommandScheduler.getInstance().schedule(autoBuilder.fullAuto(pathgroup));
         });
     }
 

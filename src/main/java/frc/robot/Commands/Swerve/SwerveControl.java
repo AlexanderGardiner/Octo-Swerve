@@ -42,8 +42,8 @@ public class SwerveControl extends CommandBase {
         double yAxis = leftJoystick.getRawAxis(1);
 
         // Get speeds from joysticks
-        xSpeed = -1 * Math.signum(yAxis) * Math.pow(MathUtil.fitDeadband(yAxis, 0.01), 2) * swerveDrive.getMaxSpeed();
-        ySpeed = -1 * Math.signum(xAxis) * Math.pow(MathUtil.fitDeadband(xAxis, 0.01), 2) * swerveDrive.getMaxSpeed();
+        xSpeed = -1 * Math.signum(yAxis) * Math.pow(MathUtil.fitDeadband(yAxis, 0.05), 2) * swerveDrive.getMaxSpeed();
+        ySpeed = -1 * Math.signum(xAxis) * Math.pow(MathUtil.fitDeadband(xAxis, 0.05), 2) * swerveDrive.getMaxSpeed();
 
         if (DriverStation.getAlliance() == DriverStation.Alliance.Red) {
             xSpeed = xSpeed * -1;
@@ -51,7 +51,7 @@ public class SwerveControl extends CommandBase {
         }
 
         // Calculate the deadband
-        rot = MathUtil.fitDeadband(-rightJoystick.getRawAxis(0), 0.01) * swerveDrive.getMaxAngularSpeed();
+        rot = MathUtil.fitDeadband(-leftJoystick.getRawAxis(4), 0.05) * swerveDrive.getMaxAngularSpeed();
 
         // Drive
         swerveDrive.drive(new ChassisSpeeds(xSpeed, ySpeed, rot), true);

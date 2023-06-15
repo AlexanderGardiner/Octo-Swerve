@@ -52,7 +52,7 @@ public class Gyro implements Sendable {
             lastTimeSimulatedRotationUpdated = Timer.getFPGATimestamp();
             return simulatedAngleDegrees.get() + simulatedAngleAdjustment;
         } else {
-            return this.navX.getAngle();
+            return -this.navX.getAngle();
         }
     }
 

@@ -124,20 +124,25 @@ public class DriveTrain {
             // accurate driving then calculates the robot relative speeds
             Pose2d currentPose = poseEstimator.getPose2d();
 
-            targetPose2d = new Pose2d(targetPose2d.getX() + chassisSpeeds.vxMetersPerSecond * 0.02,
-                    targetPose2d.getY() + chassisSpeeds.vyMetersPerSecond * 0.02,
-                    targetPose2d.getRotation().plus(new Rotation2d(chassisSpeeds.omegaRadiansPerSecond * 0.02)));
+            targetPose2d = new Pose2d(targetPose2d.getX() + (chassisSpeeds.vxMetersPerSecond * 0.02),
+                    targetPose2d.getY() + (chassisSpeeds.vyMetersPerSecond * 0.02),
+                    new Rotation2d(
+                            targetPose2d.getRotation().getRadians() + (chassisSpeeds.omegaRadiansPerSecond * 0.02)));
 
+            SmartDashboard.putString("target pose 2d", targetPose2d.toString());
+            SmartDashboard.putString("current pose 2d", currentPose.toString());
             chassisSpeeds = new ChassisSpeeds(
                     chassisSpeeds.vxMetersPerSecond
-                            + translationPIDController.calculate(currentPose.getX(), targetPose2d.getX()) /
-                                    0.02,
+                            + (translationPIDController.calculate(currentPose.getX(), targetPose2d.getX())
+                                    /
+                                    0.02),
                     chassisSpeeds.vyMetersPerSecond
-                            + translationPIDController.calculate(currentPose.getY(), targetPose2d.getY()) /
-                                    0.02,
+                            + (translationPIDController.calculate(currentPose.getY(), targetPose2d.getY())
+                                    /
+                                    0.02),
                     chassisSpeeds.omegaRadiansPerSecond
-                            + rotationPidController.calculate(currentPose.getRotation().getRadians(),
-                                    targetPose2d.getRotation().getRadians()) / 0.02);
+                            + (rotationPidController.calculate(currentPose.getRotation().getRadians(),
+                                    targetPose2d.getRotation().getRadians())) / 0.02);
 
             if (MathUtil.isWithinTolerance(chassisSpeeds.vxMetersPerSecond, 0, 0.01)) {
                 chassisSpeeds.vxMetersPerSecond = 0;
@@ -168,7 +173,7 @@ public class DriveTrain {
         }
 
         poseEstimator.updatePose(modulePositions,
-                gyro.getWrappedAngleRotation2D());
+                gyro.getRotation2d());
 
         if (simulated) {
             gyro.setSimulatedRotationSpeed(Math.toDegrees(chassisSpeeds.omegaRadiansPerSecond));

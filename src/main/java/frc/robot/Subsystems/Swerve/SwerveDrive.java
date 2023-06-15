@@ -12,8 +12,8 @@ import frc.robot.Libraries.Util.PIDConfig;
 public class SwerveDrive extends SubsystemBase {
     DriveTrain driveTrain;
     private static SwerveDrive INSTANCE;
-    private double maxSpeed = 8;
-    private double maxAngularSpeed = 2 * Math.PI;
+    private double maxSpeed = 4;
+    private double maxAngularSpeed = Math.PI / 2;
 
     /**
      * Gets the current instance of the swerve drive subsystem if it doesn't exist
@@ -56,8 +56,8 @@ public class SwerveDrive extends SubsystemBase {
                 new boolean[] { false, false, false, false },
                 true,
                 new Pose2d(0, 0, new Rotation2d(Math.PI)),
-                new PIDConfig(0.7, 0, 0, 0, Double.valueOf(0)),
-                new PIDConfig(0.7, 0, 0, 0, Double.valueOf(0)));
+                new PIDConfig(0.001, 0, 0, 0, Double.valueOf(0)),
+                new PIDConfig(0.01, 0, 0, 0, Double.valueOf(0)));
     }
 
     /**
