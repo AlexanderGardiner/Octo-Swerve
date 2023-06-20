@@ -4,6 +4,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Libraries.Swerve.DriveTrain;
 import frc.robot.Libraries.Swerve.Util.MotorType;
@@ -13,7 +14,7 @@ public class SwerveDrive extends SubsystemBase {
     DriveTrain driveTrain;
     private static SwerveDrive INSTANCE;
     private double maxSpeed = 4;
-    private double maxAngularSpeed = Math.PI / 2;
+    private double maxAngularSpeed = Math.PI;
 
     /**
      * Gets the current instance of the swerve drive subsystem if it doesn't exist
@@ -39,25 +40,26 @@ public class SwerveDrive extends SubsystemBase {
                         new PIDConfig(5, .0, 0.02, Double.valueOf(0)),
                         new PIDConfig(5, .0, 0.02, Double.valueOf(0)),
                         new PIDConfig(5, .0, 0.02, Double.valueOf(0)) },
-                new PIDConfig[] { new PIDConfig(0.1, 0.00, 0.0, 0.08, Double.valueOf(0)),
-                        new PIDConfig(0.1, 0.00, 0.0, 0.08, Double.valueOf(0)),
-                        new PIDConfig(0.1, 0.00, 0.0, 0.08, Double.valueOf(0)),
-                        new PIDConfig(0.1, 0.00, 0.0, 0.08, Double.valueOf(0)) },
+                new PIDConfig[] { new PIDConfig(0.2, 0.0, 0.0, 0.045, Double.valueOf(0)),
+                        new PIDConfig(0.2, 0.00, 0.0, 0.045, Double.valueOf(0)),
+                        new PIDConfig(0.2, 0.00, 0.0, 0.045, Double.valueOf(0)),
+                        new PIDConfig(0.2, 0.00, 0.0, 0.045, Double.valueOf(0)) },
                 1,
                 2048,
                 1.0 / 1.0,
                 40.0 / 11.0,
                 0.038,
-                new Translation2d[] { new Translation2d(-1, 1), new Translation2d(1, 1), new Translation2d(-1, -1),
-                        new Translation2d(1, -1) },
+                new Translation2d[] { new Translation2d(-0.3, 0.3), new Translation2d(0.3, 0.3),
+                        new Translation2d(-0.3, -0.3),
+                        new Translation2d(0.3, -0.3) },
                 new boolean[] { false, false, false, false },
                 new boolean[] { false, false, false, false },
                 new boolean[] { false, false, false, false },
                 new boolean[] { false, false, false, false },
-                true,
+                false,
                 new Pose2d(0, 0, new Rotation2d(Math.PI)),
                 new PIDConfig(0.001, 0, 0, 0, Double.valueOf(0)),
-                new PIDConfig(0.01, 0, 0, 0, Double.valueOf(0)));
+                new PIDConfig(0.1, 0, 0, 0, Double.valueOf(0)));
     }
 
     /**

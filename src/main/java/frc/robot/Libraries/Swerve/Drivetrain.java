@@ -131,13 +131,18 @@ public class DriveTrain {
 
             SmartDashboard.putString("target pose 2d", targetPose2d.toString());
             SmartDashboard.putString("current pose 2d", currentPose.toString());
+
+            SmartDashboard.putString("target speeds", chassisSpeeds.toString());
+
             chassisSpeeds = new ChassisSpeeds(
                     chassisSpeeds.vxMetersPerSecond
-                            + (translationPIDController.calculate(currentPose.getX(), targetPose2d.getX())
+                            + (translationPIDController.calculate(currentPose.getX(),
+                                    targetPose2d.getX())
                                     /
                                     0.02),
                     chassisSpeeds.vyMetersPerSecond
-                            + (translationPIDController.calculate(currentPose.getY(), targetPose2d.getY())
+                            + (translationPIDController.calculate(currentPose.getY(),
+                                    targetPose2d.getY())
                                     /
                                     0.02),
                     chassisSpeeds.omegaRadiansPerSecond
