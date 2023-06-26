@@ -124,15 +124,27 @@ public class DriveTrain {
             // accurate driving then calculates the robot relative speeds
             Pose2d currentPose = poseEstimator.getPose2d();
 
+            // Sets the x and/or y of the target position to the current x/y if there is no
+            // input along that axis
+            double targetPoseX = targetPose2d.getX();
+            double targetPoseY = targetPose2d.getY();
+            Rotation2d targetPoseRotation = targetPose2d.getRotation();
+            if (chassisSpeeds.vxMetersPerSecond == 0) {
+                targetPoseX = currentPose.getX();
+            }
+
+            if (chassisSpeeds.vyMetersPerSecond == 0) {
+                targetPoseY = currentPose.getY();
+            }
+
+            targetPose2d = new Pose2d(targetPoseX, targetPoseY, targetPoseRotation);
+
+            // Calculates the target position with the chassis speeds added and calculates
+            // speeds
             targetPose2d = new Pose2d(targetPose2d.getX() + (chassisSpeeds.vxMetersPerSecond * 0.02),
                     targetPose2d.getY() + (chassisSpeeds.vyMetersPerSecond * 0.02),
                     new Rotation2d(
                             targetPose2d.getRotation().getRadians() + (chassisSpeeds.omegaRadiansPerSecond * 0.02)));
-
-            SmartDashboard.putString("target pose 2d", targetPose2d.toString());
-            SmartDashboard.putString("current pose 2d", currentPose.toString());
-
-            SmartDashboard.putString("target speeds", chassisSpeeds.toString());
 
             chassisSpeeds = new ChassisSpeeds(
                     chassisSpeeds.vxMetersPerSecond
