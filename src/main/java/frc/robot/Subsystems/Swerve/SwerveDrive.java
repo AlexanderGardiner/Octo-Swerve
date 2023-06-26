@@ -4,7 +4,6 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Libraries.Swerve.DriveTrain;
 import frc.robot.Libraries.Swerve.Util.MotorType;
@@ -56,7 +55,7 @@ public class SwerveDrive extends SubsystemBase {
                 new boolean[] { false, false, false, false },
                 new boolean[] { false, false, false, false },
                 new boolean[] { false, false, false, false },
-                false,
+                true,
                 new Pose2d(0, 0, new Rotation2d(Math.PI)),
                 new PIDConfig(0.001, 0, 0, 0, Double.valueOf(0)),
                 new PIDConfig(0.1, 0, 0, 0, Double.valueOf(0)));

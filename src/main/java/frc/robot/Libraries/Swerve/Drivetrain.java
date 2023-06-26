@@ -146,6 +146,8 @@ public class DriveTrain {
                     new Rotation2d(
                             targetPose2d.getRotation().getRadians() + (chassisSpeeds.omegaRadiansPerSecond * 0.02)));
 
+            SmartDashboard.putString("targetPose", targetPose2d.toString());
+            SmartDashboard.putString("currentPose", currentPose.toString());
             chassisSpeeds = new ChassisSpeeds(
                     chassisSpeeds.vxMetersPerSecond
                             + (translationPIDController.calculate(currentPose.getX(),
@@ -159,7 +161,7 @@ public class DriveTrain {
                                     0.02),
                     chassisSpeeds.omegaRadiansPerSecond
                             + (rotationPidController.calculate(currentPose.getRotation().getRadians(),
-                                    targetPose2d.getRotation().getRadians())) / 0.02);
+                                    targetPose2d.getRotation().getRadians()) / 0.02));
 
             if (MathUtil.isWithinTolerance(chassisSpeeds.vxMetersPerSecond, 0, 0.01)) {
                 chassisSpeeds.vxMetersPerSecond = 0;
