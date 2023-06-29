@@ -147,10 +147,11 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     } else {
+      SwerveDrive.getInstance().resetGyro();
       if (DriverStation.getAlliance() == DriverStation.Alliance.Red) {
         SwerveDrive.getInstance().setGyroAngleAdjustment(180);
       }
-      SwerveDrive.getInstance().resetGyro();
+
     }
 
     SwerveDrive.getInstance().setTargetPose2d(SwerveDrive.getInstance().getPose2d());
