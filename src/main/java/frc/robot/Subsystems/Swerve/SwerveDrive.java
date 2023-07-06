@@ -5,6 +5,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.MotorIDs;
 import frc.robot.Libraries.Swerve.DriveTrain;
 import frc.robot.Libraries.Swerve.Util.MotorType;
 import frc.robot.Libraries.Util.PIDConfig;
@@ -31,10 +32,11 @@ public class SwerveDrive extends SubsystemBase {
      * Creates a new swerve drive using the drivetrain class
      */
     public SwerveDrive() {
-        this.driveTrain = new DriveTrain(MotorType.SparkMax,
+        this.driveTrain = new DriveTrain(
+                MotorType.SparkMax,
                 MotorType.TalonFX,
-                new int[] { 1, 3, 5, 7 },
-                new int[] { 2, 4, 6, 8 },
+                new int[] { MotorIDs.FRONT_LEFT_STEER, MotorIDs.FRONT_RIGHT_STEER, MotorIDs.BACK_LEFT_STEER, MotorIDs.BACK_RIGHT_STEER},
+                new int[] { MotorIDs.FRONT_LEFT_DRIVE, MotorIDs.FRONT_RIGHT_DRIVE, MotorIDs.BACK_LEFT_DRIVE, MotorIDs.BACK_RIGHT_DRIVE},
                 new PIDConfig[] { new PIDConfig(5, .0, 0.02, Double.valueOf(0)),
                         new PIDConfig(5, .0, 0.02, Double.valueOf(0)),
                         new PIDConfig(5, .0, 0.02, Double.valueOf(0)),
