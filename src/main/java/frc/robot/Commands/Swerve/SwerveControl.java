@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.ControlMap;
 import frc.robot.Libraries.Util.MathUtil;
-import frc.robot.Subsystems.Swerve.SwerveDrive;
+import frc.robot.Subsystems.drivetrain.SwerveDrive;
 
 public class SwerveControl extends CommandBase {
     SwerveDrive swerveDrive;

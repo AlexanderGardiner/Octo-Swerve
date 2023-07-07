@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Commands.Autonomous.PathPlannerAutos;
 import frc.robot.Commands.Swerve.SwerveControl;
-import frc.robot.Subsystems.Swerve.SwerveDrive;
+import frc.robot.Subsystems.drivetrain.SwerveDrive;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
