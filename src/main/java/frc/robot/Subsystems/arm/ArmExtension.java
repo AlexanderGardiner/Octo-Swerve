@@ -5,7 +5,6 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.revrobotics.CANSparkMaxLowLevel.PeriodicFrame;
 import com.revrobotics.SparkMaxAbsoluteEncoder;
 import com.revrobotics.SparkMaxPIDController;
 
@@ -19,6 +18,7 @@ import frc.robot.Libraries.Util.SparkMax.SparkMaxSetup;
 import frc.robot.Libraries.Util.SparkMax.SparkMaxStatusFrames;
 
 public class ArmExtension extends SubsystemBase {
+    //TODO: OMFG we need to fix the measurements here, it's so arbitrary 
     private CANSparkMax motor;
     private static ArmExtension armExtension;
     public SparkMaxPIDController pidController;
@@ -48,7 +48,7 @@ public class ArmExtension extends SubsystemBase {
         false,
         new PIDConfig(0.5, 0, 0.4, -3)
     );
-    
+
     public static ArmExtension getInstance() {
         if (armExtension == null) {
             armExtension = new ArmExtension();

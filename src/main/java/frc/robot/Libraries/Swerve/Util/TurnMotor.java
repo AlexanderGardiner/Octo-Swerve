@@ -29,8 +29,6 @@ public class TurnMotor {
     private WPI_TalonFX talonFX;
     private CANSparkMax sparkMax;
 
-    private int encoderCountsPerRev;
-
     private boolean simulated;
     private double simulatedEncoderPositionTicks;
 
@@ -48,7 +46,6 @@ public class TurnMotor {
     public TurnMotor(MotorType motorType, int canID, PIDConfig PIDconfig, int encoderCountsPerRev,
             boolean motorInverted, boolean encoderInverted, boolean simulated) {
         this.motorType = motorType;
-        this.encoderCountsPerRev = encoderCountsPerRev;
         this.simulated = simulated;
 
         if (this.motorType == MotorType.TalonFX) {
