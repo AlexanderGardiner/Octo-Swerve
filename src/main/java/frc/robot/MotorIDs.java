@@ -33,7 +33,7 @@ public class MotorIDs {
 
     //Arm
     public static final int ARM_ROLLER = 11;
-    public static final int INTAKE_EXTENSION = 10;
+    public static final int ARM_EXTENSION = 10;
     public static final int ARM_WRIST_ANGLE = 12;
     public static final int ARM_PIVOT_ANGLE = 9;
     public static final int ARM_PIVOT_ANGLE_FOLLOWER = 13;
