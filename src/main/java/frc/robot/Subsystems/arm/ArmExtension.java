@@ -48,6 +48,7 @@ public class ArmExtension extends SubsystemBase {
         false,
         new PIDConfig(0.5, 0, 0.4, -3)
     );
+    
     public static ArmExtension getInstance() {
         if (armExtension == null) {
             armExtension = new ArmExtension();
