@@ -207,7 +207,7 @@ public class SparkMaxConfig {
       * @param freeCurrentLimit           The current limit at free speed (5700RPM
       *                                   for NEO).
       * @param inverted                   Whether the motor's direction is inverted
-      * @param sensorInverted             Whether the sensor's direction is inverted
+      * @param leadSparkMax               The Spark Max motor to follow
       */
      public SparkMaxConfig(SparkMaxStatusFrames statusFrames, int timeoutMs, boolean reset,
                     IdleMode idleMode,
