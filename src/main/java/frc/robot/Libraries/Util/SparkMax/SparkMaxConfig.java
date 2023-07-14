@@ -3,7 +3,6 @@ package frc.robot.Libraries.Util.SparkMax;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 
-import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import frc.robot.Libraries.Util.PIDConfig;
 
 /**
