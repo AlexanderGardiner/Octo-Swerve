@@ -82,7 +82,7 @@ public class ArmExtension extends SubsystemBase {
     public double getPosition() {
         return motor.getEncoder().getPosition() / gearing;
     }
-
+    // TODO: Just awful.
     public void zeroArm() {
         motor.setSmartCurrentLimit(5, 5);
         motor.setInverted(true);
