@@ -15,6 +15,15 @@ import frc.robot.Libraries.Util.SparkMax.SparkMaxSetup;
 import frc.robot.Libraries.Util.SparkMax.SparkMaxStatusFrames;
 
 public class ArmWrist extends SubsystemBase{
+    
+    private ArmWrist armWrist;
+    public ArmWrist getInstance() {
+        if (armWrist == null) {
+            armWrist = new ArmWrist();
+        }
+        return armWrist;
+    }
+
     private CANSparkMax motor;
     private SparkMaxConfig wristConfig = new SparkMaxConfig(
         new SparkMaxStatusFrames(
