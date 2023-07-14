@@ -41,7 +41,7 @@ public class ArmPivot extends SubsystemBase {
             30,
             false,
             true,
-            0,
+            4096,
             false,
             new PIDConfig(6, 0.0, 1, 0)
     );
