@@ -4,6 +4,8 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.MotorIDs;
 import frc.robot.Libraries.Util.PIDConfig;
@@ -42,7 +44,7 @@ public class HippoWrist extends SubsystemBase{
             false,
             0,
             false,
-            new PIDConfig(2, 0.000, 6, 0.02)
+            new PIDConfig(1.1, 0.005, 0, 0)
     );
 
     public HippoWrist() {
@@ -51,11 +53,7 @@ public class HippoWrist extends SubsystemBase{
     }
 
     public void setSpatulaPos(double angle) {
-        if (angle > 0.46) {
-            angle = 0.46;
-        } else if (angle < 0.12) {
-            angle = 0.12;
-        }
+        MathUtil.clamp(angle, 0.12, 0.46);
         motor.getPIDController().setReference(angle, ControlType.kPosition);
     }
 
