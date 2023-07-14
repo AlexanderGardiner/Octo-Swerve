@@ -78,7 +78,8 @@ public class DriveTrain {
             boolean[] driveMotorInverted, boolean[] driveEncoderInverted,
             boolean simulated,
             Pose2d initalPose2d,
-            PIDConfig translationPIDConfig, PIDConfig rotationPIDConfig) {
+            PIDConfig translationPIDConfig, PIDConfig rotationPIDConfig,
+            boolean loggingEnabled) {
         for (int i = 0; i < 4; i++) {
             swerveModules.add(new SwerveModule(turnMotorTypes, driveMotorTypes,
                     turnMotorCanIDs[i], driveMotorCanIDs[i],
@@ -89,12 +90,18 @@ public class DriveTrain {
                     turnMotorInverted[i], turnEncoderInverted[i],
                     driveMotorInverted[i], driveEncoderInverted[i],
                     simulated));
-            SmartDashboard.putData("Swerve-Module-" + i, swerveModules.get(i));
+            if (loggingEnabled) {
+                SmartDashboard.putData("Swerve-Module-" + i, swerveModules.get(i));
+            }
         }
 
         swerveDriveKinematics = new SwerveKinematics(modulePositions);
         gyro = new Gyro(simulated, 0);
-        SmartDashboard.putData("Gyro", gyro);
+        
+        if (loggingEnabled) {
+            SmartDashboard.putData("Gyro", gyro);
+        }
+        
         poseEstimator = new PoseEstimator(initalPose2d);
         targetPose2d = initalPose2d;
         this.simulated = simulated;

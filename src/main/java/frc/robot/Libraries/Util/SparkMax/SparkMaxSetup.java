@@ -41,21 +41,26 @@ public class SparkMaxSetup {
 
         sparkMax.setSmartCurrentLimit(sparkMaxConfig.getStallCurrentLimit(), sparkMaxConfig.getFreeCurrentLimit());
 
-        sparkMax.getPIDController().setPositionPIDWrappingEnabled(sparkMaxConfig.getPositionPIDWrappingEnabled());
+        if (!sparkMaxConfig.isFollower()) {
+            sparkMax.getPIDController().setPositionPIDWrappingEnabled(sparkMaxConfig.getPositionPIDWrappingEnabled());
 
-        sparkMax.getPIDController().setSmartMotionMaxVelocity(sparkMaxConfig.getMaxVel(), 0);
-        sparkMax.getPIDController().setSmartMotionMaxAccel(sparkMaxConfig.getMaxAccel(), 0);
-        sparkMax.getPIDController().setSmartMotionAllowedClosedLoopError(sparkMaxConfig.getAllowableClosedLoopError(),
-                0);
+            sparkMax.getPIDController().setSmartMotionMaxVelocity(sparkMaxConfig.getMaxVel(), 0);
+            sparkMax.getPIDController().setSmartMotionMaxAccel(sparkMaxConfig.getMaxAccel(), 0);
+            sparkMax.getPIDController().setSmartMotionAllowedClosedLoopError(sparkMaxConfig.getAllowableClosedLoopError(),
+                    0);
 
-        if (sparkMaxConfig.getPIDconfig().getIZone() != null) {
-            sparkMax.getPIDController().setIZone(sparkMaxConfig.getPIDconfig().getIZone());
+            if (sparkMaxConfig.getPIDconfig().getIZone() != null) {
+                sparkMax.getPIDController().setIZone(sparkMaxConfig.getPIDconfig().getIZone());
+            }
+
+            sparkMax.getPIDController().setP(sparkMaxConfig.getPIDconfig().getP());
+            sparkMax.getPIDController().setI(sparkMaxConfig.getPIDconfig().getI());
+            sparkMax.getPIDController().setD(sparkMaxConfig.getPIDconfig().getD());
+            sparkMax.getPIDController().setFF(sparkMaxConfig.getPIDconfig().getF());
+        } else {
+            sparkMax.follow(sparkMaxConfig.getLeadSparkMax(), sparkMaxConfig.isInverted());
         }
-
-        sparkMax.getPIDController().setP(sparkMaxConfig.getPIDconfig().getP());
-        sparkMax.getPIDController().setI(sparkMaxConfig.getPIDconfig().getI());
-        sparkMax.getPIDController().setD(sparkMaxConfig.getPIDconfig().getD());
-        sparkMax.getPIDController().setFF(sparkMaxConfig.getPIDconfig().getF());
+        
 
     }
 }

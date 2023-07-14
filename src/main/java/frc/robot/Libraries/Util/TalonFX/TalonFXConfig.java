@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.sensors.SensorInitializationStrategy;
 
 import frc.robot.Libraries.Util.PIDConfig;
@@ -30,6 +31,9 @@ public class TalonFXConfig {
     private PIDConfig PIDconfig = new PIDConfig(0, 0, 0);
 
     int encoderCountsPerRev = 4096;
+
+    private boolean isFollower = false;;
+    private WPI_TalonFX leadTalonFX;
 
     /**
      * Default constructor
@@ -244,6 +248,41 @@ public class TalonFXConfig {
         this.sCurveStrength = sCurveStrength;
     }
 
+    /**
+     * Config for a follower motor
+     * 
+     * @param statusFrames                           A status frame object that
+     *                                               contains the period for each
+     *                                               type of status frame
+     * @param reset                                  If the motor should be reset to
+     *                                               factory default
+     * @param neutralMode                            The motor's behavior when not
+     *                                               moving
+     * @param statorCurrentLimit                     The max output current
+     * @param supplyCurrentLimit                     The max input current
+     * @param inverted                               Whether the motor's direction
+     *                                               is inverted
+     * @param leadTalonFX                            The TalonFX motor to follow
+     */
+    public TalonFXConfig(TalonFXStatusFrames statusFrames, boolean reset,
+            NeutralMode neutralMode,
+            StatorCurrentLimitConfiguration statorCurrentLimit, SupplyCurrentLimitConfiguration supplyCurrentLimit,
+            boolean inverted,
+            WPI_TalonFX leadTalonFX) {
+                this.statusFrames = statusFrames;
+                this.reset = reset;
+
+                this.neutralMode = neutralMode;
+
+                this.statorCurrentLimit = statorCurrentLimit;
+                this.supplyCurrentLimit = supplyCurrentLimit;
+
+                this.inverted = inverted;
+
+                this.isFollower = true;
+                this.leadTalonFX = leadTalonFX;
+    }
+
     public TalonFXStatusFrames getStatusFrames() {
         return this.statusFrames;
     }
@@ -367,6 +406,22 @@ public class TalonFXConfig {
 
     public void setEncoderCountsPerRev(int encoderCountsPerRev) {
         this.encoderCountsPerRev = encoderCountsPerRev;
+    }
+
+    public boolean isFollower() {
+        return this.isFollower;
+    }
+
+    public void setIsFollower(boolean isFollower) {
+        this.isFollower = isFollower;
+    }
+
+    public WPI_TalonFX getLeadTalonFX() {
+        return this.leadTalonFX;
+    }
+
+    public void setLeadTalonFX(WPI_TalonFX leadTalonFX) {
+        this.leadTalonFX = leadTalonFX;
     }
 
 }
