@@ -14,8 +14,8 @@ import frc.robot.Libraries.Util.SparkMax.SparkMaxSetup;
 import frc.robot.Libraries.Util.SparkMax.SparkMaxStatusFrames;
 
 public class ArmPivot extends SubsystemBase {
-    private ArmPivot armPivot;
-    public ArmPivot getInstance() {
+    private static ArmPivot armPivot;
+    public static ArmPivot getInstance() {
         if (armPivot == null) {
             armPivot = new ArmPivot();
         }
@@ -72,6 +72,10 @@ public class ArmPivot extends SubsystemBase {
 
     public void setAngle(double angle) {
         motor1.getPIDController().setReference(angle, ControlType.kPosition);
+    }
+
+    public void setAngle(ArmPositions armPositions) {
+        setAngle(armPositions.armAngle);
     }
 
     public double getAngle() {

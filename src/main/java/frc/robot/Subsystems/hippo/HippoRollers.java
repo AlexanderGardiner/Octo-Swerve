@@ -13,8 +13,8 @@ import frc.robot.Libraries.Util.SparkMax.SparkMaxSetup;
 import frc.robot.Libraries.Util.SparkMax.SparkMaxStatusFrames;
 
 public class HippoRollers extends SubsystemBase{
-    private HippoRollers armRollers;
-    public HippoRollers getInstance() {
+    private static HippoRollers armRollers;
+    public static HippoRollers getInstance() {
         if (armRollers == null) {
             armRollers = new HippoRollers();
         }
@@ -51,5 +51,9 @@ public class HippoRollers extends SubsystemBase{
 
     public void setSpeed(double speed) {
         motor.setVoltage(speed);
+    }
+
+    public void setSpeed(HippoPositions hippoPositions) {
+        setSpeed(hippoPositions.speed);
     }
 }

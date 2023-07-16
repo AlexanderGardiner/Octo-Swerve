@@ -16,8 +16,8 @@ import frc.robot.Libraries.Util.SparkMax.SparkMaxStatusFrames;
 
 public class HippoWrist extends SubsystemBase{
     
-    private HippoWrist hippoWrist;
-    public HippoWrist getInstance() {
+    private static HippoWrist hippoWrist;
+    public static HippoWrist getInstance() {
         if (hippoWrist == null) {
             hippoWrist = new HippoWrist();
         }
@@ -52,12 +52,16 @@ public class HippoWrist extends SubsystemBase{
         SparkMaxSetup.setup(motor, wristConfig);
     }
 
-    public void setSpatulaPos(double angle) {
+    public void setAngle(double angle) {
         MathUtil.clamp(angle, 0.12, 0.46);
         motor.getPIDController().setReference(angle, ControlType.kPosition);
     }
 
-    public double getSpatulaPos() {
+    public void setAngle(HippoPositions hippoPositions) {
+        setAngle(hippoPositions.angle);
+    }
+
+    public double getAngle() {
         return motor.getEncoder().getPosition();
     }
 }

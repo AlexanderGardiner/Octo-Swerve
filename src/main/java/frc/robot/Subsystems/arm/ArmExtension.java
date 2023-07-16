@@ -79,6 +79,10 @@ public class ArmExtension extends SubsystemBase {
             motor.getPIDController().setReference(gearing * position, ControlType.kPosition);
     }
 
+    public void setPosition(ArmPositions armPositions, boolean override) {
+        setPosition(armPositions.extension, override);
+    }
+
     public double getPosition() {
         return motor.getEncoder().getPosition() / gearing;
     }

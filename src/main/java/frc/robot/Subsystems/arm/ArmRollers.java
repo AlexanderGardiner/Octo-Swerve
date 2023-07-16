@@ -13,8 +13,8 @@ import frc.robot.Libraries.Util.SparkMax.SparkMaxSetup;
 import frc.robot.Libraries.Util.SparkMax.SparkMaxStatusFrames;
 
 public class ArmRollers extends SubsystemBase{
-    private ArmRollers armRollers;
-    public ArmRollers getInstance() {
+    private static ArmRollers armRollers;
+    public static ArmRollers getInstance() {
         if (armRollers == null) {
             armRollers = new ArmRollers();
         }
@@ -25,11 +25,11 @@ public class ArmRollers extends SubsystemBase{
     private SparkMaxConfig rollerConfig = new SparkMaxConfig(
         new SparkMaxStatusFrames(
             500,
-            20,
+            100,
             500,
             500,
             500,
-            20,
+            500,
             500),
             1000,
             true,
@@ -51,5 +51,9 @@ public class ArmRollers extends SubsystemBase{
 
     public void setSpeed(double speed) {
         motor.setVoltage(speed);
+    }
+
+    public void setSpeed(ArmSpeeds armSpeeds) {
+        setSpeed(armSpeeds.roller);
     }
 }

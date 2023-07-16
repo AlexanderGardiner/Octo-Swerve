@@ -16,8 +16,8 @@ import frc.robot.Libraries.Util.SparkMax.SparkMaxStatusFrames;
 
 public class ArmWrist extends SubsystemBase{
     
-    private ArmWrist armWrist;
-    public ArmWrist getInstance() {
+    private static ArmWrist armWrist;
+    public static ArmWrist getInstance() {
         if (armWrist == null) {
             armWrist = new ArmWrist();
         }
@@ -55,6 +55,10 @@ public class ArmWrist extends SubsystemBase{
     public void setAngle(double angle) {
         MathUtil.clamp(angle, 0.232, 0.69);
         motor.getPIDController().setReference(angle, ControlType.kPosition);
+    }
+
+    public void setAngle(ArmPositions armPositions) {
+        setAngle(armPositions.wrist);
     }
 
     public double getAngle() {
