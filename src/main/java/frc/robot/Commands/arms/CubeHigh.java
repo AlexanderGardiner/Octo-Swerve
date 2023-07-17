@@ -13,7 +13,7 @@ import frc.robot.Subsystems.hippo.HippoPositions;
 import frc.robot.Subsystems.hippo.HippoRollers;
 import frc.robot.Subsystems.hippo.HippoWrist;
 
-public class ConeHigh extends CommandBase{
+public class CubeHigh extends CommandBase{
 
     private ArmPivot armPivot;
     private ArmExtension armExtension;
@@ -22,7 +22,7 @@ public class ConeHigh extends CommandBase{
     private HippoWrist hippoWrist;
     private HippoRollers hippoRollers;
 
-    public ConeHigh() {
+    public CubeHigh() {
         //Setup the subsystems. We may want to release the hippo here if a neccessary circumstance can be hypothesized.
         armPivot = ArmPivot.getInstance();
         armExtension = ArmExtension.getInstance();
@@ -42,40 +42,37 @@ public class ConeHigh extends CommandBase{
     public void initialize() { 
         //Start by stowing the hippo, and beginning to raise the arm. RAW, the hippo is not neccessary but it is courtious to our teammates. Hold the cone and begin moving.
         hippoWrist.setAngle(HippoPositions.STOW);
-        armRollers.setSpeed(ArmSpeeds.HOLD_CONE);
-        armPivot.setAngle(ArmPositions.PRE_CONE_PLACE_HIGH);
+        armRollers.setSpeed(ArmSpeeds.HOLD_CUBE);
+        armPivot.setAngle(ArmPositions.CUBE_PLACE_HIGH);
         start = Timer.getFPGATimestamp();
     }
 
     @Override
     public void execute() {
         switch(flag) {
-        case 0: //At a certain point of acceptable height, we allow the extension and wrist to begin moving even before the pivot is done. 
-                //This should help speed up the placement, but will need to be tuned carefully.
-            if (0.65 > Timer.getFPGATimestamp() - start || armPivot.getAngle() >= ArmPositions.HALF_CONE_PLACE_HIGH.armAngle) {
-                armExtension.setPosition(ArmPositions.PRE_CONE_PLACE_HIGH, false);
-                armWrist.setAngle(ArmPositions.PRE_CONE_PLACE_HIGH);
+        case 0: //At a certain point of acceptable height, we allow the extension and wrist to begin moving once the pivot is done.
+            if (0.65 > Timer.getFPGATimestamp() - start || MathUtil.isWithinTolerance(armPivot.getAngle(), ArmPositions.CUBE_PLACE_HIGH.armAngle, 0.2)) {
+                armExtension.setPosition(ArmPositions.CUBE_PLACE_HIGH, false);
+                armWrist.setAngle(ArmPositions.CUBE_PLACE_HIGH);
                 flag = 1;
                 start = Timer.getFPGATimestamp();
             }
-        case 1: //Once the extension and wrist are in position, we are able to both lower the arm into place, and release the cone.  
-            if (0.65 > Timer.getFPGATimestamp() - start || MathUtil.isWithinTolerance(armWrist.getAngle(), ArmPositions.PRE_CONE_PLACE_HIGH.wrist, 0.2) && MathUtil.isWithinTolerance(armExtension.getMotorPos(), ArmPositions.PRE_CONE_PLACE_HIGH.extension, 2)) {
-                armPivot.setAngle(ArmPositions.CONE_PLACE_HIGH); //TODO: We should probably replace this arm movement with a wrist movement for stability's sake.
-                armRollers.setSpeed(ArmSpeeds.PLACE_CONE);
+        case 1: //If the wrist is there, launch the cube.
+            if (0.25 > Timer.getFPGATimestamp() - start || MathUtil.isWithinTolerance(armWrist.getAngle(), ArmPositions.CUBE_PLACE_HIGH.wrist, 0.2)) {
+                armRollers.setSpeed(ArmSpeeds.PLACE_CUBE);
                 flag = 2;
                 start = Timer.getFPGATimestamp();
             }
-        case 2: //After the pivot is in place or at least past that point, we can immediately bring the arm back and spit the cone out more aggressively.
-            if (0.65 > Timer.getFPGATimestamp() - start || armPivot.getAngle() <= ArmPositions.CONE_PLACE_HIGH.armAngle) {
+        case 2: //After a short time, stow the arm.
+            if (0.25 > Timer.getFPGATimestamp() - start) {
                 armExtension.setPosition(ArmPositions.STOW, false);
-                armRollers.setSpeed(ArmSpeeds.EJECT_CONE);
-                flag = 3;
-                start = Timer.getFPGATimestamp();
-            }
-        case 3: //The arm clears the obstructions at this point, so we can immediately drop both the arm and tray table into the stowed and upright position and we're clear for takeoff.
-            if (0.65 > Timer.getFPGATimestamp() - start || armExtension.getMotorPos() <= ArmPositions.HALF_CONE_PLACE_HIGH.extension) {
                 armWrist.setAngle(ArmPositions.STOW);
                 armPivot.setAngle(ArmPositions.STOW);
+                flag = 3;
+            }
+        case 3: //After a shorter time, stop the rollers.
+            if (0.1 > Timer.getFPGATimestamp() - start) {
+                armRollers.setSpeed(ArmSpeeds.NOTHING);
                 flag = 4;
             }
         }

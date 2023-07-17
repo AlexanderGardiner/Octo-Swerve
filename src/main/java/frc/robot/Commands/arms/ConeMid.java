@@ -1,5 +1,6 @@
 package frc.robot.Commands.arms;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Libraries.Util.MathUtil;
 import frc.robot.Subsystems.arm.ArmExtension;
@@ -35,6 +36,7 @@ public class ConeMid extends CommandBase{
     }
 
     private int flag;
+    private double start;
 
     @Override
     public void initialize() { 
@@ -42,6 +44,7 @@ public class ConeMid extends CommandBase{
         hippoWrist.setAngle(HippoPositions.STOW);
         armRollers.setSpeed(ArmSpeeds.HOLD_CONE);
         armPivot.setAngle(ArmPositions.PRE_CONE_PLACE_MID);
+        start = Timer.getFPGATimestamp();
     }
 
     @Override
@@ -49,25 +52,28 @@ public class ConeMid extends CommandBase{
         switch(flag) {
         case 0: //At a certain point of acceptable height, we allow the extension and wrist to begin moving even before the pivot is done. 
                 //This should help speed up the placement, but will need to be tuned carefully.
-            if (armPivot.getAngle() >= ArmPositions.HALF_CONE_PLACE_MID.armAngle) {
+            if (0.65 > Timer.getFPGATimestamp() - start || armPivot.getAngle() >= ArmPositions.HALF_CONE_PLACE_MID.armAngle) {
                 armExtension.setPosition(ArmPositions.PRE_CONE_PLACE_MID, false);
                 armWrist.setAngle(ArmPositions.PRE_CONE_PLACE_MID);
                 flag = 1;
+                start = Timer.getFPGATimestamp();
             }
         case 1: //Once the extension and wrist are in position, we are able to both lower the arm into place, and release the cone.  
-            if (MathUtil.isWithinTolerance(armWrist.getAngle(), ArmPositions.PRE_CONE_PLACE_MID.wrist, 0.2) && armExtension.getMotorPos() >= ArmPositions.PRE_CONE_PLACE_MID.extension) {
+            if (0.65 > Timer.getFPGATimestamp() - start || MathUtil.isWithinTolerance(armWrist.getAngle(), ArmPositions.PRE_CONE_PLACE_MID.wrist, 0.2) && MathUtil.isWithinTolerance(armExtension.getMotorPos(), ArmPositions.PRE_CONE_PLACE_MID.extension, 2)) {
                 armPivot.setAngle(ArmPositions.CONE_PLACE_MID); //TODO: We should probably replace this arm movement with a wrist movement for stability's sake.
                 armRollers.setSpeed(ArmSpeeds.PLACE_CONE);
                 flag = 2;
+                start = Timer.getFPGATimestamp();
             }
         case 2: //After the pivot is in place or at least past that point, we can immediately bring the arm back and spit the cone out more aggressively.
-            if (armPivot.getAngle() <= ArmPositions.CONE_PLACE_MID.armAngle) {
+            if (0.65 > Timer.getFPGATimestamp() - start || armPivot.getAngle() <= ArmPositions.CONE_PLACE_MID.armAngle) {
                 armExtension.setPosition(ArmPositions.STOW, false);
                 armRollers.setSpeed(ArmSpeeds.EJECT_CONE);
                 flag = 3;
+                start = Timer.getFPGATimestamp();
             }
         case 3: //The arm clears the obstructions at this point, so we can immediately drop both the arm and tray table into the stowed and upright position and we're clear for takeoff.
-            if (armExtension.getMotorPos() <= ArmPositions.HALF_CONE_PLACE_MID.extension) {
+            if (0.65 > Timer.getFPGATimestamp() - start || armExtension.getMotorPos() <= ArmPositions.HALF_CONE_PLACE_MID.extension) {
                 armWrist.setAngle(ArmPositions.STOW);
                 armPivot.setAngle(ArmPositions.STOW);
                 flag = 4;

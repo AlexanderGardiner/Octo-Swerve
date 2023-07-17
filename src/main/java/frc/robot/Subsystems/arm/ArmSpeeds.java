@@ -4,15 +4,14 @@ public enum ArmSpeeds {
     
     PLACE_CONE(3),
     EJECT_CONE(5),
-
-    COLLECT(-3),
-    
     HOLD_CONE(-5),
+
+    PLACE_CUBE(12),
     HOLD_CUBE(-3),
-    HOLD_STOW(-4),
-    
-    NOTHING(0),
-    STOW_WITH_PIECE(0);
+
+    COLLECT(-3),    
+    HOLD_STOW_EITHER(-2),
+    NOTHING(0);
 
 
     public double roller;
