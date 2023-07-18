@@ -35,8 +35,6 @@ public class SparkMaxConfig {
      private boolean isFollower = false;;
      private CANSparkMax leadSparkMax;
 
-     
-
      /**
       * Default constructor
       * 
@@ -196,23 +194,23 @@ public class SparkMaxConfig {
      /**
       * Config for a follower motor
       *
-      * @param statusFrames               A status frame object that contains the
-      *                                   period for each type of status frame
-      * @param timeoutMS                  The timeout for messages on the CAN bus
-      * @param reset                      If the motor should be reset to factory
-      *                                   default
-      * @param idleMode                   The motor's behavior when not moving
-      * @param stallCurrentLimit          The current limit in amps at 0 rpm
-      * @param freeCurrentLimit           The current limit at free speed (5700RPM
-      *                                   for NEO).
-      * @param inverted                   Whether the motor's direction is inverted
-      * @param leadSparkMax               The Spark Max motor to follow
+      * @param statusFrames      A status frame object that contains the
+      *                          period for each type of status frame
+      * @param timeoutMS         The timeout for messages on the CAN bus
+      * @param reset             If the motor should be reset to factory
+      *                          default
+      * @param idleMode          The motor's behavior when not moving
+      * @param stallCurrentLimit The current limit in amps at 0 rpm
+      * @param freeCurrentLimit  The current limit at free speed (5700RPM
+      *                          for NEO).
+      * @param inverted          Whether the motor's direction is inverted
+      * @param leadSparkMax      The Spark Max motor to follow
       */
      public SparkMaxConfig(SparkMaxStatusFrames statusFrames, int timeoutMs, boolean reset,
-                    IdleMode idleMode,
-                    int stallCurrentLimit, int freeCurrentLimit,
-                    boolean inverted,
-                    CANSparkMax leadSparkMax) {
+               IdleMode idleMode,
+               int stallCurrentLimit, int freeCurrentLimit,
+               boolean inverted,
+               CANSparkMax leadSparkMax) {
           this.statusFrames = statusFrames;
           this.timeoutMs = timeoutMs;
           this.reset = reset;
@@ -228,7 +226,7 @@ public class SparkMaxConfig {
 
           this.isFollower = true;
           this.leadSparkMax = leadSparkMax;
- 
+
      }
 
      public SparkMaxStatusFrames getStatusFrames() {

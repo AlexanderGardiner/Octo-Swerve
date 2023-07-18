@@ -15,6 +15,7 @@ import frc.robot.Libraries.Util.SparkMax.SparkMaxStatusFrames;
 
 public class ArmPivot extends SubsystemBase {
     private static ArmPivot armPivot;
+
     public static ArmPivot getInstance() {
         if (armPivot == null) {
             armPivot = new ArmPivot();
@@ -24,49 +25,50 @@ public class ArmPivot extends SubsystemBase {
 
     private CANSparkMax motor1;
     private CANSparkMax motor2;
-    private SparkMaxConfig pivotConfig1 = new SparkMaxConfig(
-        new SparkMaxStatusFrames(
-            500,
-            20,
-            500,
-            500,
-            500,
-            20,
-            500),
-            1000,
-            true,
-            SparkMaxEncoderType.Absolute,
-            IdleMode.kCoast,
-            30,
-            30,
-            false,
-            true,
-            4096,
-            false,
-            new PIDConfig(6, 0.0, 1, 0)
-    );
-    private SparkMaxConfig pivotConfig2 = new SparkMaxConfig(
-        new SparkMaxStatusFrames(
-            100,
-            100,
-            500,
-            500,
-            500,
-            500,
-            500),
-            1000,
-            true,
-            IdleMode.kCoast,
-            30,
-            30,
-            true,
-            motor1
-    );
 
     public ArmPivot() {
+        SparkMaxConfig pivotConfig1 = new SparkMaxConfig(
+                new SparkMaxStatusFrames(
+                        500,
+                        20,
+                        500,
+                        500,
+                        500,
+                        20,
+                        500),
+                1000,
+                true,
+                SparkMaxEncoderType.Absolute,
+                IdleMode.kCoast,
+                30,
+                30,
+                false,
+                true,
+                4096,
+                false,
+                new PIDConfig(6, 0.0, 1, 0));
         motor1 = new CANSparkMax(MotorIDs.ARM_PIVOT_ANGLE, MotorType.kBrushless);
+
         SparkMaxSetup.setup(motor1, pivotConfig1);
+
+        SparkMaxConfig pivotConfig2 = new SparkMaxConfig(
+                new SparkMaxStatusFrames(
+                        100,
+                        100,
+                        500,
+                        500,
+                        500,
+                        500,
+                        500),
+                1000,
+                true,
+                IdleMode.kCoast,
+                30,
+                30,
+                true,
+                motor1);
         motor2 = new CANSparkMax(MotorIDs.ARM_PIVOT_ANGLE_FOLLOWER, MotorType.kBrushless);
+
         SparkMaxSetup.setup(motor2, pivotConfig2);
     }
 
@@ -81,6 +83,5 @@ public class ArmPivot extends SubsystemBase {
     public double getAngle() {
         return motor1.getEncoder().getPosition();
     }
-
 
 }

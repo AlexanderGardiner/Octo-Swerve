@@ -23,17 +23,19 @@ public class SparkMaxSetup {
 
         sparkMax.setCANTimeout(sparkMaxConfig.getTimeoutMs());
 
-        if (sparkMaxConfig.getEncoderType() == SparkMaxEncoderType.Absolute) {
-            sparkMax.getPIDController().setFeedbackDevice(sparkMax.getAbsoluteEncoder(Type.kDutyCycle));
-            sparkMax.getAbsoluteEncoder(Type.kDutyCycle).setInverted(sparkMaxConfig.getSensorInverted());
-        } else if (sparkMaxConfig.getEncoderType() == SparkMaxEncoderType.Alternate) {
-            sparkMax.getPIDController()
-                    .setFeedbackDevice(sparkMax.getAlternateEncoder(sparkMaxConfig.getEncoderCountsPerRev()));
-            sparkMax.getAlternateEncoder(sparkMaxConfig.getEncoderCountsPerRev())
-                    .setInverted(sparkMaxConfig.getSensorInverted());
-        } else {
-            sparkMax.getPIDController().setFeedbackDevice(sparkMax.getEncoder());
-            sparkMax.getEncoder().setInverted(sparkMaxConfig.getSensorInverted());
+        if (!sparkMaxConfig.isFollower()) {
+            if (sparkMaxConfig.getEncoderType() == SparkMaxEncoderType.Absolute) {
+                sparkMax.getPIDController().setFeedbackDevice(sparkMax.getAbsoluteEncoder(Type.kDutyCycle));
+                sparkMax.getAbsoluteEncoder(Type.kDutyCycle).setInverted(sparkMaxConfig.getSensorInverted());
+            } else if (sparkMaxConfig.getEncoderType() == SparkMaxEncoderType.Alternate) {
+                sparkMax.getPIDController()
+                        .setFeedbackDevice(sparkMax.getAlternateEncoder(sparkMaxConfig.getEncoderCountsPerRev()));
+                sparkMax.getAlternateEncoder(sparkMaxConfig.getEncoderCountsPerRev())
+                        .setInverted(sparkMaxConfig.getSensorInverted());
+            } else {
+                sparkMax.getPIDController().setFeedbackDevice(sparkMax.getEncoder());
+                sparkMax.getEncoder().setInverted(sparkMaxConfig.getSensorInverted());
+            }
         }
 
         sparkMax.setIdleMode(sparkMaxConfig.getIdleMode());
@@ -46,7 +48,8 @@ public class SparkMaxSetup {
 
             sparkMax.getPIDController().setSmartMotionMaxVelocity(sparkMaxConfig.getMaxVel(), 0);
             sparkMax.getPIDController().setSmartMotionMaxAccel(sparkMaxConfig.getMaxAccel(), 0);
-            sparkMax.getPIDController().setSmartMotionAllowedClosedLoopError(sparkMaxConfig.getAllowableClosedLoopError(),
+            sparkMax.getPIDController().setSmartMotionAllowedClosedLoopError(
+                    sparkMaxConfig.getAllowableClosedLoopError(),
                     0);
 
             if (sparkMaxConfig.getPIDconfig().getIZone() != null) {
@@ -60,7 +63,6 @@ public class SparkMaxSetup {
         } else {
             sparkMax.follow(sparkMaxConfig.getLeadSparkMax(), sparkMaxConfig.isInverted());
         }
-        
 
     }
 }
