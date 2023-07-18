@@ -155,6 +155,7 @@ public class Robot extends TimedRobot {
     }
 
     SwerveDrive.getInstance().setTargetPose2d(SwerveDrive.getInstance().getPose2d());
+    ButtonConfig.initTeleop();
 
     CommandScheduler.getInstance().setDefaultCommand(SwerveDrive.getInstance(), new SwerveControl());
   }
