@@ -2,15 +2,15 @@ package frc.robot.Subsystems.arm;
 
 public enum ArmSpeeds {
     
-    PLACE_CONE(3),
-    EJECT_CONE(5),
-    HOLD_CONE(-5),
+    PLACE_CONE(2),
+    EJECT_CONE(4),
+    HOLD_CONE(-10),
 
-    PLACE_CUBE(12),
-    HOLD_CUBE(-3),
+    PLACE_CUBE(5),
+    HOLD_CUBE(-6),
 
-    COLLECT(-3),    
-    HOLD_STOW_EITHER(-2),
+    COLLECT(-10),    
+    HOLD_STOW_EITHER(-10),
     NOTHING(0);
 
 
