@@ -151,10 +151,10 @@ public class Robot extends TimedRobot {
       if (DriverStation.getAlliance() == DriverStation.Alliance.Red) {
         SwerveDrive.getInstance().setGyroAngleAdjustment(180);
       }
-
     }
 
     SwerveDrive.getInstance().setTargetPose2d(SwerveDrive.getInstance().getPose2d());
+
     ButtonConfig.initTeleop();
 
     CommandScheduler.getInstance().setDefaultCommand(SwerveDrive.getInstance(), new SwerveControl());
