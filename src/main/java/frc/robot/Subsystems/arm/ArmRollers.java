@@ -12,8 +12,9 @@ import frc.robot.Libraries.Util.SparkMax.SparkMaxEncoderType;
 import frc.robot.Libraries.Util.SparkMax.SparkMaxSetup;
 import frc.robot.Libraries.Util.SparkMax.SparkMaxStatusFrames;
 
-public class ArmRollers extends SubsystemBase{
+public class ArmRollers extends SubsystemBase {
     private static ArmRollers armRollers;
+
     public static ArmRollers getInstance() {
         if (armRollers == null) {
             armRollers = new ArmRollers();
@@ -23,14 +24,14 @@ public class ArmRollers extends SubsystemBase{
 
     private CANSparkMax motor;
     private SparkMaxConfig rollerConfig = new SparkMaxConfig(
-        new SparkMaxStatusFrames(
-            500,
-            100,
-            500,
-            500,
-            500,
-            500,
-            500),
+            new SparkMaxStatusFrames(
+                    500,
+                    100,
+                    500,
+                    500,
+                    500,
+                    500,
+                    500),
             1000,
             true,
             SparkMaxEncoderType.Relative,
@@ -41,11 +42,10 @@ public class ArmRollers extends SubsystemBase{
             false,
             2048,
             false,
-            new PIDConfig(0, 0, 0, 0)
-    );
+            new PIDConfig(0, 0, 0, 0));
 
     public ArmRollers() {
-        motor = new CANSparkMax(MotorIDs.ARM_WRIST_ANGLE, MotorType.kBrushless);
+        motor = new CANSparkMax(MotorIDs.ARM_ROLLER, MotorType.kBrushless);
         SparkMaxSetup.setup(motor, rollerConfig);
     }
 

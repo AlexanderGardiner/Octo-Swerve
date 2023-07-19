@@ -34,7 +34,6 @@ public class SparkMaxSetup {
                         .setInverted(sparkMaxConfig.getSensorInverted());
             } else {
                 sparkMax.getPIDController().setFeedbackDevice(sparkMax.getEncoder());
-                sparkMax.getEncoder().setInverted(sparkMaxConfig.getSensorInverted());
             }
         }
 
