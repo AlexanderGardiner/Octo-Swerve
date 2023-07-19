@@ -18,36 +18,34 @@ import frc.robot.Libraries.Util.SparkMax.SparkMaxSetup;
 import frc.robot.Libraries.Util.SparkMax.SparkMaxStatusFrames;
 
 public class ArmExtension extends SubsystemBase {
-    //TODO: OMFG we need to fix the measurements here, it's so arbitrary 
+    // TODO: OMFG we need to fix the measurements here, it's so arbitrary
     private CANSparkMax motor;
     private static ArmExtension armExtension;
     public SparkMaxPIDController pidController;
     private ElevatorFeedforward feedforward = new ElevatorFeedforward(0.25, 0.01, 0);
-    //gear reduction 1:25
+    // gear reduction 1:25
     private double gearing = 5.0 / 15.0;
     public double lastpos = 0;
     private SparkMaxConfig extenConfig = new SparkMaxConfig(
-        new SparkMaxStatusFrames(
-            500, 
-            500, 
-            20, 
-            500, 
-            500, 
-            500, 
-            500
-        ), 
-        1000, 
-        false, 
-        SparkMaxEncoderType.Relative, 
-        IdleMode.kBrake, 
-        30, 
-        30, 
-        true, 
-        false, 
-        2048,
-        false,
-        new PIDConfig(0.5, 0, 0.4, -3)
-    );
+            new SparkMaxStatusFrames(
+                    500,
+                    500,
+                    20,
+                    500,
+                    500,
+                    500,
+                    500),
+            1000,
+            false,
+            SparkMaxEncoderType.Relative,
+            IdleMode.kBrake,
+            30,
+            30,
+            true,
+            false,
+            2048,
+            false,
+            new PIDConfig(0.5, 0, 0.4, -3));
 
     public static ArmExtension getInstance() {
         if (armExtension == null) {
@@ -57,26 +55,27 @@ public class ArmExtension extends SubsystemBase {
     }
 
     public ArmExtension() {
-            this.motor = new CANSparkMax(MotorIDs.ARM_EXTENSION, MotorType.kBrushless);
-            SparkMaxSetup.setup(motor, extenConfig);
-            setOffset();
+        this.motor = new CANSparkMax(MotorIDs.ARM_EXTENSION, MotorType.kBrushless);
+        SparkMaxSetup.setup(motor, extenConfig);
+        pidController = motor.getPIDController();
+        setOffset();
     }
 
     public void setOffset() {
         motor.getEncoder().setPosition(0);
-        setPosition(0, false);    
+        setPosition(0, false);
     }
 
     public void setPosition(double position, boolean override) {
-            if (position > 75 && !override) {
-                position = 75;
-            }
-            if (position < 0 && !override) {
-                position = 0;
-            }
+        if (position > 75 && !override) {
+            position = 75;
+        }
+        if (position < 0 && !override) {
+            position = 0;
+        }
 
-            lastpos = position;
-            motor.getPIDController().setReference(gearing * position, ControlType.kPosition);
+        lastpos = position;
+        motor.getPIDController().setReference(gearing * position, ControlType.kPosition);
     }
 
     public void setPosition(ArmPositions armPositions, boolean override) {
@@ -86,6 +85,7 @@ public class ArmExtension extends SubsystemBase {
     public double getPosition() {
         return motor.getEncoder().getPosition() / gearing;
     }
+
     // TODO: Just awful.
     public void zeroArm() {
         motor.setSmartCurrentLimit(5, 5);
@@ -95,7 +95,7 @@ public class ArmExtension extends SubsystemBase {
     }
 
     @Override
-    public void periodic(){
+    public void periodic() {
         setMotorKf();
     }
 
@@ -107,19 +107,19 @@ public class ArmExtension extends SubsystemBase {
         this.motor.setSmartCurrentLimit(extenConfig.getStallCurrentLimit(), extenConfig.getFreeCurrentLimit());
     }
 
-    public double getMotorPos(){
+    public double getMotorPos() {
         return motor.getAbsoluteEncoder(SparkMaxAbsoluteEncoder.Type.kDutyCycle).getPosition();
     }
 
-    public double getMotorVel(){
+    public double getMotorVel() {
         return motor.getAbsoluteEncoder(SparkMaxAbsoluteEncoder.Type.kDutyCycle).getVelocity();
     }
 
-    public void setMotorKf(){
+    public void setMotorKf() {
         pidController.setFF(feedforward.calculate(getMotorPos(), getMotorVel()));
     }
 
-    public double getMotorKf(){
+    public double getMotorKf() {
         return pidController.getFF();
     }
 }
