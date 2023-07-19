@@ -15,6 +15,8 @@
 
 7. Press the button to the right of the replace field to replace all instances of "frc.robot.Libraries" with "octo.lib"
 
+8. Adjust the readme.md file to revert the changes of the find and replace
+
 9. Change the version number in the build.gradle file in the octo-lib project under wpi (If it asks to synchronize the classpath/configuration press yes)
    <br><code>wpi {
     &nbsp;&nbsp;&nbsp;&nbsp;version = "2023.1.0"
