@@ -19,7 +19,7 @@ public class Light extends SubsystemBase {
         return light;
     }
 
-    private boolean command = true;
+    public boolean command = true;
     private ArrayList<Animations> animationsList;
 
     public Light() {
