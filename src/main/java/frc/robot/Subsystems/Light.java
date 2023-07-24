@@ -21,7 +21,7 @@ public class Light extends SubsystemBase {
 
     public boolean command = true;
     private ArrayList<Animations> animationsList;
-
+    //Honestly some of the best logic code I've ever written. TODO:Document this later
     public Light() {
         this.candle = new CANdle(MotorIDs.CANDLE_ID);
         setAnimation(Animations.BOOT_COMPLETE);
@@ -39,6 +39,7 @@ public class Light extends SubsystemBase {
     private void configAnimation(Animation animation) {
         if (animation == lastAnimation) return;
         candle.animate(animation);
+        lastAnimation = animation;
     }
 
     int flag = 0;
