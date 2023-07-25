@@ -3,8 +3,6 @@ package frc.robot.Commands.arms;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Libraries.Util.MathUtil;
-import frc.robot.Subsystems.Animations;
-import frc.robot.Subsystems.Light;
 import frc.robot.Subsystems.arm.ArmExtension;
 import frc.robot.Subsystems.arm.ArmPivot;
 import frc.robot.Subsystems.arm.ArmPositions;
@@ -14,6 +12,8 @@ import frc.robot.Subsystems.arm.ArmWrist;
 import frc.robot.Subsystems.hippo.HippoPositions;
 import frc.robot.Subsystems.hippo.HippoRollers;
 import frc.robot.Subsystems.hippo.HippoWrist;
+import frc.robot.Subsystems.light.Animations;
+import frc.robot.Subsystems.light.Light;
 
 public class ConeMid extends CommandBase{
 

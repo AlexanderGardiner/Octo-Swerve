@@ -1,4 +1,4 @@
-package frc.robot.Subsystems;
+package frc.robot.Subsystems.light;
 
 import com.ctre.phoenix.led.Animation;
 import com.ctre.phoenix.led.RainbowAnimation;

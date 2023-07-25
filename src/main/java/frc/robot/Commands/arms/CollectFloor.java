@@ -12,6 +12,8 @@ import frc.robot.Subsystems.arm.ArmWrist;
 import frc.robot.Subsystems.hippo.HippoPositions;
 import frc.robot.Subsystems.hippo.HippoRollers;
 import frc.robot.Subsystems.hippo.HippoWrist;
+import frc.robot.Subsystems.light.Animations;
+import frc.robot.Subsystems.light.Light;
 
 public class CollectFloor extends CommandBase{
 
@@ -21,6 +23,7 @@ public class CollectFloor extends CommandBase{
     private ArmRollers armRollers;
     private HippoWrist hippoWrist;
     private HippoRollers hippoRollers;
+    private Light light;
 
     public CollectFloor() {
         //Setup the subsystems. We may want to release the hippo here if a neccessary circumstance can be hypothesized.
@@ -30,6 +33,7 @@ public class CollectFloor extends CommandBase{
         armRollers = ArmRollers.getInstance();
         hippoWrist = HippoWrist.getInstance();
         hippoRollers = HippoRollers.getInstance();
+        light = Light.getInstance();
         addRequirements(armPivot, armExtension, armWrist, armRollers, hippoWrist, hippoRollers);
         //Initialize flag to zero. This will increment our sequence tracking in the switch case as the movement progresses.
         flag = 0;
@@ -51,10 +55,19 @@ public class CollectFloor extends CommandBase{
     public void execute() {
         switch(flag) {
         case 0: //At a certain point of acceptable height, we allow the extension and wrist to begin moving once the pivot is done.
-            if (0.65 > Timer.getFPGATimestamp() - start || MathUtil.isWithinTolerance(armPivot.getAngle(), ArmPositions.CUBE_PLACE_MID.armAngle, 0.1)) {
+            if (0.65 > Timer.getFPGATimestamp() - start) {
                 armExtension.setPosition(ArmPositions.INTAKE_GROUND, false);
                 armWrist.setAngle(ArmPositions.INTAKE_GROUND);
                 flag = 1;
+                light.setAnimation(Animations.CHECK_FAILED);
+                return;
+            }
+            if (MathUtil.isWithinTolerance(armPivot.getAngle(), ArmPositions.CUBE_PLACE_MID.armAngle, 0.1)) {
+                armExtension.setPosition(ArmPositions.INTAKE_GROUND, false);
+                armWrist.setAngle(ArmPositions.INTAKE_GROUND);
+                flag = 1;
+                light.setAnimation(Animations.CHECK_PASSED);
+                return;
             }
         }
     }

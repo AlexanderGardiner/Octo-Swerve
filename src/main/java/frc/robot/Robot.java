@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Commands.Autonomous.PathPlannerAutos;
 import frc.robot.Commands.Swerve.SwerveControl;
-import frc.robot.Subsystems.Light;
 import frc.robot.Subsystems.arm.ArmExtension;
 import frc.robot.Subsystems.arm.ArmPivot;
 import frc.robot.Subsystems.arm.ArmRollers;
@@ -24,6 +23,7 @@ import frc.robot.Subsystems.arm.ArmWrist;
 import frc.robot.Subsystems.drivetrain.SwerveDrive;
 import frc.robot.Subsystems.hippo.HippoRollers;
 import frc.robot.Subsystems.hippo.HippoWrist;
+import frc.robot.Subsystems.light.Light;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
