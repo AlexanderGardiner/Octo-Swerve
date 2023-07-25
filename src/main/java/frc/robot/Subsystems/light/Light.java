@@ -41,6 +41,10 @@ public class Light extends SubsystemBase {
         }
     }
 
+    public void setAnimation(CmdIDSequences cmdIDSequences) {
+        setAnimation(cmdIDSequences.animations);
+    }
+
     private Animation lastAnimation;
     private void configAnimation(Animation animation) {
         if (animation == lastAnimation) return;
