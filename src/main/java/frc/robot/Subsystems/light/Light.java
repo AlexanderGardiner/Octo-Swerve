@@ -20,7 +20,7 @@ public class Light extends SubsystemBase {
     }
 
     public boolean command = true;
-    private ArrayList<Animations> animationsList;
+    private ArrayList<Animations> animationsList = new ArrayList<Animations>();
     //Honestly some of the best logic code I've ever written. TODO:Document this later
     public Light() {
         this.candle = new CANdle(MotorIDs.CANDLE_ID);
