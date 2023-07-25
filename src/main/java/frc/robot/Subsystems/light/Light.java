@@ -35,6 +35,12 @@ public class Light extends SubsystemBase {
         animationsList.add(animations);
     }
 
+    public void setAnimation(Animations[] animations) {
+        for (Animations animations2 : animations) {
+            setAnimation(animations2);
+        }
+    }
+
     private Animation lastAnimation;
     private void configAnimation(Animation animation) {
         if (animation == lastAnimation) return;
