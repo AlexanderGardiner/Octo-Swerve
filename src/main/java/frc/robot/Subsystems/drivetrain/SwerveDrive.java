@@ -214,4 +214,11 @@ public class SwerveDrive extends SubsystemBase {
     public void setPoseEstimatorPose2d(Pose2d pose2d) {
         driveTrain.setPoseEstimatorPose2d(pose2d);
     }
+
+    /**
+     * Updates the robot pose
+     */
+    public void updatePose() {
+        driveTrain.updatePose();
+    }
 }

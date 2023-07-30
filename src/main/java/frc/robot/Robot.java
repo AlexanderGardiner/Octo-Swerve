@@ -6,6 +6,8 @@ import com.pathplanner.lib.server.PathPlannerServer;
 import com.sun.management.OperatingSystemMXBean;
 
 import edu.wpi.first.hal.can.CANStatus;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
@@ -155,14 +157,26 @@ public class Robot extends TimedRobot {
     teleopTimer = Timer.getFPGATimestamp();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
+      SwerveDrive.getInstance().setTargetPose2d(SwerveDrive.getInstance().getPose2d());
     } else {
-      SwerveDrive.getInstance().resetGyro();
       if (DriverStation.getAlliance() == DriverStation.Alliance.Red) {
+        SwerveDrive.getInstance().resetGyro();
         SwerveDrive.getInstance().setGyroAngleAdjustment(180);
+        SwerveDrive.getInstance().setPoseEstimatorGyroOffset(new Rotation2d());
+        SwerveDrive.getInstance().setPoseEstimatorPose2d(new Pose2d(0,0,new Rotation2d(0)));
+        SwerveDrive.getInstance().setTargetPose2d(new Pose2d(0,0,new Rotation2d(Math.PI)));
+
+      } else {
+        SwerveDrive.getInstance().resetGyro();
+        SwerveDrive.getInstance().setGyroAngleAdjustment(0);
+        SwerveDrive.getInstance().setPoseEstimatorGyroOffset(new Rotation2d());
+        SwerveDrive.getInstance().setPoseEstimatorPose2d(new Pose2d(0,0,new Rotation2d(0)));
+        SwerveDrive.getInstance().setTargetPose2d(new Pose2d(0,0,new Rotation2d(0)));
+
       }
     }
 
-    SwerveDrive.getInstance().setTargetPose2d(SwerveDrive.getInstance().getPose2d());
+    SwerveDrive.getInstance().updatePose();
 
     ButtonConfig.initTeleop();
 
@@ -185,6 +199,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopExit() {
+    CommandScheduler.getInstance().removeDefaultCommand(SwerveDrive.getInstance());
   }
 
   private void initAllSubsystems() {
