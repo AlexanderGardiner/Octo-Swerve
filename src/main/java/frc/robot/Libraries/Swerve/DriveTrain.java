@@ -191,7 +191,17 @@ public class DriveTrain {
             swerveModules.get(i).setTargetState(swerveModuleStates[i]);
         }
 
-        // Updates current pose from current module states
+        updatePose();
+        
+        if (simulated) {
+            gyro.setSimulatedRotationSpeed(Math.toDegrees(chassisSpeeds.omegaRadiansPerSecond));
+        }
+    }
+
+    /**
+     * Updates current pose from current module states
+     */
+    public void updatePose() {
         ArrayList<SwerveModulePosition> modulePositions = new ArrayList<SwerveModulePosition>();
 
         for (int i = 0; i < 4; i++) {
@@ -201,9 +211,6 @@ public class DriveTrain {
         poseEstimator.updatePose(modulePositions,
                 gyro.getRotation2d());
 
-        if (simulated) {
-            gyro.setSimulatedRotationSpeed(Math.toDegrees(chassisSpeeds.omegaRadiansPerSecond));
-        }
     }
 
     /**

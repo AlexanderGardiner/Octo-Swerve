@@ -167,6 +167,8 @@ public class Robot extends TimedRobot {
       }
     }
 
+    SwerveDrive.getInstance().updatePose();
+
     
 
     CommandScheduler.getInstance().setDefaultCommand(SwerveDrive.getInstance(), new SwerveControl());
@@ -188,5 +190,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopExit() {
+    CommandScheduler.getInstance().removeDefaultCommand(SwerveDrive.getInstance());
   }
 }
