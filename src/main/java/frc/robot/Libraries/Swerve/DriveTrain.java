@@ -136,11 +136,11 @@ public class DriveTrain {
             double targetPoseX = targetPose2d.getX();
             double targetPoseY = targetPose2d.getY();
             Rotation2d targetPoseRotation = targetPose2d.getRotation();
-            if (chassisSpeeds.vxMetersPerSecond == 0) {
+            if (MathUtil.isWithinTolerance(chassisSpeeds.vxMetersPerSecond, 0, 0.1)) {
                 targetPoseX = currentPose.getX();
             }
 
-            if (chassisSpeeds.vyMetersPerSecond == 0) {
+            if (MathUtil.isWithinTolerance(chassisSpeeds.vyMetersPerSecond, 0, 0.1)) {
                 targetPoseY = currentPose.getY();
             }
 
