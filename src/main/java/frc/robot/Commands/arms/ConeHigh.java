@@ -1,6 +1,7 @@
 package frc.robot.Commands.arms;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Libraries.Util.MathUtil;
 import frc.robot.Subsystems.arm.ArmExtension;
@@ -60,6 +61,7 @@ public class ConeHigh extends CommandBase{
             if (0.65 > Timer.getFPGATimestamp() - start) {
                 armExtension.setPosition(ArmPositions.PRE_CONE_PLACE_HIGH, false);
                 armWrist.setAngle(ArmPositions.PRE_CONE_PLACE_HIGH);
+                SmartDashboard.putBoolean("wristset", true);
                 flag = 1;
                 start = Timer.getFPGATimestamp();
                 light.setAnimation(Animations.CHECK_FAILED);
@@ -68,6 +70,7 @@ public class ConeHigh extends CommandBase{
             if (armPivot.getAngle() >= ArmPositions.HALF_CONE_PLACE_HIGH.armAngle) {
                 armExtension.setPosition(ArmPositions.PRE_CONE_PLACE_HIGH, false);
                 armWrist.setAngle(ArmPositions.PRE_CONE_PLACE_HIGH);
+                SmartDashboard.putBoolean("wristset", true);
                 flag = 1;
                 start = Timer.getFPGATimestamp();
                 light.setAnimation(Animations.CHECK_PASSED);
@@ -82,7 +85,7 @@ public class ConeHigh extends CommandBase{
                 light.setAnimation(Animations.CHECK_FAILED);
                 return;
             }
-            if (MathUtil.isWithinTolerance(armWrist.getAngle(), ArmPositions.PRE_CONE_PLACE_HIGH.wrist, 0.2) && MathUtil.isWithinTolerance(armExtension.getMotorPos(), ArmPositions.PRE_CONE_PLACE_HIGH.extension, 2)) {
+            if (MathUtil.isWithinTolerance(armWrist.getAngle(), ArmPositions.PRE_CONE_PLACE_HIGH.wrist, 0.1) && MathUtil.isWithinTolerance(armExtension.getMotorPos(), ArmPositions.PRE_CONE_PLACE_HIGH.extension, 2)) {
                 armPivot.setAngle(ArmPositions.CONE_PLACE_HIGH); //TODO: We should probably replace this arm movement with a wrist movement for stability's sake.
                 armRollers.setSpeed(ArmSpeeds.PLACE_CONE);
                 flag = 2;

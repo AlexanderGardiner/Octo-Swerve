@@ -3,7 +3,7 @@ package frc.robot.Subsystems.hippo;
 public enum HippoPositions {
 
     INTAKE(0, 0),
-    STOW(0, 0),
+    STOW(0.45, -0.5),
     PLACE(0, 0);
 
     

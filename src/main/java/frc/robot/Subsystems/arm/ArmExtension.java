@@ -43,7 +43,7 @@ public class ArmExtension extends SubsystemBase {
             30,
             true,
             false,
-            2048,
+            42,
             false,
             new PIDConfig(0.5, 0, 0.4, -3));
 

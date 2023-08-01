@@ -57,7 +57,7 @@ public class SwerveDrive extends SubsystemBase {
                 new boolean[] { false, false, false, false },
                 new boolean[] { false, false, false, false },
                 new boolean[] { false, false, false, false },
-                true,
+                false,
                 new Pose2d(0, 0, new Rotation2d(Math.PI)),
                 new PIDConfig(0.001, 0, 0, 0, Double.valueOf(0)),
                 new PIDConfig(0.1, 0, 0, 0, Double.valueOf(0)),
