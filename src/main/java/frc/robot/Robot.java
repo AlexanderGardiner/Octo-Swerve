@@ -113,9 +113,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putString("Time-Left", "Robot In Auto");
     CommandScheduler.getInstance().cancelAll();
     CommandScheduler.getInstance().removeDefaultCommand(SwerveDrive.getInstance());
-
+    PathPlannerServer.startServer(5811);
     m_autonomousCommand = autoChooser.getSelected();
-
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
@@ -126,6 +125,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
+    SmartDashboard.putString("The auto pose", SwerveDrive.getInstance().getPose2d().toString());
   }
 
   /**
@@ -154,22 +154,20 @@ public class Robot extends TimedRobot {
         SwerveDrive.getInstance().resetGyro();
         SwerveDrive.getInstance().setGyroAngleAdjustment(180);
         SwerveDrive.getInstance().setPoseEstimatorGyroOffset(new Rotation2d());
-        SwerveDrive.getInstance().setPoseEstimatorPose2d(new Pose2d(0,0,new Rotation2d(0)));
-        SwerveDrive.getInstance().setTargetPose2d(new Pose2d(0,0,new Rotation2d(Math.PI)));
+        SwerveDrive.getInstance().setPoseEstimatorPose2d(new Pose2d(0, 0, new Rotation2d(0)));
+        SwerveDrive.getInstance().setTargetPose2d(new Pose2d(0, 0, new Rotation2d(Math.PI)));
 
       } else {
         SwerveDrive.getInstance().resetGyro();
         SwerveDrive.getInstance().setGyroAngleAdjustment(0);
         SwerveDrive.getInstance().setPoseEstimatorGyroOffset(new Rotation2d());
-        SwerveDrive.getInstance().setPoseEstimatorPose2d(new Pose2d(0,0,new Rotation2d(0)));
-        SwerveDrive.getInstance().setTargetPose2d(new Pose2d(0,0,new Rotation2d(0)));
+        SwerveDrive.getInstance().setPoseEstimatorPose2d(new Pose2d(0, 0, new Rotation2d(0)));
+        SwerveDrive.getInstance().setTargetPose2d(new Pose2d(0, 0, new Rotation2d(0)));
 
       }
     }
 
     SwerveDrive.getInstance().updatePose();
-
-    
 
     CommandScheduler.getInstance().setDefaultCommand(SwerveDrive.getInstance(), new SwerveControl());
   }

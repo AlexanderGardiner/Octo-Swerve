@@ -37,8 +37,8 @@ public class PathPlannerAutos {
     public static final SwerveAutoBuilder autoBuilder = new SwerveAutoBuilder(
             SwerveDrive.getInstance()::getAllianceRelativePose2d,
             SwerveDrive.getInstance()::resetAllianceRelativePose2d,
-            new PIDConstants(5, 0, 0),
-            new PIDConstants(2, 0, 0),
+            new PIDConstants(1, 0, 0),
+            new PIDConstants(1.2, 0, 0),
             SwerveDrive.getInstance()::drive,
             eventMap,
             true,
@@ -59,9 +59,10 @@ public class PathPlannerAutos {
      */
     public static CommandBase TestPath() {
         return new InstantCommand(() -> {
-            List<PathPlannerTrajectory> pathgroup = PathPlanner.loadPathGroup("Test Path", new PathConstraints(4, 3));
+            List<PathPlannerTrajectory> pathgroup = PathPlanner.loadPathGroup("TestingPath",
+                    new PathConstraints(1, 0.5));
 
-            startingGyroAngle = 90;
+            startingGyroAngle = 0;
             SwerveDrive.getInstance().setPoseEstimatorPose2d(pathgroup.get(0).getInitialHolonomicPose());
 
             SwerveDrive.getInstance().resetGyro();
@@ -92,7 +93,8 @@ public class PathPlannerAutos {
      */
     public static CommandBase TestPath1() {
         return new InstantCommand(() -> {
-            List<PathPlannerTrajectory> pathgroup = PathPlanner.loadPathGroup("Test Path1", new PathConstraints(4, 3));
+            List<PathPlannerTrajectory> pathgroup = PathPlanner.loadPathGroup("Test Path1",
+                    new PathConstraints(0.2, 0.1));
 
             startingGyroAngle = 180;
 
