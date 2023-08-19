@@ -62,14 +62,13 @@ public class PathPlannerAutos {
             List<PathPlannerTrajectory> pathgroup = PathPlanner.loadPathGroup("TestingPath",
                     new PathConstraints(1, 0.5));
 
-            startingGyroAngle = 0;
+            startingGyroAngle = pathgroup.get(0).getInitialHolonomicPose().getRotation().getDegrees();
+            SwerveDrive.getInstance().resetGyro();
             SwerveDrive.getInstance().setPoseEstimatorPose2d(pathgroup.get(0).getInitialHolonomicPose());
 
-            SwerveDrive.getInstance().resetGyro();
-
             if (DriverStation.getAlliance() == DriverStation.Alliance.Red) {
-                SwerveDrive.getInstance()
-                        .setGyroAngleAdjustment(MathUtil.flipAngleOverYAxis(PathPlannerAutos.startingGyroAngle));
+                SwerveDrive.getInstance().setGyroAngleAdjustment(MathUtil.flipAngleOverYAxis(startingGyroAngle));
+                
             } else {
                 SwerveDrive.getInstance().setGyroAngleAdjustment(PathPlannerAutos.startingGyroAngle);
             }
@@ -94,23 +93,16 @@ public class PathPlannerAutos {
     public static CommandBase TestPath1() {
         return new InstantCommand(() -> {
             List<PathPlannerTrajectory> pathgroup = PathPlanner.loadPathGroup("Test Path1",
-                    new PathConstraints(0.2, 0.1));
+                    new PathConstraints(1, 0.5));
 
-            startingGyroAngle = 180;
-
+            startingGyroAngle = pathgroup.get(0).getInitialHolonomicPose().getRotation().getDegrees();
             SwerveDrive.getInstance().resetGyro();
+            SwerveDrive.getInstance().setPoseEstimatorPose2d(pathgroup.get(0).getInitialHolonomicPose());
 
             if (DriverStation.getAlliance() == DriverStation.Alliance.Red) {
-                SwerveDrive.getInstance()
-                        .setPoseEstimatorPose2d(new Pose2d(pathgroup.get(0).getInitialHolonomicPose().getX(),
-                                pathgroup.get(0).getInitialHolonomicPose().getY(),
-                                new Rotation2d(Math.toRadians(MathUtil.flipAngleOverYAxis(startingGyroAngle)))));
-                SmartDashboard.putNumber("flipped gyro",
-                        MathUtil.flipAngleOverYAxis(PathPlannerAutos.startingGyroAngle));
-                SwerveDrive.getInstance()
-                        .setGyroAngleAdjustment(MathUtil.flipAngleOverYAxis(PathPlannerAutos.startingGyroAngle));
+                SwerveDrive.getInstance().setGyroAngleAdjustment(MathUtil.flipAngleOverYAxis(startingGyroAngle));
+                
             } else {
-                SwerveDrive.getInstance().setPoseEstimatorPose2d(pathgroup.get(0).getInitialHolonomicPose());
                 SwerveDrive.getInstance().setGyroAngleAdjustment(PathPlannerAutos.startingGyroAngle);
             }
 

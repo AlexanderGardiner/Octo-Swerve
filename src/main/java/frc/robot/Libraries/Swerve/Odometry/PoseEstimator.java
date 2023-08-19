@@ -113,7 +113,7 @@ public class PoseEstimator {
         Pose2d fieldRelativePose = pose2d;
         if (DriverStation.getAlliance() == DriverStation.Alliance.Red) {
             fieldRelativePose = new Pose2d(FIELD_WIDTH_METERS - pose2d.getX(),
-                    FIELD_HEIGHT_METERS - pose2d.getY(), pose2d.getRotation().minus(new Rotation2d(Math.PI)));
+                    FIELD_HEIGHT_METERS - pose2d.getY(), fieldRelativePose.getRotation().times(-1));
         }
         resetPose2d(fieldRelativePose, previousModulePositions);
     }
