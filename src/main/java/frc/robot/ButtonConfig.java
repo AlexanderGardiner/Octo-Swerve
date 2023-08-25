@@ -2,10 +2,14 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Commands.arms.CollectFloor;
+import frc.robot.Commands.arms.CollectSubstation;
 import frc.robot.Commands.arms.ConeHigh;
 import frc.robot.Commands.arms.ConeMid;
 import frc.robot.Commands.arms.CubeHigh;
 import frc.robot.Commands.arms.CubeMid;
+import frc.robot.Commands.arms.PositionAutoAlign;
+import frc.robot.Commands.arms.PositionDrive;
+import frc.robot.Commands.arms.PositionStow;
 
 public class ButtonConfig {
     public static void initTeleop() {
@@ -18,8 +22,8 @@ public class ButtonConfig {
         //DRIVER_LEFT 2 is 180 degrees
 
         new JoystickButton(ControlMap.CO_DRIVER_BUTTONS, 1).onTrue(new CollectFloor());
-        //CODRIVER 2 is substation collect
-        //CODRIVER 3 is drive/stow both
+        new JoystickButton(ControlMap.CO_DRIVER_BUTTONS, 2).onTrue(new CollectSubstation());
+        new JoystickButton(ControlMap.CO_DRIVER_BUTTONS, 3).onTrue(new PositionDrive());
         //CODRIVER 4 is hippo intake
         //CODRIVER 5 is hippo place
         //CODRIVER 6 is arm zero
@@ -27,7 +31,7 @@ public class ButtonConfig {
         new JoystickButton(ControlMap.CO_DRIVER_BUTTONS, 8).onTrue(new ConeHigh());
         new JoystickButton(ControlMap.CO_DRIVER_BUTTONS, 9).onTrue(new CubeMid());
         new JoystickButton(ControlMap.CO_DRIVER_BUTTONS, 10).onTrue(new ConeMid());
-        //CODRIVER 11 is arm auto align position
-        //CODRIVER 12 is stow both
+        new JoystickButton(ControlMap.CO_DRIVER_BUTTONS, 11).onTrue(new PositionAutoAlign());
+        new JoystickButton(ControlMap.CO_DRIVER_BUTTONS, 12).onTrue(new PositionStow());
     }
 }

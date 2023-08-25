@@ -6,7 +6,10 @@ public enum CmdIDSequences {
     CubeHigh(new Animations[] {Animations.ID_BLUE, Animations.ID_YELLOW}),
     CubeMid(new Animations[] {Animations.ID_BLUE, Animations.ID_BLUE}),
     CollectFloor(new Animations[] {Animations.ID_PURPLE, Animations.ID_GREEN}),
-    CollectSubstation(new Animations[] {Animations.ID_PURPLE, Animations.ID_YELLOW});
+    CollectSubstation(new Animations[] {Animations.ID_PURPLE, Animations.ID_YELLOW}),
+    PositionDrive(new Animations[] {Animations.ID_GREEN, Animations.ID_PURPLE}),
+    PositionStow(new Animations[] {Animations.ID_GREEN, Animations.ID_YELLOW}),
+    PositionAutoAlign(new Animations[] {Animations.ID_GREEN, Animations.ID_BLUE});
 
     public Animations[] animations;
     private CmdIDSequences(Animations[] animations) {

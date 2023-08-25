@@ -38,8 +38,6 @@ public class CollectFloor extends CommandBase{
         addRequirements(armPivot, armExtension, armWrist, armRollers, hippoWrist, hippoRollers);
         //Initialize flag to zero. This will increment our sequence tracking in the switch case as the movement progresses.
         flag = 0;
-        light.command = true;
-        light.setAnimation(CmdIDSequences.CollectFloor);
     }
 
     private int flag;
@@ -52,6 +50,8 @@ public class CollectFloor extends CommandBase{
         armRollers.setSpeed(ArmSpeeds.COLLECT);
         armPivot.setAngle(ArmPositions.INTAKE_GROUND);
         start = Timer.getFPGATimestamp();
+        light.command = true;
+        light.setAnimation(CmdIDSequences.CollectFloor);
     }
 
     @Override
