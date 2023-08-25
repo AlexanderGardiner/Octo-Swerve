@@ -13,6 +13,7 @@ import frc.robot.Subsystems.hippo.HippoPositions;
 import frc.robot.Subsystems.hippo.HippoRollers;
 import frc.robot.Subsystems.hippo.HippoWrist;
 import frc.robot.Subsystems.light.Animations;
+import frc.robot.Subsystems.light.CmdIDSequences;
 import frc.robot.Subsystems.light.Light;
 
 public class CubeHigh extends CommandBase{
@@ -49,6 +50,8 @@ public class CubeHigh extends CommandBase{
         armRollers.setSpeed(ArmSpeeds.HOLD_CUBE);
         armPivot.setAngle(ArmPositions.CUBE_PLACE_HIGH);
         start = Timer.getFPGATimestamp();
+        light.command = true;
+        light.setAnimation(CmdIDSequences.CubeHigh);
     }
 
     @Override
@@ -110,5 +113,10 @@ public class CubeHigh extends CommandBase{
     public boolean isFinished() {
         //After everything is stowed we're done here.
         return flag == 4;
+    }
+
+    @Override
+    public void end(boolean interrupted){
+        light.command = false;
     }
 }

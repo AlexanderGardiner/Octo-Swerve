@@ -14,6 +14,7 @@ import frc.robot.Subsystems.hippo.HippoPositions;
 import frc.robot.Subsystems.hippo.HippoRollers;
 import frc.robot.Subsystems.hippo.HippoWrist;
 import frc.robot.Subsystems.light.Animations;
+import frc.robot.Subsystems.light.CmdIDSequences;
 import frc.robot.Subsystems.light.Light;
 
 public class ConeHigh extends CommandBase{
@@ -51,6 +52,7 @@ public class ConeHigh extends CommandBase{
         armPivot.setAngle(ArmPositions.PRE_CONE_PLACE_HIGH);
         start = Timer.getFPGATimestamp();
         light.command = true;
+        light.setAnimation(CmdIDSequences.ConeHigh);
     }
 
     @Override
