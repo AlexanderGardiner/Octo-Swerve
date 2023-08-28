@@ -7,6 +7,8 @@ import frc.robot.Commands.arms.ConeHigh;
 import frc.robot.Commands.arms.ConeMid;
 import frc.robot.Commands.arms.CubeHigh;
 import frc.robot.Commands.arms.CubeMid;
+import frc.robot.Commands.arms.HippoIntake;
+import frc.robot.Commands.arms.HippoPlace;
 import frc.robot.Commands.arms.PositionAutoAlign;
 import frc.robot.Commands.arms.PositionDrive;
 import frc.robot.Commands.arms.PositionStow;
@@ -24,8 +26,8 @@ public class ButtonConfig {
         new JoystickButton(ControlMap.CO_DRIVER_BUTTONS, 1).onTrue(new CollectFloor());
         new JoystickButton(ControlMap.CO_DRIVER_BUTTONS, 2).onTrue(new CollectSubstation());
         new JoystickButton(ControlMap.CO_DRIVER_BUTTONS, 3).onTrue(new PositionDrive());
-        //CODRIVER 4 is hippo intake
-        //CODRIVER 5 is hippo place
+        new JoystickButton(ControlMap.CO_DRIVER_BUTTONS, 4).onTrue(new HippoIntake());
+        new JoystickButton(ControlMap.CO_DRIVER_BUTTONS, 5).onTrue(new HippoPlace());
         //CODRIVER 6 is arm zero
         new JoystickButton(ControlMap.CO_DRIVER_BUTTONS, 7).onTrue(new CubeHigh());
         new JoystickButton(ControlMap.CO_DRIVER_BUTTONS, 8).onTrue(new ConeHigh());
