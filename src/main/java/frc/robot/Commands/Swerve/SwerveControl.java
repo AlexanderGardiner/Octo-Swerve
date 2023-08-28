@@ -46,8 +46,33 @@ public class SwerveControl extends CommandBase {
          *  The joysticks may have some small amount of input when not being touched
          *  we use deadbands to remove any input from below a certain threshold
          */ 
+
         double deadbandedXAxis;
         double deadbandedYAxis;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
         
 
         // Get speeds from joysticks
