@@ -38,6 +38,20 @@ public class SwerveControl extends CommandBase {
         var ySpeed = 0.0;
         var rot = 0.0;
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         double xAxis = -1 * leftJoystick.getRawAxis(0);
         double yAxis = -1 * leftJoystick.getRawAxis(1);
 
@@ -47,8 +61,8 @@ public class SwerveControl extends CommandBase {
          *  we use deadbands to remove any input from below a certain threshold
          */ 
 
-        double deadbandedXAxis;
-        double deadbandedYAxis;
+        double deadbandedXAxis = xAxis;
+        double deadbandedYAxis = yAxis;
 
 
 
@@ -70,9 +84,6 @@ public class SwerveControl extends CommandBase {
 
 
 
-
-
-        
         
 
         // Get speeds from joysticks
