@@ -38,12 +38,21 @@ public class SwerveControl extends CommandBase {
         var ySpeed = 0.0;
         var rot = 0.0;
 
-        double xAxis = leftJoystick.getRawAxis(0);
-        double yAxis = leftJoystick.getRawAxis(1);
+        double xAxis = -1 * leftJoystick.getRawAxis(0);
+        double yAxis = -1 * leftJoystick.getRawAxis(1);
+
+        /**
+         *  Code deadband code here
+         *  The joysticks may have some small amount of input when not being touched
+         *  we use deadbands to remove any input from below a certain threshold
+         */ 
+        double deadbandedXAxis;
+        double deadbandedYAxis;
+        
 
         // Get speeds from joysticks
-        xSpeed = -1 * Math.signum(yAxis) * Math.pow(MathUtil.fitDeadband(yAxis, 0.05), 2) * swerveDrive.getMaxSpeed();
-        ySpeed = -1 * Math.signum(xAxis) * Math.pow(MathUtil.fitDeadband(xAxis, 0.05), 2) * swerveDrive.getMaxSpeed();
+        xSpeed = deadbandedXAxis * swerveDrive.getMaxSpeed();
+        ySpeed = deadbandedYAxis * swerveDrive.getMaxSpeed();
 
         if (DriverStation.getAlliance() == DriverStation.Alliance.Red) {
             xSpeed = xSpeed * -1;
