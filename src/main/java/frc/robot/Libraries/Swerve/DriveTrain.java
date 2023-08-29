@@ -126,6 +126,7 @@ public class DriveTrain {
      * @param fieldRelative Whether the movement is field relative
      */
     public void drive(ChassisSpeeds chassisSpeeds, boolean fieldRelative) {
+        SmartDashboard.putString("chassisspeeds1", chassisSpeeds.toString());
         if (fieldRelative) {
             // Calculates the target position and feeds it into a pid loop to ensure
             // accurate driving then calculates the robot relative speeds
@@ -155,20 +156,20 @@ public class DriveTrain {
 
             SmartDashboard.putString("targetPose", targetPose2d.toString());
             SmartDashboard.putString("currentPose", currentPose.toString());
-            chassisSpeeds = new ChassisSpeeds(
-                    chassisSpeeds.vxMetersPerSecond
-                            + (translationPIDController.calculate(currentPose.getX(),
-                                    targetPose2d.getX())
-                                    /
-                                    0.02),
-                    chassisSpeeds.vyMetersPerSecond
-                            + (translationPIDController.calculate(currentPose.getY(),
-                                    targetPose2d.getY())
-                                    /
-                                    0.02),
-                    chassisSpeeds.omegaRadiansPerSecond
-                            + (rotationPidController.calculate(currentPose.getRotation().getRadians(),
-                                    targetPose2d.getRotation().getRadians()) / 0.02));
+            // chassisSpeeds = new ChassisSpeeds(
+            //         chassisSpeeds.vxMetersPerSecond
+            //                 + (translationPIDController.calculate(currentPose.getX(),
+            //                         targetPose2d.getX())
+            //                         /
+            //                         0.02),
+            //         chassisSpeeds.vyMetersPerSecond
+            //                 + (translationPIDController.calculate(currentPose.getY(),
+            //                         targetPose2d.getY())
+            //                         /
+            //                         0.02),
+            //         chassisSpeeds.omegaRadiansPerSecond
+            //                 + (rotationPidController.calculate(currentPose.getRotation().getRadians(),
+            //                         targetPose2d.getRotation().getRadians()) / 0.02));
 
             if (MathUtil.isWithinTolerance(chassisSpeeds.vxMetersPerSecond, 0, 0.01)) {
                 chassisSpeeds.vxMetersPerSecond = 0;

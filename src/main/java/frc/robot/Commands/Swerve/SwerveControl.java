@@ -1,7 +1,10 @@
 package frc.robot.Commands.Swerve;
 
+import com.fasterxml.jackson.databind.deser.std.DateDeserializers.DateDeserializer;
+
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.ControlMap;
 import frc.robot.Libraries.Util.MathUtil;
@@ -55,16 +58,49 @@ public class SwerveControl extends CommandBase {
         double xAxis = -1 * leftJoystick.getRawAxis(0);
         double yAxis = -1 * leftJoystick.getRawAxis(1);
 
+        
+        
+
+
         /**
          *  Code deadband code here
          *  The joysticks may have some small amount of input when not being touched
          *  we use deadbands to remove any input from below a certain threshold
          */ 
 
-        double deadbandedXAxis = xAxis;
-        double deadbandedYAxis = yAxis;
+        double deadbandedXAxis;
+        double deadbandedYAxis;
+
+        if(Math.abs(xAxis) < 0.1) {
+            deadbandedXAxis = 0;
+        } else {
+            deadbandedXAxis = xAxis;
+        }
 
 
+        if(Math.abs(yAxis) < 0.1) {
+            deadbandedYAxis = 0;
+        } else {
+            deadbandedYAxis = yAxis; 
+        }
+
+        
+        
+        if(deadbandedXAxis>0) {
+            deadbandedXAxis=(deadbandedXAxis-0.1)* (10/9);
+        }else if(deadbandedXAxis<0){
+            deadbandedXAxis=(deadbandedXAxis+0.1)* (10/9);
+        }
+
+        if(deadbandedYAxis>0) {
+            deadbandedYAxis=(deadbandedYAxis-0.1)* (10/9);
+        
+        }else if (deadbandedYAxis<0){
+            deadbandedYAxis=(deadbandedYAxis+0.1)* (10/9);
+        }
+
+        SmartDashboard.putNumber("x", deadbandedXAxis);
+        SmartDashboard.putNumber("y", deadbandedYAxis);
 
 
 
@@ -98,6 +134,7 @@ public class SwerveControl extends CommandBase {
         // Calculate the deadband
         rot = MathUtil.fitDeadband(-rightJoystick.getRawAxis(0), 0.05) * swerveDrive.getMaxAngularSpeed();
 
+       
         // Drive
         swerveDrive.drive(new ChassisSpeeds(xSpeed, ySpeed, rot), true);
     }
