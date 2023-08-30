@@ -5,11 +5,11 @@ public enum ArmPositions {
     AUTO_ALIGN(0.785, 0, 0.35), //taken from original
     STOW(.48, 0, .242), //taken from original
 
-    HALF_CONE_PLACE_HIGH(.785, 71, .567), //fill in the crossover
+    HALF_CONE_PLACE_HIGH(.6, 0, .567), //fill in the crossover
     PRE_CONE_PLACE_HIGH(.785, 71, .567), //taken from original
     CONE_PLACE_HIGH(.745, 71, .567), //same as prep but with caligirlsmovedownalittle incorporated
     
-    HALF_CONE_PLACE_MID(0,0,0), //fill in the crossover
+    HALF_CONE_PLACE_MID(.6, 0, .619), //fill in the crossover
     PRE_CONE_PLACE_MID(.77, 21.5, .619), //taken from original
     CONE_PLACE_MID(.73, 21.5, .619), //same as prep but with caligirlsmovedownalittle incorporated
     

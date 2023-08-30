@@ -1,6 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.Commands.Swerve.GyroZero;
 import frc.robot.Commands.arms.ArmZero;
 import frc.robot.Commands.arms.CollectFloor;
 import frc.robot.Commands.arms.CollectSubstation;
@@ -16,9 +17,10 @@ import frc.robot.Commands.arms.PositionStow;
 
 public class ButtonConfig {
     public static void initTeleop() {
-        //DRIVER 6 is gyro reset
+        new JoystickButton(ControlMap.DRIVER_BUTTONS, 6).onTrue(new GyroZero());
         //DRIVER 13 is driver assist, should be removed
 
+        //TODO:Write these with the new library
         //DRIVER_RIGHT 1 is auto align
 
         //DRIVER_LEFT 1 is 0 degrees

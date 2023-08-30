@@ -23,8 +23,9 @@ public class ArmExtension extends SubsystemBase {
     private static ArmExtension armExtension;
     public SparkMaxPIDController pidController;
     private ElevatorFeedforward feedforward = new ElevatorFeedforward(0.25, 0.01, 0);
-    // gear reduction 1:25
     private double gearing = 5.0 / 15.0;
+    private double gearTicksToMeters = 5;
+    private double gearingToMeters = gearing * gearTicksToMeters;
     public double lastpos = 0;
     private SparkMaxConfig extenConfig = new SparkMaxConfig(
             new SparkMaxStatusFrames(
