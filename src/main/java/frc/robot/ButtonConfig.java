@@ -12,6 +12,7 @@ import frc.robot.Commands.arms.HippoPlace;
 import frc.robot.Commands.arms.PositionAutoAlign;
 import frc.robot.Commands.arms.PositionDrive;
 import frc.robot.Commands.arms.PositionStow;
+import frc.robot.Subsystems.arm.ArmZero;
 
 public class ButtonConfig {
     public static void initTeleop() {
@@ -28,7 +29,7 @@ public class ButtonConfig {
         new JoystickButton(ControlMap.CO_DRIVER_BUTTONS, 3).onTrue(new PositionDrive());
         new JoystickButton(ControlMap.CO_DRIVER_BUTTONS, 4).onTrue(new HippoIntake());
         new JoystickButton(ControlMap.CO_DRIVER_BUTTONS, 5).onTrue(new HippoPlace());
-        //CODRIVER 6 is arm zero
+        new JoystickButton(ControlMap.CO_DRIVER_BUTTONS, 6).onTrue(new ArmZero());
         new JoystickButton(ControlMap.CO_DRIVER_BUTTONS, 7).onTrue(new CubeHigh());
         new JoystickButton(ControlMap.CO_DRIVER_BUTTONS, 8).onTrue(new ConeHigh());
         new JoystickButton(ControlMap.CO_DRIVER_BUTTONS, 9).onTrue(new CubeMid());
