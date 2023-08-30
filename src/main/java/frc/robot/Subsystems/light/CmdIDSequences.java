@@ -11,7 +11,8 @@ public enum CmdIDSequences {
     HippoPlace(new Animations[] {Animations.ID_YELLOW, Animations.ID_PURPLE}),
     PositionDrive(new Animations[] {Animations.ID_GREEN, Animations.ID_PURPLE}),
     PositionStow(new Animations[] {Animations.ID_GREEN, Animations.ID_YELLOW}),
-    PositionAutoAlign(new Animations[] {Animations.ID_GREEN, Animations.ID_BLUE});
+    PositionAutoAlign(new Animations[] {Animations.ID_GREEN, Animations.ID_BLUE}),
+    ZeroArm(new Animations[] {Animations.BOOT_COMPLETE});
 
     public Animations[] animations;
     private CmdIDSequences(Animations[] animations) {

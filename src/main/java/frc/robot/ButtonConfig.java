@@ -1,6 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.Commands.arms.ArmZero;
 import frc.robot.Commands.arms.CollectFloor;
 import frc.robot.Commands.arms.CollectSubstation;
 import frc.robot.Commands.arms.ConeHigh;
@@ -12,7 +13,6 @@ import frc.robot.Commands.arms.HippoPlace;
 import frc.robot.Commands.arms.PositionAutoAlign;
 import frc.robot.Commands.arms.PositionDrive;
 import frc.robot.Commands.arms.PositionStow;
-import frc.robot.Subsystems.arm.ArmZero;
 
 public class ButtonConfig {
     public static void initTeleop() {
