@@ -9,7 +9,6 @@ import frc.robot.Subsystems.drivetrain.SwerveDrive;
 public class GyroZero extends InstantCommand{
 
 
-    //TODO:Alex wtf is your gyro code we need this button to work
     @Override
     public void initialize() {
         SwerveDrive.getInstance().resetGyro();
