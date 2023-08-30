@@ -24,6 +24,7 @@ public class HippoWrist extends SubsystemBase{
         return hippoWrist;
     }
 
+    public double lastpos;
     private CANSparkMax motor;
     private SparkMaxConfig wristConfig = new SparkMaxConfig(
         new SparkMaxStatusFrames(
@@ -54,6 +55,7 @@ public class HippoWrist extends SubsystemBase{
 
     public void setAngle(double angle) {
         MathUtil.clamp(angle, 0.12, 0.46);
+        lastpos = angle;
         motor.getPIDController().setReference(angle, ControlType.kPosition);
     }
 

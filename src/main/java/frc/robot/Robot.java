@@ -80,6 +80,16 @@ public class Robot extends TimedRobot {
       SmartDashboard.putBoolean("IsRed", false);
     }
 
+    SmartDashboard.putNumber("Extension position", ArmExtension.getInstance().getPosition());
+    SmartDashboard.putNumber("Extension target", ArmExtension.getInstance().lastpos);
+    SmartDashboard.putNumber("Pivot position", ArmPivot.getInstance().getAngle());
+    SmartDashboard.putNumber("Pivot target", ArmPivot.getInstance().lastpos);
+    SmartDashboard.putNumber("Wrist position", ArmWrist.getInstance().getAngle());
+    SmartDashboard.putNumber("Wrist target", ArmWrist.getInstance().lastpos);
+    SmartDashboard.putNumber("Hippo position", HippoWrist.getInstance().getAngle());
+    SmartDashboard.putNumber("Hippo target", HippoWrist.getInstance().lastpos);
+
+
     SmartDashboard.putNumber("Time for loop (ms)", (Timer.getFPGATimestamp() - startTime) * 1000);
 
     field.setRobotPose(SwerveDrive.getInstance().getPose2d());

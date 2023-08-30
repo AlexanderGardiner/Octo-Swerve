@@ -25,6 +25,7 @@ public class ArmWrist extends SubsystemBase{
         return armWrist;
     }
 
+    public double lastpos;
     private CANSparkMax motor;
     private SparkMaxConfig wristConfig = new SparkMaxConfig(
         new SparkMaxStatusFrames(
@@ -55,7 +56,7 @@ public class ArmWrist extends SubsystemBase{
 
     public void setAngle(double angle) {
         MathUtil.clamp(angle, 0.232, 0.69);
-        SmartDashboard.putNumber("wrist set angle", angle);
+        lastpos = angle;
         motor.getPIDController().setReference(angle, ControlType.kPosition);
     }
 

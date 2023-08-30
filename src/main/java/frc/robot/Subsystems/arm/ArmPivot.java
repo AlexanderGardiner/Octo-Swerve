@@ -25,6 +25,7 @@ public class ArmPivot extends SubsystemBase {
 
     private CANSparkMax motor1;
     private CANSparkMax motor2;
+    public double lastpos;
 
     public ArmPivot() {
         SparkMaxConfig pivotConfig1 = new SparkMaxConfig(
@@ -71,6 +72,7 @@ public class ArmPivot extends SubsystemBase {
     }
 
     public void setAngle(double angle) {
+        lastpos = angle;
         motor1.getPIDController().setReference(angle, ControlType.kPosition);
     }
 
