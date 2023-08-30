@@ -1,12 +1,10 @@
 package frc.robot.Commands.arms;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Subsystems.arm.ArmExtension;
 import frc.robot.Subsystems.arm.ArmPivot;
 import frc.robot.Subsystems.arm.ArmPositions;
 import frc.robot.Subsystems.arm.ArmRollers;
-import frc.robot.Subsystems.arm.ArmSpeeds;
 import frc.robot.Subsystems.arm.ArmWrist;
 import frc.robot.Subsystems.hippo.HippoPositions;
 import frc.robot.Subsystems.hippo.HippoRollers;

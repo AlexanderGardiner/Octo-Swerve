@@ -1,7 +1,5 @@
 package frc.robot.Subsystems.light;
 
-import frc.robot.Commands.arms.HippoIntake;
-
 public enum CmdIDSequences {
     ConeHigh(new Animations[] {Animations.ID_BLUE, Animations.ID_GREEN}),
     ConeMid(new Animations[] {Animations.ID_BLUE, Animations.ID_PURPLE}),
