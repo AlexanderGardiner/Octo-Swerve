@@ -46,7 +46,7 @@ public class HippoWrist extends SubsystemBase{
             false,
             4096,
             false,
-            new PIDConfig(1.1, 0.005, 0, 0)
+            new PIDConfig(1.1, 0., 0, 0)
     );
 
     public HippoWrist() {

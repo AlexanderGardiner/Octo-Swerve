@@ -42,7 +42,7 @@ public class ArmWrist extends SubsystemBase{
             IdleMode.kCoast,
             35,
             35,
-            false,
+            true,
             //TODO:Possibly invert sensor
             false,
             4096,

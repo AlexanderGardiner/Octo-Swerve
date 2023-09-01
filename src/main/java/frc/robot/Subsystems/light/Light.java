@@ -19,7 +19,7 @@ public class Light extends SubsystemBase {
         return light;
     }
 
-    public boolean command = true;
+    public boolean command = false;
     private ArrayList<Animations> animationsList = new ArrayList<Animations>();
     //Honestly some of the best logic code I've ever written. TODO:Document this later
     public Light() {

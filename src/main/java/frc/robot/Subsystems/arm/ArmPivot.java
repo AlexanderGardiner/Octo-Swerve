@@ -70,6 +70,7 @@ public class ArmPivot extends SubsystemBase {
                 motor1);
         motor2 = new CANSparkMax(MotorIDs.ARM_PIVOT_ANGLE_FOLLOWER, MotorType.kBrushless);
         SparkMaxSetup.setup(motor2, pivotConfig2);
+        motor1.getAbsoluteEncoder(Type.kDutyCycle).setZeroOffset(0.72+(-.258)-(1/6)+0.07);
     }
 
     public void setAngle(double angle) {
