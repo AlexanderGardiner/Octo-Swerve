@@ -4,6 +4,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -64,6 +65,6 @@ public class HippoWrist extends SubsystemBase{
     }
 
     public double getAngle() {
-        return motor.getEncoder().getPosition();
+        return motor.getAbsoluteEncoder(Type.kDutyCycle).getPosition();
     }
 }

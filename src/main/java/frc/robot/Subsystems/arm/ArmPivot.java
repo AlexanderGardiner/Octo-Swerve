@@ -4,6 +4,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.MotorIDs;
@@ -81,7 +82,7 @@ public class ArmPivot extends SubsystemBase {
     }
 
     public double getAngle() {
-        return motor1.getEncoder().getPosition();
+        return motor1.getAbsoluteEncoder(Type.kDutyCycle).getPosition();
     }
 
 }
