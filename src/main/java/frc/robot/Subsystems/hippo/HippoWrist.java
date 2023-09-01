@@ -42,7 +42,7 @@ public class HippoWrist extends SubsystemBase{
             IdleMode.kCoast,
             35,
             35,
-            false,
+            true,
             false,
             4096,
             false,
