@@ -40,7 +40,6 @@ public class CubeHigh extends CommandBase {
         addRequirements(armPivot, armExtension, armWrist, armRollers, hippoWrist, hippoRollers);
         // Initialize flag to zero. This will increment our sequence tracking in the
         // switch case as the movement progresses.
-        flag = 0;
     }
 
     private int flag;
@@ -61,6 +60,7 @@ public class CubeHigh extends CommandBase {
         start = Timer.getFPGATimestamp();
         light.command = true;
         light.setAnimation(CmdIDSequences.CubeHigh);
+        flag = 0;
     }
 
     @Override
@@ -90,10 +90,10 @@ public class CubeHigh extends CommandBase {
                 break;
             case 1: // Once the extension and wrist and pivot we release the cube
                 timeout = 5 < Timer.getFPGATimestamp() - start;
-                tolerance = MathUtil.isWithinTolerance(armWrist.getAngle(), ArmPositions.CUBE_PLACE_MID.wrist, 0.3)
+                tolerance = MathUtil.isWithinTolerance(armWrist.getAngle(), ArmPositions.CUBE_PLACE_HIGH.wrist, 0.3)
                         && MathUtil.isWithinTolerance(armExtension.getPosition(),
-                                ArmPositions.CUBE_PLACE_MID.extension, 5)
-                        && MathUtil.isWithinTolerance(armPivot.getAngle(), ArmPositions.CUBE_PLACE_MID.armAngle,
+                                ArmPositions.CUBE_PLACE_HIGH.extension, 5)
+                        && MathUtil.isWithinTolerance(armPivot.getAngle(), ArmPositions.CUBE_PLACE_HIGH.armAngle,
                                 0.2);
 
                 if (timeout || tolerance) {
@@ -116,14 +116,14 @@ public class CubeHigh extends CommandBase {
                 timeout = 5 < Timer.getFPGATimestamp() - start;
                 tolerance = MathUtil.isWithinTolerance(armExtension.getPosition(),
                         ArmPositions.STOW.extension,
-                        0.1);
+                        5);
 
                 if (timeout || tolerance) {
                     armWrist.setAngle(ArmPositions.STOW);
                     armPivot.setAngle(ArmPositions.STOW);
 
                     light.setAnimation(Animations.CHECK_PASSED);
-                    flag = 4;
+                    flag = 3;
 
                     if (timeout) {
                         light.setAnimation(Animations.CHECK_FAILED);
@@ -138,7 +138,7 @@ public class CubeHigh extends CommandBase {
     @Override
     public boolean isFinished() {
         // After everything is stowed we're done here.
-        return flag == 2;
+        return flag == 3;
     }
 
     @Override

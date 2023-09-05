@@ -46,6 +46,7 @@ public class PositionAutoAlign extends CommandBase{
         armWrist.setAngle(ArmPositions.AUTO_ALIGN);
         light.command = true;
         light.setAnimation(CmdIDSequences.PositionAutoAlign);
+        
 
     }
 

@@ -52,6 +52,7 @@ public class CollectFloor extends CommandBase{
         start = Timer.getFPGATimestamp();
         light.command = true;
         light.setAnimation(CmdIDSequences.CollectFloor);
+        flag = 0;
     }
 
     @Override

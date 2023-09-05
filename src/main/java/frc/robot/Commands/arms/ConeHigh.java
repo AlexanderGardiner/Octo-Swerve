@@ -61,6 +61,7 @@ public class ConeHigh extends CommandBase {
         start = Timer.getFPGATimestamp();
         light.command = true;
         light.setAnimation(CmdIDSequences.ConeHigh);
+        flag = 0;
     }
 
     @Override

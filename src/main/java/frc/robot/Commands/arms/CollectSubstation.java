@@ -39,6 +39,8 @@ public class CollectSubstation extends CommandBase{
         hippoWrist.setAngle(HippoPositions.STOW);
         armRollers.setSpeed(ArmSpeeds.COLLECT);
         armPivot.setAngle(ArmPositions.INTAKE_SUBSTATION);
+        armWrist.setAngle(ArmPositions.INTAKE_SUBSTATION);
+        armExtension.setPosition(ArmPositions.STOW,false);
         light.command = true;
         light.setAnimation(CmdIDSequences.CollectSubstation);
 

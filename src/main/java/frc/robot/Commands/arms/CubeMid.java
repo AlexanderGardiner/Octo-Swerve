@@ -61,6 +61,7 @@ public class CubeMid extends CommandBase {
         start = Timer.getFPGATimestamp();
         light.command = true;
         light.setAnimation(CmdIDSequences.CubeMid);
+        flag = 0;
     }
 
     @Override
@@ -116,14 +117,14 @@ public class CubeMid extends CommandBase {
                 timeout = 5 < Timer.getFPGATimestamp() - start;
                 tolerance = MathUtil.isWithinTolerance(armExtension.getPosition(),
                         ArmPositions.STOW.extension,
-                        0.1);
+                        5);
 
                 if (timeout || tolerance) {
                     armWrist.setAngle(ArmPositions.STOW);
                     armPivot.setAngle(ArmPositions.STOW);
 
                     light.setAnimation(Animations.CHECK_PASSED);
-                    flag = 4;
+                    flag = 3;
 
                     if (timeout) {
                         light.setAnimation(Animations.CHECK_FAILED);
@@ -138,7 +139,7 @@ public class CubeMid extends CommandBase {
     @Override
     public boolean isFinished() {
         // After everything is stowed we're done here.
-        return flag == 2;
+        return flag == 3;
     }
 
     @Override
