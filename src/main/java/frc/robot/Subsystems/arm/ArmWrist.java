@@ -4,6 +4,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -15,9 +16,10 @@ import frc.robot.Libraries.Util.SparkMax.SparkMaxEncoderType;
 import frc.robot.Libraries.Util.SparkMax.SparkMaxSetup;
 import frc.robot.Libraries.Util.SparkMax.SparkMaxStatusFrames;
 
-public class ArmWrist extends SubsystemBase{
-    
+public class ArmWrist extends SubsystemBase {
+
     private static ArmWrist armWrist;
+
     public static ArmWrist getInstance() {
         if (armWrist == null) {
             armWrist = new ArmWrist();
@@ -25,16 +27,17 @@ public class ArmWrist extends SubsystemBase{
         return armWrist;
     }
 
+    public double lastpos;
     private CANSparkMax motor;
     private SparkMaxConfig wristConfig = new SparkMaxConfig(
-        new SparkMaxStatusFrames(
-            500,
-            20,
-            500,
-            500,
-            500,
-            20,
-            500),
+            new SparkMaxStatusFrames(
+                    500,
+                    20,
+                    500,
+                    500,
+                    500,
+                    20,
+                    500),
             1000,
             true,
             SparkMaxEncoderType.Absolute,
@@ -42,11 +45,11 @@ public class ArmWrist extends SubsystemBase{
             35,
             35,
             false,
-            false,
+            // TODO:Possibly invert sensor
+            true,
             4096,
             false,
-            new PIDConfig(2, 0.000, 6, 0.02)
-    );
+            new PIDConfig(2, 0.000, 6, 0.02));
 
     public ArmWrist() {
         motor = new CANSparkMax(MotorIDs.ARM_WRIST_ANGLE, MotorType.kBrushless);
@@ -54,8 +57,8 @@ public class ArmWrist extends SubsystemBase{
     }
 
     public void setAngle(double angle) {
-        MathUtil.clamp(angle, 0.232, 0.69);
-        SmartDashboard.putNumber("wrist set angle", angle);
+        lastpos = angle;
+        SmartDashboard.putNumber("angle", angle);
         motor.getPIDController().setReference(angle, ControlType.kPosition);
     }
 
@@ -64,6 +67,6 @@ public class ArmWrist extends SubsystemBase{
     }
 
     public double getAngle() {
-        return motor.getEncoder().getPosition();
+        return motor.getAbsoluteEncoder(Type.kDutyCycle).getPosition();
     }
 }

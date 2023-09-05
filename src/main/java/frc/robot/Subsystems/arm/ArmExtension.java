@@ -23,8 +23,9 @@ public class ArmExtension extends SubsystemBase {
     private static ArmExtension armExtension;
     public SparkMaxPIDController pidController;
     private ElevatorFeedforward feedforward = new ElevatorFeedforward(0.25, 0.01, 0);
-    // gear reduction 1:25
     private double gearing = 5.0 / 15.0;
+    private double gearTicksToMeters = 5;
+    private double gearingToMeters = gearing * gearTicksToMeters;
     public double lastpos = 0;
     private SparkMaxConfig extenConfig = new SparkMaxConfig(
             new SparkMaxStatusFrames(
@@ -45,7 +46,7 @@ public class ArmExtension extends SubsystemBase {
             false,
             42,
             false,
-            new PIDConfig(0.5, 0, 0.4, -3));
+            new PIDConfig(0.3, 0, 0.2, 0));
 
     public static ArmExtension getInstance() {
         if (armExtension == null) {
@@ -86,12 +87,11 @@ public class ArmExtension extends SubsystemBase {
         return motor.getEncoder().getPosition() / gearing;
     }
 
-    // TODO: Just awful.
     public void zeroArm() {
         motor.setSmartCurrentLimit(5, 5);
-        motor.setInverted(true);
-        motor.setVoltage(-4);
-        setPosition(-3500, true);
+        // motor.setInverted(true);
+        // motor.setVoltage(-4);
+        // setPosition(-3500, true);
     }
 
     @Override
@@ -104,11 +104,11 @@ public class ArmExtension extends SubsystemBase {
     }
 
     public void resetCurrent() {
-        this.motor.setSmartCurrentLimit(extenConfig.getStallCurrentLimit(), extenConfig.getFreeCurrentLimit());
+        motor.setSmartCurrentLimit(extenConfig.getStallCurrentLimit(), extenConfig.getFreeCurrentLimit());
     }
 
     public double getMotorPos() {
-        return motor.getAbsoluteEncoder(SparkMaxAbsoluteEncoder.Type.kDutyCycle).getPosition();
+        return motor.getEncoder().getPosition();
     }
 
     public double getMotorVel() {
@@ -116,7 +116,7 @@ public class ArmExtension extends SubsystemBase {
     }
 
     public void setMotorKf() {
-        pidController.setFF(feedforward.calculate(getMotorPos(), getMotorVel()));
+        // pidController.setFF(feedforward.calculate(getMotorPos(), getMotorVel()));
     }
 
     public double getMotorKf() {

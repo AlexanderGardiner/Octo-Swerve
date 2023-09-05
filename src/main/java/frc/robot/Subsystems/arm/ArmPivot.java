@@ -4,6 +4,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.MotorIDs;
@@ -25,6 +26,7 @@ public class ArmPivot extends SubsystemBase {
 
     private CANSparkMax motor1;
     private CANSparkMax motor2;
+    public double lastpos;
 
     public ArmPivot() {
         SparkMaxConfig pivotConfig1 = new SparkMaxConfig(
@@ -68,9 +70,11 @@ public class ArmPivot extends SubsystemBase {
                 motor1);
         motor2 = new CANSparkMax(MotorIDs.ARM_PIVOT_ANGLE_FOLLOWER, MotorType.kBrushless);
         SparkMaxSetup.setup(motor2, pivotConfig2);
+        motor1.getAbsoluteEncoder(Type.kDutyCycle).setZeroOffset(0.72+(-.258)-(1/6)+0.07);
     }
 
     public void setAngle(double angle) {
+        lastpos = angle;
         motor1.getPIDController().setReference(angle, ControlType.kPosition);
     }
 
@@ -79,7 +83,7 @@ public class ArmPivot extends SubsystemBase {
     }
 
     public double getAngle() {
-        return motor1.getEncoder().getPosition();
+        return motor1.getAbsoluteEncoder(Type.kDutyCycle).getPosition();
     }
 
 }
