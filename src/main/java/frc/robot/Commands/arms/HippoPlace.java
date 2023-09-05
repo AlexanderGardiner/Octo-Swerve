@@ -34,19 +34,21 @@ public class HippoPlace extends CommandBase{
         start = Timer.getFPGATimestamp();
         light.command = true;
         light.setAnimation(CmdIDSequences.HippoPlace);
+        flag = 0;
     }
 
     @Override
     public void execute() {
         switch(flag) {
         case 0:
-            if (0.65 > Timer.getFPGATimestamp() - start) {
+            if (1 < Timer.getFPGATimestamp() - start) {
                 flag = 1;
                 hippoWrist.setAngle(HippoPositions.STOW);
                 hippoRollers.setSpeed(0);
                 flag = 1;                
-                return;
+                
             }
+            break;
         }
     }
 
