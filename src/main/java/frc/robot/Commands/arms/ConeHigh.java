@@ -54,8 +54,8 @@ public class ConeHigh extends CommandBase {
         // Start by stowing the hippo, and beginning to raise the arm. RAW, the hippo is
         // not neccessary but it is courtious to our teammates. Hold the cone and begin
         // moving.
-        //hippoWrist.setAngle(HippoPositions.STOW);
-        //armRollers.setSpeed(ArmSpeeds.HOLD_CONE);
+        hippoWrist.setAngle(HippoPositions.STOW);
+        armRollers.setSpeed(ArmSpeeds.HOLD_CONE);
         armPivot.setAngle(ArmPositions.PRE_CONE_PLACE_HIGH);
         armExtension.setPosition(ArmPositions.STOW, false);
         start = Timer.getFPGATimestamp();
@@ -72,7 +72,8 @@ public class ConeHigh extends CommandBase {
                     // begin moving even before the pivot is done.
                     // This should help speed up the placement, but will need to be tuned carefully.
                 timeout = 5 < Timer.getFPGATimestamp() - start;
-                tolerance = MathUtil.isWithinTolerance(armPivot.getAngle(), ArmPositions.HALF_CONE_PLACE_HIGH.armAngle,0.1);
+                tolerance = MathUtil.isWithinTolerance(armPivot.getAngle(), ArmPositions.HALF_CONE_PLACE_HIGH.armAngle,
+                        0.1);
 
                 if (timeout || tolerance) {
                     armExtension.setPosition(ArmPositions.PRE_CONE_PLACE_HIGH, false);
@@ -93,11 +94,13 @@ public class ConeHigh extends CommandBase {
                     // arm into place, and release the cone.
                 timeout = 5 < Timer.getFPGATimestamp() - start;
                 tolerance = MathUtil.isWithinTolerance(armWrist.getAngle(), ArmPositions.PRE_CONE_PLACE_HIGH.wrist, 0.3)
-                                     && MathUtil.isWithinTolerance(armExtension.getPosition(), ArmPositions.PRE_CONE_PLACE_HIGH.extension, 5) 
-                                     && MathUtil.isWithinTolerance(armPivot.getAngle(), ArmPositions.PRE_CONE_PLACE_HIGH.armAngle, 0.2);
+                        && MathUtil.isWithinTolerance(armExtension.getPosition(),
+                                ArmPositions.PRE_CONE_PLACE_HIGH.extension, 5)
+                        && MathUtil.isWithinTolerance(armPivot.getAngle(), ArmPositions.PRE_CONE_PLACE_HIGH.armAngle,
+                                0.2);
 
                 if (timeout || tolerance) {
-                    armPivot.setAngle(ArmPositions.CONE_PLACE_HIGH); 
+                    armPivot.setAngle(ArmPositions.CONE_PLACE_HIGH);
                     armRollers.setSpeed(ArmSpeeds.PLACE_CONE);
 
                     start = Timer.getFPGATimestamp();
@@ -113,7 +116,7 @@ public class ConeHigh extends CommandBase {
             case 2: // After the pivot is in place or at least past that point, we can immediately
                     // bring the arm back and spit the cone out more aggressively.
                 timeout = 5 < Timer.getFPGATimestamp() - start;
-                tolerance = MathUtil.isWithinTolerance(armPivot.getAngle(), ArmPositions.CONE_PLACE_HIGH.armAngle,0.1);
+                tolerance = MathUtil.isWithinTolerance(armPivot.getAngle(), ArmPositions.CONE_PLACE_HIGH.armAngle, 0.1);
 
                 if (timeout || tolerance) {
                     armExtension.setPosition(ArmPositions.STOW, false);
@@ -133,12 +136,13 @@ public class ConeHigh extends CommandBase {
                     // both the arm and tray table into the stowed and upright position and we're
                     // clear for takeoff.
                 timeout = 5 < Timer.getFPGATimestamp() - start;
-                tolerance = MathUtil.isWithinTolerance(armExtension.getMotorPos(), ArmPositions.HALF_CONE_PLACE_HIGH.extension, 5);
+                tolerance = MathUtil.isWithinTolerance(armExtension.getMotorPos(),
+                        ArmPositions.HALF_CONE_PLACE_HIGH.extension, 5);
 
                 if (timeout || tolerance) {
                     armWrist.setAngle(ArmPositions.STOW);
                     armPivot.setAngle(ArmPositions.STOW);
-      
+
                     light.setAnimation(Animations.CHECK_PASSED);
                     flag = 4;
 
