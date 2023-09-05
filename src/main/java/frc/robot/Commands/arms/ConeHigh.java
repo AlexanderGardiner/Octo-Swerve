@@ -17,7 +17,7 @@ import frc.robot.Subsystems.light.Animations;
 import frc.robot.Subsystems.light.CmdIDSequences;
 import frc.robot.Subsystems.light.Light;
 
-public class ConeHigh extends CommandBase{
+public class ConeHigh extends CommandBase {
 
     private ArmPivot armPivot;
     private ArmExtension armExtension;
@@ -28,7 +28,8 @@ public class ConeHigh extends CommandBase{
     private Light light;
 
     public ConeHigh() {
-        //Setup the subsystems. We may want to release the hippo here if a neccessary circumstance can be hypothesized.
+        // Setup the subsystems. We may want to release the hippo here if a neccessary
+        // circumstance can be hypothesized.
         armPivot = ArmPivot.getInstance();
         armExtension = ArmExtension.getInstance();
         armWrist = ArmWrist.getInstance();
@@ -37,7 +38,8 @@ public class ConeHigh extends CommandBase{
         hippoRollers = HippoRollers.getInstance();
         light = Light.getInstance();
         addRequirements(armPivot, armExtension, armWrist, armRollers, hippoWrist, hippoRollers);
-        //Initialize flag to zero. This will increment our sequence tracking in the switch case as the movement progresses.
+        // Initialize flag to zero. This will increment our sequence tracking in the
+        // switch case as the movement progresses.
         flag = 0;
     }
 
@@ -45,8 +47,10 @@ public class ConeHigh extends CommandBase{
     private double start;
 
     @Override
-    public void initialize() { 
-        //Start by stowing the hippo, and beginning to raise the arm. RAW, the hippo is not neccessary but it is courtious to our teammates. Hold the cone and begin moving.
+    public void initialize() {
+        // Start by stowing the hippo, and beginning to raise the arm. RAW, the hippo is
+        // not neccessary but it is courtious to our teammates. Hold the cone and begin
+        // moving.
         hippoWrist.setAngle(HippoPositions.STOW);
         armRollers.setSpeed(ArmSpeeds.HOLD_CONE);
         armPivot.setAngle(ArmPositions.PRE_CONE_PLACE_HIGH);
@@ -57,82 +61,95 @@ public class ConeHigh extends CommandBase{
 
     @Override
     public void execute() {
-        switch(flag) {
-        case 0: //At a certain point of acceptable height, we allow the extension and wrist to begin moving even before the pivot is done. 
-                //This should help speed up the placement, but will need to be tuned carefully.
-            if (0.65 > Timer.getFPGATimestamp() - start) {
-                armExtension.setPosition(ArmPositions.PRE_CONE_PLACE_HIGH, false);
-                armWrist.setAngle(ArmPositions.PRE_CONE_PLACE_HIGH);
-                SmartDashboard.putBoolean("wristset", true);
-                flag = 1;
-                start = Timer.getFPGATimestamp();
-                light.setAnimation(Animations.CHECK_FAILED);
-                return;
-            }
-            if (armPivot.getAngle() >= ArmPositions.HALF_CONE_PLACE_HIGH.armAngle) {
-                armExtension.setPosition(ArmPositions.PRE_CONE_PLACE_HIGH, false);
-                armWrist.setAngle(ArmPositions.PRE_CONE_PLACE_HIGH);
-                SmartDashboard.putBoolean("wristset", true);
-                flag = 1;
-                start = Timer.getFPGATimestamp();
-                light.setAnimation(Animations.CHECK_PASSED);
-                return;
-            }
-        case 1: //Once the extension and wrist are in position, we are able to both lower the arm into place, and release the cone.  
-            if (0.65 > Timer.getFPGATimestamp() - start) {
-                armPivot.setAngle(ArmPositions.CONE_PLACE_HIGH); //TODO: We should probably replace this arm movement with a wrist movement for stability's sake.
-                armRollers.setSpeed(ArmSpeeds.PLACE_CONE);
-                flag = 2;
-                start = Timer.getFPGATimestamp();
-                light.setAnimation(Animations.CHECK_FAILED);
-                return;
-            }
-            if (MathUtil.isWithinTolerance(armWrist.getAngle(), ArmPositions.PRE_CONE_PLACE_HIGH.wrist, 0.1) && MathUtil.isWithinTolerance(armExtension.getMotorPos(), ArmPositions.PRE_CONE_PLACE_HIGH.extension, 2)) {
-                armPivot.setAngle(ArmPositions.CONE_PLACE_HIGH); //TODO: We should probably replace this arm movement with a wrist movement for stability's sake.
-                armRollers.setSpeed(ArmSpeeds.PLACE_CONE);
-                flag = 2;
-                start = Timer.getFPGATimestamp();
-                light.setAnimation(Animations.CHECK_PASSED);
-                return;
-            }
-        case 2: //After the pivot is in place or at least past that point, we can immediately bring the arm back and spit the cone out more aggressively.
-            if (0.65 > Timer.getFPGATimestamp() - start) {
-                armExtension.setPosition(ArmPositions.STOW, false);
-                armRollers.setSpeed(ArmSpeeds.EJECT_CONE);
-                flag = 3;
-                start = Timer.getFPGATimestamp();
-                light.setAnimation(Animations.CHECK_FAILED);
-                return;
-            }
-            if (armPivot.getAngle() <= ArmPositions.CONE_PLACE_HIGH.armAngle) {
-                armExtension.setPosition(ArmPositions.STOW, false);
-                armRollers.setSpeed(ArmSpeeds.EJECT_CONE);
-                flag = 3;
-                start = Timer.getFPGATimestamp();
-                light.setAnimation(Animations.CHECK_PASSED);
-                return;
-            }
-        case 3: //The arm clears the obstructions at this point, so we can immediately drop both the arm and tray table into the stowed and upright position and we're clear for takeoff.
-            if (0.65 > Timer.getFPGATimestamp() - start || armExtension.getMotorPos() <= ArmPositions.HALF_CONE_PLACE_HIGH.extension) {
-                armWrist.setAngle(ArmPositions.STOW);
-                armPivot.setAngle(ArmPositions.STOW);
-                flag = 4;
-                light.setAnimation(Animations.CHECK_FAILED);
-                return;
-            }
-            if (0.65 > Timer.getFPGATimestamp() - start || armExtension.getMotorPos() <= ArmPositions.HALF_CONE_PLACE_HIGH.extension) {
-                armWrist.setAngle(ArmPositions.STOW);
-                armPivot.setAngle(ArmPositions.STOW);
-                flag = 4;
-                light.setAnimation(Animations.CHECK_PASSED);
-                return;
-            }
+        switch (flag) {
+            case 0: // At a certain point of acceptable height, we allow the extension and wrist to
+                    // begin moving even before the pivot is done.
+                    // This should help speed up the placement, but will need to be tuned carefully.
+                if (5 > Timer.getFPGATimestamp() - start) {
+                    armExtension.setPosition(ArmPositions.PRE_CONE_PLACE_HIGH, false);
+                    armWrist.setAngle(ArmPositions.PRE_CONE_PLACE_HIGH);
+                    SmartDashboard.putBoolean("wristset", true);
+                    flag = 1;
+                    start = Timer.getFPGATimestamp();
+                    light.setAnimation(Animations.CHECK_FAILED);
+                    return;
+                }
+                if (armPivot.getAngle() >= ArmPositions.HALF_CONE_PLACE_HIGH.armAngle) {
+                    armExtension.setPosition(ArmPositions.PRE_CONE_PLACE_HIGH, false);
+                    armWrist.setAngle(ArmPositions.PRE_CONE_PLACE_HIGH);
+                    SmartDashboard.putBoolean("wristset", true);
+                    flag = 1;
+                    start = Timer.getFPGATimestamp();
+                    light.setAnimation(Animations.CHECK_PASSED);
+                    return;
+                }
+            case 1: // Once the extension and wrist are in position, we are able to both lower the
+                    // arm into place, and release the cone.
+                if (5 > Timer.getFPGATimestamp() - start) {
+                    armPivot.setAngle(ArmPositions.CONE_PLACE_HIGH); // TODO: We should probably replace this arm
+                                                                     // movement with a wrist movement for stability's
+                                                                     // sake.
+                    armRollers.setSpeed(ArmSpeeds.PLACE_CONE);
+                    flag = 2;
+                    start = Timer.getFPGATimestamp();
+                    light.setAnimation(Animations.CHECK_FAILED);
+                    return;
+                }
+                if (MathUtil.isWithinTolerance(armWrist.getAngle(), ArmPositions.PRE_CONE_PLACE_HIGH.wrist, 0.1)
+                        && MathUtil.isWithinTolerance(armExtension.getMotorPos(),
+                                ArmPositions.PRE_CONE_PLACE_HIGH.extension, 2)) {
+                    armPivot.setAngle(ArmPositions.CONE_PLACE_HIGH); // TODO: We should probably replace this arm
+                                                                     // movement with a wrist movement for stability's
+                                                                     // sake.
+                    armRollers.setSpeed(ArmSpeeds.PLACE_CONE);
+                    flag = 2;
+                    start = Timer.getFPGATimestamp();
+                    light.setAnimation(Animations.CHECK_PASSED);
+                    return;
+                }
+            case 2: // After the pivot is in place or at least past that point, we can immediately
+                    // bring the arm back and spit the cone out more aggressively.
+                if (5 > Timer.getFPGATimestamp() - start) {
+                    armExtension.setPosition(ArmPositions.STOW, false);
+                    armRollers.setSpeed(ArmSpeeds.EJECT_CONE);
+                    flag = 3;
+                    start = Timer.getFPGATimestamp();
+                    light.setAnimation(Animations.CHECK_FAILED);
+                    return;
+                }
+                if (armPivot.getAngle() <= ArmPositions.CONE_PLACE_HIGH.armAngle) {
+                    armExtension.setPosition(ArmPositions.STOW, false);
+                    armRollers.setSpeed(ArmSpeeds.EJECT_CONE);
+                    flag = 3;
+                    start = Timer.getFPGATimestamp();
+                    light.setAnimation(Animations.CHECK_PASSED);
+                    return;
+                }
+            case 3: // The arm clears the obstructions at this point, so we can immediately drop
+                    // both the arm and tray table into the stowed and upright position and we're
+                    // clear for takeoff.
+                if (5 > Timer.getFPGATimestamp() - start
+                        || armExtension.getMotorPos() <= ArmPositions.HALF_CONE_PLACE_HIGH.extension) {
+                    armWrist.setAngle(ArmPositions.STOW);
+                    armPivot.setAngle(ArmPositions.STOW);
+                    flag = 4;
+                    light.setAnimation(Animations.CHECK_FAILED);
+                    return;
+                }
+                if (5 > Timer.getFPGATimestamp() - start
+                        || armExtension.getMotorPos() <= ArmPositions.HALF_CONE_PLACE_HIGH.extension) {
+                    armWrist.setAngle(ArmPositions.STOW);
+                    armPivot.setAngle(ArmPositions.STOW);
+                    flag = 4;
+                    light.setAnimation(Animations.CHECK_PASSED);
+                    return;
+                }
         }
     }
 
     @Override
     public boolean isFinished() {
-        //After everything is stowed we're done here.
+        // After everything is stowed we're done here.
         return flag == 4;
     }
 
