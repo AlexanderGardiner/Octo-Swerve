@@ -46,7 +46,7 @@ public class ArmExtension extends SubsystemBase {
             false,
             42,
             false,
-            new PIDConfig(0.5, 0, 0.4, -3));
+            new PIDConfig(0.3, 0, 0.2, 0));
 
     public static ArmExtension getInstance() {
         if (armExtension == null) {
@@ -108,7 +108,7 @@ public class ArmExtension extends SubsystemBase {
     }
 
     public double getMotorPos() {
-        return motor.getAbsoluteEncoder(SparkMaxAbsoluteEncoder.Type.kDutyCycle).getPosition();
+        return motor.getEncoder().getPosition();
     }
 
     public double getMotorVel() {
@@ -116,7 +116,7 @@ public class ArmExtension extends SubsystemBase {
     }
 
     public void setMotorKf() {
-        pidController.setFF(feedforward.calculate(getMotorPos(), getMotorVel()));
+        // pidController.setFF(feedforward.calculate(getMotorPos(), getMotorVel()));
     }
 
     public double getMotorKf() {

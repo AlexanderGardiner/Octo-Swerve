@@ -54,6 +54,7 @@ public class Robot extends TimedRobot {
 
     SmartDashboard.putData("Field", field);
     PathPlannerServer.startServer(5811);
+    ArmExtension.getInstance().setOffset();
 
   }
 
