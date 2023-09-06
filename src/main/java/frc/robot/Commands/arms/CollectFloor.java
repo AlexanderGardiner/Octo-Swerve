@@ -59,13 +59,13 @@ public class CollectFloor extends CommandBase{
     public void execute() {
         switch(flag) {
         case 0: //At a certain point of acceptable height, we allow the extension and wrist to begin moving once the pivot is done.
-            if (0.65 < Timer.getFPGATimestamp() - start) {
+            if (5 < Timer.getFPGATimestamp() - start) {
                 armExtension.setPosition(ArmPositions.INTAKE_GROUND, false);
                 armWrist.setAngle(ArmPositions.INTAKE_GROUND);
                 flag = 1;
                 light.setAnimation(Animations.CHECK_FAILED);
             }
-            if (MathUtil.isWithinTolerance(armPivot.getAngle(), ArmPositions.INTAKE_GROUND.armAngle, 0.1)) {
+            if (MathUtil.isWithinTolerance(armPivot.getAngle(), ArmPositions.INTAKE_GROUND.armAngle, 0.05)) {
                 armExtension.setPosition(ArmPositions.INTAKE_GROUND, false);
                 armWrist.setAngle(ArmPositions.INTAKE_GROUND);
                 flag = 1;

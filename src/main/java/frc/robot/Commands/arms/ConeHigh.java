@@ -94,7 +94,7 @@ public class ConeHigh extends CommandBase {
             case 1: // Once the extension and wrist are in position, we are able to both lower the
                     // arm into place, and release the cone.
                 timeout = 5 < Timer.getFPGATimestamp() - start;
-                tolerance = MathUtil.isWithinTolerance(armWrist.getAngle(), ArmPositions.PRE_CONE_PLACE_HIGH.wrist, 0.3)
+                tolerance = MathUtil.isWithinTolerance(armWrist.getAngle(), ArmPositions.PRE_CONE_PLACE_HIGH.wrist, 0.05)
                         && MathUtil.isWithinTolerance(armExtension.getPosition(),
                                 ArmPositions.PRE_CONE_PLACE_HIGH.extension, 5)
                         && MathUtil.isWithinTolerance(armPivot.getAngle(), ArmPositions.PRE_CONE_PLACE_HIGH.armAngle,

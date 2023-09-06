@@ -1,6 +1,7 @@
 package frc.robot.Commands.arms;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Subsystems.arm.ArmExtension;
 import frc.robot.Subsystems.arm.ArmPivot;
 import frc.robot.Subsystems.arm.ArmPositions;
@@ -13,7 +14,7 @@ import frc.robot.Subsystems.hippo.HippoWrist;
 import frc.robot.Subsystems.light.CmdIDSequences;
 import frc.robot.Subsystems.light.Light;
 
-public class PositionDrive extends CommandBase{
+public class PositionDrive extends InstantCommand{
     
     private ArmPivot armPivot;
     private ArmExtension armExtension;

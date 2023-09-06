@@ -94,11 +94,11 @@ public class ConeMid extends CommandBase {
             case 1: // Once the extension and wrist are in position, we are able to both lower the
                     // arm into place, and release the cone.
                 timeout = 5 < Timer.getFPGATimestamp() - start;
-                tolerance = MathUtil.isWithinTolerance(armWrist.getAngle(), ArmPositions.PRE_CONE_PLACE_MID.wrist, 0.3)
+                tolerance = MathUtil.isWithinTolerance(armWrist.getAngle(), ArmPositions.PRE_CONE_PLACE_MID.wrist, 0.03)
                         && MathUtil.isWithinTolerance(armExtension.getPosition(),
                                 ArmPositions.PRE_CONE_PLACE_MID.extension, 5)
                         && MathUtil.isWithinTolerance(armPivot.getAngle(), ArmPositions.PRE_CONE_PLACE_MID.armAngle,
-                                0.2);
+                                0.02);
 
                 if (timeout || tolerance) {
                     armPivot.setAngle(ArmPositions.CONE_PLACE_MID);
@@ -117,7 +117,7 @@ public class ConeMid extends CommandBase {
             case 2: // After the pivot is in place or at least past that point, we can immediately
                     // bring the arm back and spit the cone out more aggressively.
                 timeout = 5 < Timer.getFPGATimestamp() - start;
-                tolerance = MathUtil.isWithinTolerance(armPivot.getAngle(), ArmPositions.CONE_PLACE_MID.armAngle, 0.1);
+                tolerance = MathUtil.isWithinTolerance(armPivot.getAngle(), ArmPositions.CONE_PLACE_MID.armAngle, 0.05);
 
                 if (timeout || tolerance) {
                     armExtension.setPosition(ArmPositions.STOW, false);
