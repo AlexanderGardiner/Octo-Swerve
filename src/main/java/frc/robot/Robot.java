@@ -1,11 +1,6 @@
 package frc.robot;
 
-import java.lang.management.ManagementFactory;
-
 import com.pathplanner.lib.server.PathPlannerServer;
-import com.sun.management.OperatingSystemMXBean;
-
-import edu.wpi.first.hal.can.CANStatus;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -25,15 +20,15 @@ import frc.robot.Subsystems.arm.ArmWrist;
 import frc.robot.Subsystems.drivetrain.SwerveDrive;
 import frc.robot.Subsystems.hippo.HippoRollers;
 import frc.robot.Subsystems.hippo.HippoWrist;
+import frc.robot.Subsystems.light.Animations;
 import frc.robot.Subsystems.light.Light;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   private final Field2d field = new Field2d();
-  private double teleopTimer;
   private SendableChooser<Command> autoChooser;
 
-  private OperatingSystemMXBean osBean = ManagementFactory.getPlatformMXBean(OperatingSystemMXBean.class);
+  // private OperatingSystemMXBean osBean = ManagementFactory.getPlatformMXBean(OperatingSystemMXBean.class);
 
   /**
    * Runs on robot startup
@@ -45,7 +40,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     initAllSubsystems();
-
+    Light.getInstance().setAnimation(Animations.BOOT_COMPLETE);
     autoChooser = new SendableChooser<Command>();
     autoChooser.setDefaultOption("Test Path", PathPlannerAutos.TestPath());
     autoChooser.addOption("Test Path1", PathPlannerAutos.TestPath1());
@@ -55,6 +50,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Field", field);
     PathPlannerServer.startServer(5811);
     ArmExtension.getInstance().setOffset();
+
 
   }
 
@@ -66,20 +62,20 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    CANStatus canBus = new CANStatus();
-    SmartDashboard.putNumber("CAN-USAGE", canBus.percentBusUtilization);
-    SmartDashboard.putNumber("RIO-CPU", osBean.getCpuLoad());
-    SmartDashboard.putNumber("RIO-RAM",
-        (((double) osBean.getTotalMemorySize() - (double) osBean.getFreeMemorySize())
-            / (double) osBean.getTotalMemorySize()));
+    // CANStatus canBus = new CANStatus();
+    // SmartDashboard.putNumber("CAN-USAGE", canBus.percentBusUtilization);
+    // SmartDashboard.putNumber("RIO-CPU", osBean.getCpuLoad());
+    // SmartDashboard.putNumber("RIO-RAM",
+        // (((double) osBean.getTotalMemorySize() - (double) osBean.getFreeMemorySize())
+        //     / (double) osBean.getTotalMemorySize()));
     double startTime = Timer.getFPGATimestamp();
     CommandScheduler.getInstance().run();
 
-    if (DriverStation.getAlliance() == DriverStation.Alliance.Red) {
-      SmartDashboard.putBoolean("IsRed", true);
-    } else {
-      SmartDashboard.putBoolean("IsRed", false);
-    }
+    // if (DriverStation.getAlliance() == DriverStation.Alliance.Red) {
+    //   SmartDashboard.putBoolean("IsRed", true);
+    // } else {
+    //   SmartDashboard.putBoolean("IsRed", false);
+    // }
 
     SmartDashboard.putNumber("Extension position", ArmExtension.getInstance().getPosition());
     SmartDashboard.putNumber("Extension target", ArmExtension.getInstance().lastpos);
@@ -104,7 +100,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
-    SmartDashboard.putString("Time-Left", "Robot Disabled");
+    Light.getInstance().setAnimation(Animations.DISABLE);
+
   }
 
   /**
@@ -130,9 +127,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    SmartDashboard.putString("Time-Left", "Robot In Auto");
     CommandScheduler.getInstance().cancelAll();
     CommandScheduler.getInstance().removeDefaultCommand(SwerveDrive.getInstance());
+    Light.getInstance().setAnimation(Animations.ENABLE);
 
     m_autonomousCommand = autoChooser.getSelected();
 
@@ -165,7 +162,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopInit() {
-    teleopTimer = Timer.getFPGATimestamp();
+    Light.getInstance().setAnimation(Animations.ENABLE);
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
       SwerveDrive.getInstance().setTargetPose2d(SwerveDrive.getInstance().getPose2d());
@@ -196,13 +193,9 @@ public class Robot extends TimedRobot {
 
   /**
    * Runs every robot loop when the robot is in teleop
-   * <ul>
-   * <li>Logs the time left in teleop</li>
-   * </l>
    */
   @Override
   public void teleopPeriodic() {
-    SmartDashboard.putString("Time-Left", Double.valueOf(135 - (Timer.getFPGATimestamp() - teleopTimer)).toString());
   }
 
   /**
