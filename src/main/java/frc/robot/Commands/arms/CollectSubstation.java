@@ -40,14 +40,12 @@ public class CollectSubstation extends CommandBase{
         armRollers.setSpeed(ArmSpeeds.COLLECT);
         armPivot.setAngle(ArmPositions.INTAKE_SUBSTATION);
         armWrist.setAngle(ArmPositions.INTAKE_SUBSTATION);
-        armExtension.setPosition(ArmPositions.STOW,false);
-        light.command = true;
+        armExtension.setPosition(ArmPositions.INTAKE_SUBSTATION,false);
         light.setAnimation(CmdIDSequences.CollectSubstation);
 
     }
 
     @Override
     public void end(boolean interrupted){
-        light.command = false;
     }
 }
