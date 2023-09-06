@@ -61,7 +61,7 @@ public class CollectSubstation extends CommandBase{
         case 0: //At a certain point of acceptable height, we allow the extension and wrist to begin moving once the pivot is done.
             if (5 < Timer.getFPGATimestamp() - start) {
                 armExtension.setPosition(ArmPositions.INTAKE_SUBSTATION, false);
-                armWrist.setAngle(ArmPositions.INTAKE_SUBSTATION);
+                armWrist.setAngle(ArmPositions.STOW);
                 flag = 1;
                 light.setAnimation(Animations.CHECK_FAILED);
             }
