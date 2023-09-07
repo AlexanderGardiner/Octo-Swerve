@@ -35,6 +35,7 @@ public class ArmZero extends CommandBase{
     @Override
     public void end(boolean interrupted) {
         armExtension.resetCurrent();
+        armExtension.setOffset();
     }
     
 }
