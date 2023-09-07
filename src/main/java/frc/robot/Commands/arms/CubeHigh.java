@@ -90,11 +90,11 @@ public class CubeHigh extends CommandBase {
                 break;
             case 1: // Once the extension and wrist and pivot we release the cube
                 timeout = 5 < Timer.getFPGATimestamp() - start;
-                tolerance = MathUtil.isWithinTolerance(armWrist.getAngle(), ArmPositions.CUBE_PLACE_HIGH.wrist, 0.3)
+                tolerance = MathUtil.isWithinTolerance(armWrist.getAngle(), ArmPositions.CUBE_PLACE_HIGH.wrist, 0.1)
                         && MathUtil.isWithinTolerance(armExtension.getPosition(),
                                 ArmPositions.CUBE_PLACE_HIGH.extension, 5)
                         && MathUtil.isWithinTolerance(armPivot.getAngle(), ArmPositions.CUBE_PLACE_HIGH.armAngle,
-                                0.2);
+                                0.1);
 
                 if (timeout || tolerance) {
                     armRollers.setSpeed(ArmSpeeds.PLACE_CUBE);
