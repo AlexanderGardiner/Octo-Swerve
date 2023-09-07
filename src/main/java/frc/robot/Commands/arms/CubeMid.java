@@ -70,9 +70,9 @@ public class CubeMid extends CommandBase {
 
         switch (flag) {
             case 0:
-                timeout = 5 < Timer.getFPGATimestamp() - start;
+                timeout = 1 < Timer.getFPGATimestamp() - start;
                 tolerance = MathUtil.isWithinTolerance(armPivot.getAngle(), ArmPositions.CUBE_PLACE_MID.armAngle,
-                        0.1);
+                        0.05);
 
                 if (timeout || tolerance) {
                     armExtension.setPosition(ArmPositions.CUBE_PLACE_MID, false);
@@ -90,8 +90,8 @@ public class CubeMid extends CommandBase {
 
                 break;
             case 1: // Once the extension and wrist and pivot we release the cube
-                timeout = 5 < Timer.getFPGATimestamp() - start;
-                tolerance = MathUtil.isWithinTolerance(armWrist.getAngle(), ArmPositions.CUBE_PLACE_MID.wrist, 0.1)
+                timeout = 1 < Timer.getFPGATimestamp() - start;
+                tolerance = MathUtil.isWithinTolerance(armWrist.getAngle(), ArmPositions.CUBE_PLACE_MID.wrist, 0.05)
                         && MathUtil.isWithinTolerance(armExtension.getPosition(), ArmPositions.CUBE_PLACE_MID.extension, 5);
 
                 if (timeout || tolerance) {
@@ -111,7 +111,7 @@ public class CubeMid extends CommandBase {
             case 2: // The arm clears the obstructions at this point, so we can immediately drop
                     // both the arm and tray table into the stowed and upright position and we're
                     // clear for takeoff.
-                timeout = 5 < Timer.getFPGATimestamp() - start;
+                timeout = 1 < Timer.getFPGATimestamp() - start;
                 tolerance = MathUtil.isWithinTolerance(armExtension.getPosition(), ArmPositions.STOW.extension, 5);
 
                 if (timeout || tolerance) {
