@@ -8,7 +8,6 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxAbsoluteEncoder;
 import com.revrobotics.SparkMaxPIDController;
 
-import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.MotorIDs;
 import frc.robot.Libraries.Util.PIDConfig;
@@ -18,14 +17,11 @@ import frc.robot.Libraries.Util.SparkMax.SparkMaxSetup;
 import frc.robot.Libraries.Util.SparkMax.SparkMaxStatusFrames;
 
 public class ArmExtension extends SubsystemBase {
-    // TODO: OMFG we need to fix the measurements here, it's so arbitrary
+    // todo canceled: OMFG we need to fix the measurements here, it's so arbitrary: we're not fixing this lmao
     private CANSparkMax motor;
     private static ArmExtension armExtension;
     public SparkMaxPIDController pidController;
-    private ElevatorFeedforward feedforward = new ElevatorFeedforward(0.25, 0.01, 0);
     private double gearing = 5.0 / 15.0;
-    private double gearTicksToMeters = 5;
-    private double gearingToMeters = gearing * gearTicksToMeters;
     public double lastpos = 0;
     private SparkMaxConfig extenConfig = new SparkMaxConfig(
             new SparkMaxStatusFrames(

@@ -1,7 +1,6 @@
 package frc.robot.Commands.arms;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Libraries.Util.MathUtil;
 import frc.robot.Subsystems.arm.ArmExtension;

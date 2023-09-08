@@ -1,6 +1,5 @@
 package frc.robot.Commands.arms;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Subsystems.arm.ArmExtension;
 import frc.robot.Subsystems.arm.ArmPivot;

@@ -1,7 +1,6 @@
 package frc.robot.Subsystems.arm;
 
 public enum ArmPositions {
-    // TODO: all of this is probably bad now, bruh moment
     AUTO_ALIGN(0.785, 0.5, 0.35), //taken from original
     STOW(.48, 0.5, .242), //taken from original
 
