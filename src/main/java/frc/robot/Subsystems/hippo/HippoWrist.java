@@ -15,9 +15,10 @@ import frc.robot.Libraries.Util.SparkMax.SparkMaxEncoderType;
 import frc.robot.Libraries.Util.SparkMax.SparkMaxSetup;
 import frc.robot.Libraries.Util.SparkMax.SparkMaxStatusFrames;
 
-public class HippoWrist extends SubsystemBase{
-    
+public class HippoWrist extends SubsystemBase {
+
     private static HippoWrist hippoWrist;
+
     public static HippoWrist getInstance() {
         if (hippoWrist == null) {
             hippoWrist = new HippoWrist();
@@ -28,14 +29,14 @@ public class HippoWrist extends SubsystemBase{
     public double lastpos;
     private CANSparkMax motor;
     private SparkMaxConfig wristConfig = new SparkMaxConfig(
-        new SparkMaxStatusFrames(
-            500,
-            20,
-            500,
-            500,
-            500,
-            20,
-            500),
+            new SparkMaxStatusFrames(
+                    500,
+                    20,
+                    500,
+                    500,
+                    500,
+                    20,
+                    500),
             1000,
             true,
             SparkMaxEncoderType.Absolute,
@@ -46,8 +47,7 @@ public class HippoWrist extends SubsystemBase{
             false,
             4096,
             false,
-            new PIDConfig(1.1, 0., 0, 0)
-    );
+            new PIDConfig(0.6, 0.000, 0, 0));
 
     public HippoWrist() {
         motor = new CANSparkMax(MotorIDs.SPATULA_ANGLE, MotorType.kBrushless);
