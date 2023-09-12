@@ -28,7 +28,8 @@ public class Robot extends TimedRobot {
   private final Field2d field = new Field2d();
   private SendableChooser<Command> autoChooser;
 
-  // private OperatingSystemMXBean osBean = ManagementFactory.getPlatformMXBean(OperatingSystemMXBean.class);
+  // private OperatingSystemMXBean osBean =
+  // ManagementFactory.getPlatformMXBean(OperatingSystemMXBean.class);
 
   /**
    * Runs on robot startup
@@ -51,7 +52,6 @@ public class Robot extends TimedRobot {
     PathPlannerServer.startServer(5811);
     ArmExtension.getInstance().setOffset();
 
-
   }
 
   /**
@@ -66,15 +66,15 @@ public class Robot extends TimedRobot {
     // SmartDashboard.putNumber("CAN-USAGE", canBus.percentBusUtilization);
     // SmartDashboard.putNumber("RIO-CPU", osBean.getCpuLoad());
     // SmartDashboard.putNumber("RIO-RAM",
-        // (((double) osBean.getTotalMemorySize() - (double) osBean.getFreeMemorySize())
-        //     / (double) osBean.getTotalMemorySize()));
+    // (((double) osBean.getTotalMemorySize() - (double) osBean.getFreeMemorySize())
+    // / (double) osBean.getTotalMemorySize()));
     double startTime = Timer.getFPGATimestamp();
     CommandScheduler.getInstance().run();
 
     // if (DriverStation.getAlliance() == DriverStation.Alliance.Red) {
-    //   SmartDashboard.putBoolean("IsRed", true);
+    // SmartDashboard.putBoolean("IsRed", true);
     // } else {
-    //   SmartDashboard.putBoolean("IsRed", false);
+    // SmartDashboard.putBoolean("IsRed", false);
     // }
 
     SmartDashboard.putNumber("Extension position", ArmExtension.getInstance().getPosition());
@@ -85,7 +85,6 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Wrist target", ArmWrist.getInstance().lastpos);
     SmartDashboard.putNumber("Hippo position", HippoWrist.getInstance().getAngle());
     SmartDashboard.putNumber("Hippo target", HippoWrist.getInstance().lastpos);
-
 
     SmartDashboard.putNumber("Time for loop (ms)", (Timer.getFPGATimestamp() - startTime) * 1000);
 
@@ -171,15 +170,15 @@ public class Robot extends TimedRobot {
         SwerveDrive.getInstance().resetGyro();
         SwerveDrive.getInstance().setGyroAngleAdjustment(180);
         SwerveDrive.getInstance().setPoseEstimatorGyroOffset(new Rotation2d());
-        SwerveDrive.getInstance().setPoseEstimatorPose2d(new Pose2d(0,0,new Rotation2d(0)));
-        SwerveDrive.getInstance().setTargetPose2d(new Pose2d(0,0,new Rotation2d(Math.PI)));
+        SwerveDrive.getInstance().setPoseEstimatorPose2d(new Pose2d(0, 0, new Rotation2d(0)));
+        SwerveDrive.getInstance().setTargetPose2d(new Pose2d(0, 0, new Rotation2d(Math.PI)));
 
       } else {
         SwerveDrive.getInstance().resetGyro();
         SwerveDrive.getInstance().setGyroAngleAdjustment(0);
         SwerveDrive.getInstance().setPoseEstimatorGyroOffset(new Rotation2d());
-        SwerveDrive.getInstance().setPoseEstimatorPose2d(new Pose2d(0,0,new Rotation2d(0)));
-        SwerveDrive.getInstance().setTargetPose2d(new Pose2d(0,0,new Rotation2d(0)));
+        SwerveDrive.getInstance().setPoseEstimatorPose2d(new Pose2d(0, 0, new Rotation2d(0)));
+        SwerveDrive.getInstance().setTargetPose2d(new Pose2d(0, 0, new Rotation2d(0)));
 
       }
     }
