@@ -37,8 +37,8 @@ public class PathPlannerAutos {
     public static final SwerveAutoBuilder autoBuilder = new SwerveAutoBuilder(
             SwerveDrive.getInstance()::getAllianceRelativePose2d,
             SwerveDrive.getInstance()::resetAllianceRelativePose2d,
+            new PIDConstants(0.5, 0, 0),
             new PIDConstants(5, 0, 0),
-            new PIDConstants(2, 0, 0),
             SwerveDrive.getInstance()::drive,
             eventMap,
             true,
@@ -62,6 +62,40 @@ public class PathPlannerAutos {
             List<PathPlannerTrajectory> pathgroup = PathPlanner.loadPathGroup("Test Path", new PathConstraints(4, 3));
 
             startingGyroAngle = 90;
+            SwerveDrive.getInstance().setPoseEstimatorPose2d(pathgroup.get(0).getInitialHolonomicPose());
+
+            SwerveDrive.getInstance().resetGyro();
+
+            if (DriverStation.getAlliance() == DriverStation.Alliance.Red) {
+                SwerveDrive.getInstance()
+                        .setGyroAngleAdjustment(MathUtil.flipAngleOverYAxis(PathPlannerAutos.startingGyroAngle));
+            } else {
+                SwerveDrive.getInstance().setGyroAngleAdjustment(PathPlannerAutos.startingGyroAngle);
+            }
+
+            CommandScheduler.getInstance().schedule(autoBuilder.fullAuto(pathgroup));
+        });
+    }
+
+    /**
+     * An example path
+     * <ul>
+     * <li>Sets the starting gyro angle to the holonmic angle of the inital pose,
+     * make sure 0 is towards the red alliance (cw positive)</li>
+     * <li>Sets the inital pose</li>
+     * <li>Resets the gyro and offsets it so 0 is facing towards the red
+     * alliance</li>
+     * <li>Schedules the path</li>
+     * </ul>
+     * 
+     * @return The path as a command
+     */
+    public static CommandBase ConeHighCubeLow() {
+        return new InstantCommand(() -> {
+            List<PathPlannerTrajectory> pathgroup = PathPlanner.loadPathGroup("ConeHighCubeLow",
+                    new PathConstraints(2, 1));
+
+            startingGyroAngle = 180;
             SwerveDrive.getInstance().setPoseEstimatorPose2d(pathgroup.get(0).getInitialHolonomicPose());
 
             SwerveDrive.getInstance().resetGyro();
