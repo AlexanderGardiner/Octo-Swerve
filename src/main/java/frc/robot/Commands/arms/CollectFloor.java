@@ -16,7 +16,7 @@ import frc.robot.Subsystems.light.Animations;
 import frc.robot.Subsystems.light.CmdIDSequences;
 import frc.robot.Subsystems.light.Light;
 
-public class CollectFloor extends CommandBase{
+public class CollectFloor extends CommandBase {
 
     private ArmPivot armPivot;
     private ArmExtension armExtension;
@@ -27,7 +27,8 @@ public class CollectFloor extends CommandBase{
     private Light light;
 
     public CollectFloor() {
-        //Setup the subsystems. We may want to release the hippo here if a neccessary circumstance can be hypothesized.
+        // Setup the subsystems. We may want to release the hippo here if a neccessary
+        // circumstance can be hypothesized.
         armPivot = ArmPivot.getInstance();
         armExtension = ArmExtension.getInstance();
         armWrist = ArmWrist.getInstance();
@@ -36,7 +37,8 @@ public class CollectFloor extends CommandBase{
         hippoRollers = HippoRollers.getInstance();
         light = Light.getInstance();
         addRequirements(armPivot, armExtension, armWrist, armRollers, hippoWrist, hippoRollers);
-        //Initialize flag to zero. This will increment our sequence tracking in the switch case as the movement progresses.
+        // Initialize flag to zero. This will increment our sequence tracking in the
+        // switch case as the movement progresses.
         flag = 0;
     }
 
@@ -44,8 +46,10 @@ public class CollectFloor extends CommandBase{
     private double start;
 
     @Override
-    public void initialize() { 
-        //Start by stowing the hippo, and beginning to raise the arm. RAW, the hippo is not neccessary but it is courtious to our teammates. Hold the cone and begin moving.
+    public void initialize() {
+        // Start by stowing the hippo, and beginning to raise the arm. RAW, the hippo is
+        // not neccessary but it is courtious to our teammates. Hold the cone and begin
+        // moving.
         hippoWrist.setAngle(HippoPositions.STOW);
         armRollers.setSpeed(ArmSpeeds.COLLECT);
         armPivot.setAngle(ArmPositions.INTAKE_GROUND);
@@ -57,32 +61,34 @@ public class CollectFloor extends CommandBase{
 
     @Override
     public void execute() {
-        switch(flag) {
-        case 0: //At a certain point of acceptable height, we allow the extension and wrist to begin moving once the pivot is done.
-            boolean timeout = 1 < Timer.getFPGATimestamp() - start;
-            boolean tolerance = MathUtil.isWithinTolerance(armPivot.getAngle(), ArmPositions.INTAKE_GROUND.armAngle, 0.05);
-            if (timeout || tolerance) {
-                armExtension.setPosition(ArmPositions.INTAKE_GROUND, false);
-                armWrist.setAngle(ArmPositions.INTAKE_GROUND);
-                flag = 1;
-                if (timeout) {
-                    light.setAnimation(Animations.CHECK_PASSED);
-                } else {
-                    light.setAnimation(Animations.CHECK_PASSED);
+        switch (flag) {
+            case 0: // At a certain point of acceptable height, we allow the extension and wrist to
+                    // begin moving once the pivot is done.
+                boolean timeout = 3 < Timer.getFPGATimestamp() - start;
+                boolean tolerance = MathUtil.isWithinTolerance(armPivot.getAngle(), ArmPositions.INTAKE_GROUND.armAngle,
+                        0.05);
+                if (timeout || tolerance) {
+                    armExtension.setPosition(ArmPositions.INTAKE_GROUND, false);
+                    armWrist.setAngle(ArmPositions.INTAKE_GROUND);
+                    flag = 1;
+                    if (timeout) {
+                        light.setAnimation(Animations.CHECK_PASSED);
+                    } else {
+                        light.setAnimation(Animations.CHECK_PASSED);
+                    }
                 }
-            }
-            break;
+                break;
         }
     }
 
     @Override
     public boolean isFinished() {
-        //After everything is stowed we're done here.
+        // After everything is stowed we're done here.
         return flag == 1;
     }
 
     @Override
-    public void end(boolean interrupted){
+    public void end(boolean interrupted) {
         light.command = false;
     }
 }
