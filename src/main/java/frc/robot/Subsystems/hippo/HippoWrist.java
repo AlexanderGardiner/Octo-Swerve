@@ -47,7 +47,7 @@ public class HippoWrist extends SubsystemBase {
             false,
             4096,
             false,
-            new PIDConfig(0.6, 0.000, 0, 0));
+            new PIDConfig(0.5, 0.000, 0, 0));
 
     public HippoWrist() {
         motor = new CANSparkMax(MotorIDs.SPATULA_ANGLE, MotorType.kBrushless);
