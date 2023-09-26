@@ -63,8 +63,8 @@ public class Constants {
     //     public static final String cameraName = "Right_Camera";
     // }
 
-    public static class TapVisionConstants {
-        public static final String tagCameraName = "tapeCam";
+    public static class TapeVisionConstants {
+        public static final String cameraName = "tapeCam";
 
         public static final Transform3d robotToCam = new Transform3d(new Translation3d(0.0, 0.0, 0.0),
                 new Rotation3d(0, 0.0, 0));

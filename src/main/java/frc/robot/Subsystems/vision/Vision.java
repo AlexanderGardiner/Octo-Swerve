@@ -11,6 +11,7 @@ import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Subsystems.vision.Constants.TagCameraVisionConstants;
+import frc.robot.Subsystems.vision.Constants.TapeVisionConstants;
 
 public class Vision extends SubsystemBase {
 	private static Vision INSTANCE;
@@ -23,41 +24,41 @@ public class Vision extends SubsystemBase {
 	}
 
 	// private final PhotonCamera tapeCamera = new PhotonCamera("Microsoft_LifeCam_HD-3000");
-	private final PhotonCamera tapeCamera = new PhotonCamera("tapeCam");
+	private final PhotonCamera tapeCamera = new PhotonCamera(TapeVisionConstants.cameraName);
 
-	private final PhotonCamera tagCameraFR = new PhotonCamera(TagCameraVisionConstants.cameraNameFR);
-	private final PhotonCamera tagCameraFL = new PhotonCamera(TagCameraVisionConstants.cameraNameFL);
-	private final PhotonCamera tagCameraBR = new PhotonCamera(TagCameraVisionConstants.cameraNameBR);
-	private final PhotonCamera tagCameraBL = new PhotonCamera(TagCameraVisionConstants.cameraNameBL);
-	// public boolean hasTarget;
+	// private final PhotonCamera tagCameraFR = new PhotonCamera(TagCameraVisionConstants.cameraNameFR);
+	// private final PhotonCamera tagCameraFL = new PhotonCamera(TagCameraVisionConstants.cameraNameFL);
+	// private final PhotonCamera tagCameraBR = new PhotonCamera(TagCameraVisionConstants.cameraNameBR);
+	// private final PhotonCamera tagCameraBL = new PhotonCamera(TagCameraVisionConstants.cameraNameBL);
+	// // public boolean hasTarget;
 	private PhotonPipelineResult tapeResult;
-	private PhotonPipelineResult tagResultFR;
-	private PhotonPipelineResult tagResultFL;
-	private PhotonPipelineResult tagResultBR;
-	private PhotonPipelineResult tagResultBL;
+	// private PhotonPipelineResult tagResultFR;
+	// private PhotonPipelineResult tagResultFL;
+	// private PhotonPipelineResult tagResultBR;
+	// private PhotonPipelineResult tagResultBL;
 
 	@Override
 	public void periodic() {
 		// Query the latest result from PhotonVision
-		if (tapeResult.hasTargets()) {
+		if (tapeCamera.getLatestResult().hasTargets()) {
 			this.tapeResult = tapeCamera.getLatestResult();
 		}
 
-		if (tagResultFR.hasTargets()) {
-			this.tagResultFR = tagCameraFR.getLatestResult();
-		}
+		// if (tagCameraFR.getLatestResult().hasTargets()) {
+		// 	this.tagResultFR = tagCameraFR.getLatestResult();
+		// }
 
-		if (tagResultFL.hasTargets()) {
-			this.tagResultFL = tagCameraFL.getLatestResult();
-		}
+		// if (tagCameraFL.getLatestResult().hasTargets()) {
+		// 	this.tagResultFL = tagCameraFL.getLatestResult();
+		// }
 
-		if (tagResultBR.hasTargets()) {
-			this.tagResultBR = tagCameraBR.getLatestResult();
-		}
+		// if (tagCameraBR.getLatestResult().hasTargets()) {
+		// 	this.tagResultBR = tagCameraBR.getLatestResult();
+		// }
 
-		if (tagResultBL.hasTargets()) {
-			this.tagResultBL = tagCameraBL.getLatestResult();
-		}
+		// if (tagCameraBR.getLatestResult().hasTargets()) {
+		// 	this.tagResultBL = tagCameraBL.getLatestResult();
+		// }
 
 	}
 

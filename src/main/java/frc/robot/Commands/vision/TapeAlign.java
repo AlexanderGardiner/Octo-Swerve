@@ -61,7 +61,7 @@ public class TapeAlign extends CommandBase {
                     //     //light.setDegrees(cameraToTarget.getYaw()-3);
                     //     //light.setHasTarget(true);
                     //     //light.lightUpdateControl(-1);
-                    //     ySpeed = (cameraToTarget.getYaw() - 1.5) * 0.1;
+                    ySpeed = (cameraToTarget.getYaw() - 1.5) * 0.1;
                     //     // SmartDashboard.putNumber("Degrees to target", cameraToTarget.getYaw()-3);
 
                     //     if (MathUtil.isWithinTolerance(cameraToTarget.getYaw() - 1.5, 0, 2)) {
@@ -69,20 +69,20 @@ public class TapeAlign extends CommandBase {
                     //     } else {
                     //         light.AdrUpdateStrobe(0, 0, 255, 1);
                     //     }
+                    swerveDrive.drive(new ChassisSpeeds(swerveDrive.previousXSpeed, ySpeed, 0), true);
 
-                    // } else {
-                    //     ySpeed = 0;
+                } else {
+                    ySpeed = 0;
                     //     //light.setHasTarget(false);
                     //     //light.lightUpdateControl(-1);
                     //     light.AdrUpdateStrobe(255, 0, 0, 1);
-                    //     end(true);
+                    end(true);
                     //     // driveTrain.drive(0, 0, 0, true);
-                    // }
-
-                    // //SmartDashboard.putNumber("Y_SPED", ySpeed);
-                    // CommandScheduler.getInstance().schedule(new SetDriveAngle(180));
-                    swerveDrive.drive(new ChassisSpeeds(swerveDrive.previousXSpeed, ySpeed, 0), true);
                 }
+
+                // //SmartDashboard.putNumber("Y_SPED", ySpeed);
+                // CommandScheduler.getInstance().schedule(new SetDriveAngle(180));
+                
             }
         } catch (Exception e) {
             // error

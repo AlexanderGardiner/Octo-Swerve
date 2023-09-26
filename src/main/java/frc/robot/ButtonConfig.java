@@ -23,7 +23,7 @@ public class ButtonConfig {
 
         //TODO:Write these with the new library
         //DRIVER_RIGHT 1 is auto align
-        new JoystickButton(ControlMap.DRIVER_RIGHT, 1).onTrue(new TapeAlign());
+        new JoystickButton(ControlMap.DRIVER_BUTTONS, 1).whileTrue(new TapeAlign());
 
         //DRIVER_LEFT 1 is 0 degrees
         //DRIVER_LEFT 2 is 180 degrees
