@@ -14,6 +14,7 @@ import frc.robot.Commands.arms.HippoPlace;
 import frc.robot.Commands.arms.PositionAutoAlign;
 import frc.robot.Commands.arms.PositionDrive;
 import frc.robot.Commands.arms.PositionStow;
+import frc.robot.Commands.vision.TapeAlign;
 
 public class ButtonConfig {
     public static void initTeleop() {
@@ -22,6 +23,7 @@ public class ButtonConfig {
 
         //TODO:Write these with the new library
         //DRIVER_RIGHT 1 is auto align
+        new JoystickButton(ControlMap.DRIVER_RIGHT, 1).onTrue(new TapeAlign());
 
         //DRIVER_LEFT 1 is 0 degrees
         //DRIVER_LEFT 2 is 180 degrees

@@ -1,10 +1,16 @@
 package frc.robot.Subsystems.vision;
 
+import java.util.List;
+
 import org.photonvision.PhotonCamera;
 import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
 
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Subsystems.vision.Constants.TagCameraVisionConstants;
 
 public class Vision extends SubsystemBase {
 	private static Vision INSTANCE;
@@ -16,22 +22,44 @@ public class Vision extends SubsystemBase {
 		return INSTANCE;
 	}
 
-	private final PhotonCamera tapeCamera = new PhotonCamera("Microsoft_LifeCam_HD-3000");
+	// private final PhotonCamera tapeCamera = new PhotonCamera("Microsoft_LifeCam_HD-3000");
+	private final PhotonCamera tapeCamera = new PhotonCamera("tapeCam");
+
+	private final PhotonCamera tagCameraFR = new PhotonCamera(TagCameraVisionConstants.cameraNameFR);
+	private final PhotonCamera tagCameraFL = new PhotonCamera(TagCameraVisionConstants.cameraNameFL);
+	private final PhotonCamera tagCameraBR = new PhotonCamera(TagCameraVisionConstants.cameraNameBR);
+	private final PhotonCamera tagCameraBL = new PhotonCamera(TagCameraVisionConstants.cameraNameBL);
 	// public boolean hasTarget;
 	private PhotonPipelineResult tapeResult;
-	// private List<PhotonTrackedTarget> allTargets;
+	private PhotonPipelineResult tagResultFR;
+	private PhotonPipelineResult tagResultFL;
+	private PhotonPipelineResult tagResultBR;
+	private PhotonPipelineResult tagResultBL;
 
 	@Override
 	public void periodic() {
-		PhotonPipelineResult tapeResult = tapeCamera.getLatestResult(); // Query the latest result from PhotonVision
-
+		// Query the latest result from PhotonVision
 		if (tapeResult.hasTargets()) {
-			this.tapeResult = tapeResult;
+			this.tapeResult = tapeCamera.getLatestResult();
+		}
+
+		if (tagResultFR.hasTargets()) {
+			this.tagResultFR = tagCameraFR.getLatestResult();
+		}
+
+		if (tagResultFL.hasTargets()) {
+			this.tagResultFL = tagCameraFL.getLatestResult();
+		}
+
+		if (tagResultBR.hasTargets()) {
+			this.tagResultBR = tagCameraBR.getLatestResult();
+		}
+
+		if (tagResultBL.hasTargets()) {
+			this.tagResultBL = tagCameraBL.getLatestResult();
 		}
 
 	}
-
-	
 
 	public PhotonTrackedTarget getBestTarget() {
 		if (tapeResult.hasTargets()) {
@@ -42,11 +70,11 @@ public class Vision extends SubsystemBase {
 	}
 
 	public boolean getTapeCamHasTarget() {
-		if (tapeResult==null) {
+		if (tapeResult == null) {
 			return false;
 		}
-		return tapeResult.hasTargets(); 
-		
+		return tapeResult.hasTargets();
+
 		// Returns whether a target was found
 	}
 

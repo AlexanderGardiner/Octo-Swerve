@@ -22,47 +22,67 @@
  * SOFTWARE.
  */
 
- package frc.robot.Subsystems.vision;
+package frc.robot.Subsystems.vision;
 
- import edu.wpi.first.math.geometry.Rotation3d;
- import edu.wpi.first.math.geometry.Transform3d;
- import edu.wpi.first.math.geometry.Translation3d;
- import edu.wpi.first.math.util.Units;
- 
- public class Constants {
-     static class DriveTrainConstants {
-         static final double kMaxSpeed = 3.0; // meters per second
-         static final double kMaxAngularSpeed = 2 * Math.PI; // one rotation per second
-         static final double kTrackWidth = 0.381 * 2; // meters
-         static final double kWheelRadius = 0.0508; // meters
-         static final int kEncoderResolution = 4096;
-         static final double distancePerPulse = 2 * Math.PI * kWheelRadius / (double) kEncoderResolution;
-     }
- 
-     public static class FieldConstants {
-         public static final double length = Units.feetToMeters(54);
-         public static final double width = Units.feetToMeters(27);
-     }
- 
-     public static class LeftCameraVisionConstants {
-        public static final Transform3d robotToCam =
-                 new Transform3d(
-                         new Translation3d(0.0508, -0.1143, 1.0414),
-                         new Rotation3d(
-                                 0, -0.349,
-                                 -0.2617)); // Cam mounted facing forward, half a meter forward of center, half a meter up
-         // from center.
-         public static final String cameraName = "Left_Camera";
-     }
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
+import edu.wpi.first.math.geometry.Translation3d;
+import edu.wpi.first.math.util.Units;
 
-     public static class VisionConstants {
-        public static final Transform3d robotToCam =
-                 new Transform3d(
-                         new Translation3d(0.0,0.1302, 0.0),
-                         new Rotation3d(
-                                 0, -0.174533,
-                                 0)); // Cam mounted facing forward, half a meter forward of center, half a meter up
-         // from center.
-         public static final String cameraName = "Right_Camera";
-     }
- }
+public class Constants {
+    static class DriveTrainConstants {
+        static final double kMaxSpeed = 3.0; // meters per second
+        static final double kMaxAngularSpeed = 2 * Math.PI; // one rotation per second
+        static final double kTrackWidth = 0.381 * 2; // meters
+        static final double kWheelRadius = 0.0508; // meters
+        static final int kEncoderResolution = 4096;
+        static final double distancePerPulse = 2 * Math.PI * kWheelRadius / (double) kEncoderResolution;
+    }
+
+    public static class FieldConstants {
+        public static final double length = Units.feetToMeters(54);
+        public static final double width = Units.feetToMeters(27);
+    }
+
+    // public static class LeftCameraVisionConstants {
+    //     public static final Transform3d robotToCam = new Transform3d(
+    //             new Translation3d(0.0508, -0.1143, 1.0414),
+    //             new Rotation3d(
+    //                     0, -0.349,
+    //                     -0.2617)); // Cam mounted facing forward, half a meter forward of center, half a meter up
+    //     // from center.
+    //     public static final String cameraName = "Left_Camera";
+    // }
+
+    // public static class VisionConstants {
+    //     public static final Transform3d robotToCam = new Transform3d(
+    //             new Translation3d(0.0, 0.1302, 0.0),
+    //             new Rotation3d(
+    //                     0, -0.174533,
+    //                     0));
+    //     public static final String cameraName = "Right_Camera";
+    // }
+
+    public static class TapVisionConstants {
+        public static final String tagCameraName = "tapeCam";
+
+        public static final Transform3d robotToCam = new Transform3d(new Translation3d(0.0, 0.0, 0.0),
+                new Rotation3d(0, 0.0, 0));
+    }
+
+    public static class TagCameraVisionConstants {
+        public static final String cameraNameFR = "Right_Camera";
+        public static final String cameraNameFL = "Right_Camera";
+        public static final String cameraNameBR = "Right_Camera";
+        public static final String cameraNameBL = "Right_Camera";
+
+        public static final Transform3d robotToCamFR = new Transform3d(new Translation3d(0.0, 0.0, 0.0),
+                new Rotation3d(0, 0.0, 0));
+        public static final Transform3d robotToCamFL = new Transform3d(new Translation3d(0.0, 0.0, 0.0),
+                new Rotation3d(0, 0.0, 0));
+        public static final Transform3d robotToCamBR = new Transform3d(new Translation3d(0.0, 0.0, 0.0),
+                new Rotation3d(0, 0.0, 0));
+        public static final Transform3d robotToCamBL = new Transform3d(new Translation3d(0.0, 0.0, 0.0),
+                new Rotation3d(0, 0.0, 0));
+    }
+}

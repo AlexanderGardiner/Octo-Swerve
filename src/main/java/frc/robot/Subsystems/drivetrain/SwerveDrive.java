@@ -15,6 +15,7 @@ public class SwerveDrive extends SubsystemBase {
     private static SwerveDrive INSTANCE;
     private double maxSpeed = 4;
     private double maxAngularSpeed = Math.PI;
+    public double previousXSpeed = 0;
 
     /**
      * Gets the current instance of the swerve drive subsystem if it doesn't exist
@@ -74,7 +75,9 @@ public class SwerveDrive extends SubsystemBase {
      * @param fieldRelative Whether the chassisSpeeds are field relative
      */
     public void drive(ChassisSpeeds chassisSpeeds, boolean fieldRelative) {
+        previousXSpeed = chassisSpeeds.vxMetersPerSecond;
         driveTrain.drive(chassisSpeeds, fieldRelative);
+
     }
 
     /**
