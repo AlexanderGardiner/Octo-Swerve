@@ -69,7 +69,7 @@ public class CubeHigh extends CommandBase {
 
         switch (flag) {
             case 0:
-                timeout = 1 < Timer.getFPGATimestamp() - start;
+                timeout = 5 < Timer.getFPGATimestamp() - start;
                 tolerance = MathUtil.isWithinTolerance(armPivot.getAngle(), ArmPositions.CUBE_PLACE_HIGH.armAngle,
                         0.05);
 
@@ -113,13 +113,15 @@ public class CubeHigh extends CommandBase {
             case 2: // The arm clears the obstructions at this point, so we can immediately drop
                     // both the arm and tray table into the stowed and upright position and we're
                     // clear for takeoff.
-                timeout = 1 < Timer.getFPGATimestamp() - start;
+                timeout = 5 < Timer.getFPGATimestamp() - start;
                 tolerance = MathUtil.isWithinTolerance(armExtension.getPosition(),
                         ArmPositions.STOW.extension,
                         5);
-
-                if (timeout || tolerance) {
+                if (0.2 < Timer.getFPGATimestamp() - start) {
                     armWrist.setAngle(ArmPositions.STOW);
+                }
+                if (timeout || tolerance) {
+
                     armPivot.setAngle(ArmPositions.STOW);
 
                     light.setAnimation(Animations.CHECK_PASSED);
