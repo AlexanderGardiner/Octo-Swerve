@@ -43,7 +43,7 @@ public class Robot extends TimedRobot {
     initAllSubsystems();
     Light.getInstance().setAnimation(Animations.BOOT_COMPLETE);
     autoChooser = new SendableChooser<Command>();
-    autoChooser.setDefaultOption("Test Path", PathPlannerAutos.ConeHighCubeLow());
+    autoChooser.setDefaultOption("Test Path", PathPlannerAutos.ConeHighCubeLowCableSide());
     autoChooser.addOption("Test Path1", PathPlannerAutos.TestPath1());
 
     SmartDashboard.putData("autonomous", autoChooser);

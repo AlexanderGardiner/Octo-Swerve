@@ -16,24 +16,27 @@
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
-        "names": [],
-        "executionBehavior": "parallel",
+        "names": [
+          "AlignPosition",
+          "ConeHigh"
+        ],
+        "executionBehavior": "sequential",
         "waitBehavior": "none",
         "waitTime": 0
       }
     },
     {
       "anchorPoint": {
-        "x": 4.844506099268609,
+        "x": 4.92444027623098,
         "y": 0.7422459289363023
       },
       "prevControl": {
-        "x": 4.036793145747316,
-        "y": 0.6720100199344498
+        "x": 4.113679338469787,
+        "y": 0.7422459289363023
       },
       "nextControl": {
-        "x": 5.632428700754838,
-        "y": 0.8107609377611926
+        "x": 5.803716222817061,
+        "y": 0.7422459289363023
       },
       "holonomicAngle": 180.0,
       "isReversal": false,
@@ -49,16 +52,16 @@
     },
     {
       "anchorPoint": {
-        "x": 6.774345514502994,
-        "y": 0.9021142828610453
+        "x": 6.785764682640477,
+        "y": 0.513862566186671
       },
       "prevControl": {
-        "x": 6.169129603216471,
-        "y": 0.9706292916859334
+        "x": 6.203387107628917,
+        "y": 0.5367009024616346
       },
       "nextControl": {
-        "x": 7.28808876875295,
-        "y": 0.8439546691723723
+        "x": 7.302392409310379,
+        "y": 0.49360265533687064
       },
       "holonomicAngle": 180.0,
       "isReversal": false,
@@ -74,16 +77,16 @@
     },
     {
       "anchorPoint": {
-        "x": 4.125098506607269,
-        "y": 0.7194075926613387
+        "x": 4.113679338469788,
+        "y": 0.7536650970737852
       },
       "prevControl": {
-        "x": 5.506817851242539,
-        "y": 0.7765034333487474
+        "x": 5.495272608882333,
+        "y": 0.693595824447152
       },
       "nextControl": {
-        "x": 3.0483721525864036,
-        "y": 0.6749147681150213
+        "x": 3.0631158698214827,
+        "y": 0.7993417696237121
       },
       "holonomicAngle": 0,
       "isReversal": false,
@@ -113,12 +116,29 @@
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
-        "names": [],
-        "executionBehavior": "parallel",
+        "names": [
+          "HippoPlace"
+        ],
+        "executionBehavior": "sequential",
         "waitBehavior": "none",
         "waitTime": 0
       }
     }
   ],
-  "markers": []
+  "markers": [
+    {
+      "position": 1.018181818181818,
+      "names": [
+        "event",
+        "HippoIntake"
+      ]
+    },
+    {
+      "position": 2.327272727272639,
+      "names": [
+        "event",
+        "Stow"
+      ]
+    }
+  ]
 }

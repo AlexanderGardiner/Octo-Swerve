@@ -134,6 +134,40 @@ public class PathPlannerAutos {
      * 
      * @return The path as a command
      */
+    public static CommandBase ConeHighCubeLowCableSide() {
+        return new InstantCommand(() -> {
+            List<PathPlannerTrajectory> pathgroup = PathPlanner.loadPathGroup("ConeHighCubeLowCableSide",
+                    new PathConstraints(2, 1));
+
+            startingGyroAngle = 180;
+            SwerveDrive.getInstance().setPoseEstimatorPose2d(pathgroup.get(0).getInitialHolonomicPose());
+
+            SwerveDrive.getInstance().resetGyro();
+
+            if (DriverStation.getAlliance() == DriverStation.Alliance.Red) {
+                SwerveDrive.getInstance()
+                        .setGyroAngleAdjustment(MathUtil.flipAngleOverYAxis(PathPlannerAutos.startingGyroAngle));
+            } else {
+                SwerveDrive.getInstance().setGyroAngleAdjustment(PathPlannerAutos.startingGyroAngle);
+            }
+
+            CommandScheduler.getInstance().schedule(autoBuilder.fullAuto(pathgroup));
+        });
+    }
+
+    /**
+     * An example path
+     * <ul>
+     * <li>Sets the starting gyro angle to the holonmic angle of the inital pose,
+     * make sure 0 is towards the red alliance (cw positive)</li>
+     * <li>Sets the inital pose</li>
+     * <li>Resets the gyro and offsets it so 0 is facing towards the red
+     * alliance</li>
+     * <li>Schedules the path</li>
+     * </ul>
+     * 
+     * @return The path as a command
+     */
     public static CommandBase TestPath1() {
         return new InstantCommand(() -> {
             List<PathPlannerTrajectory> pathgroup = PathPlanner.loadPathGroup("Test Path1", new PathConstraints(4, 3));
