@@ -50,8 +50,12 @@ public class SwerveControl extends CommandBase {
             ySpeed = ySpeed * -1;
         }
 
-        // Calculate the deadband
-        rot = MathUtil.fitDeadband(-rightJoystick.getRawAxis(0), 0.05) * swerveDrive.getMaxAngularSpeed();
+        if (!swerveDrive.autonomousAngle) {
+            // Calculate the deadband
+            rot = MathUtil.fitDeadband(-rightJoystick.getRawAxis(0), 0.05) * swerveDrive.getMaxAngularSpeed();
+        } else {
+            rot = swerveDrive.previousRotSpeed;
+        }
 
         // Drive
         swerveDrive.drive(new ChassisSpeeds(xSpeed, ySpeed, rot), true);

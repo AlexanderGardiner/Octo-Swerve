@@ -73,7 +73,8 @@ public class ConeHigh extends CommandBase {
                     // begin moving even before the pivot is done.
                     // This should help speed up the placement, but will need to be tuned carefully.
                 timeout = 1 < Timer.getFPGATimestamp() - start;
-                tolerance = MathUtil.isWithinTolerance(armPivot.getAngle(), ArmPositions.HALF_CONE_PLACE_HIGH.armAngle, 0.05);
+                tolerance = MathUtil.isWithinTolerance(armPivot.getAngle(), ArmPositions.HALF_CONE_PLACE_HIGH.armAngle,
+                        0.02);
 
                 if (timeout || tolerance) {
                     armExtension.setPosition(ArmPositions.PRE_CONE_PLACE_HIGH, false);
@@ -92,10 +93,11 @@ public class ConeHigh extends CommandBase {
                 break;
             case 1: // Once the extension and wrist are in position, we are able to both lower the
                     // arm into place, and release the cone.
-                timeout = 1 < Timer.getFPGATimestamp() - start;
-                tolerance = MathUtil.isWithinTolerance(armWrist.getAngle(), ArmPositions.PRE_CONE_PLACE_HIGH.wrist, 0.05)
+                timeout = 2 < Timer.getFPGATimestamp() - start;
+                tolerance = MathUtil.isWithinTolerance(armWrist.getAngle(), ArmPositions.PRE_CONE_PLACE_HIGH.wrist,
+                        0.02)
                         && MathUtil.isWithinTolerance(armExtension.getPosition(),
-                                ArmPositions.PRE_CONE_PLACE_HIGH.extension, 5)
+                                ArmPositions.PRE_CONE_PLACE_HIGH.extension, 1)
                         && MathUtil.isWithinTolerance(armPivot.getAngle(), ArmPositions.PRE_CONE_PLACE_HIGH.armAngle,
                                 0.05);
 
@@ -116,7 +118,8 @@ public class ConeHigh extends CommandBase {
             case 2: // After the pivot is in place or at least past that point, we can immediately
                     // bring the arm back and spit the cone out more aggressively.
                 timeout = 1 < Timer.getFPGATimestamp() - start;
-                tolerance = MathUtil.isWithinTolerance(armPivot.getAngle(), ArmPositions.CONE_PLACE_HIGH.armAngle, 0.05);
+                tolerance = MathUtil.isWithinTolerance(armPivot.getAngle(), ArmPositions.CONE_PLACE_HIGH.armAngle,
+                        0.02);
 
                 if (timeout || tolerance) {
                     armExtension.setPosition(ArmPositions.STOW, false);

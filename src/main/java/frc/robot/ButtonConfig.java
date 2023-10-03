@@ -2,6 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Commands.Swerve.GyroZero;
+import frc.robot.Commands.Swerve.TurnToAngle;
 import frc.robot.Commands.arms.ArmZero;
 import frc.robot.Commands.arms.CollectFloor;
 import frc.robot.Commands.arms.CollectSubstation;
@@ -19,14 +20,16 @@ import frc.robot.Commands.vision.TapeAlign;
 public class ButtonConfig {
     public static void initTeleop() {
         new JoystickButton(ControlMap.DRIVER_BUTTONS, 6).onTrue(new GyroZero());
-        //DRIVER 13 is driver assist, should be removed
+        // DRIVER 13 is driver assist, should be removed
 
-        //TODO:Write these with the new library
-        //DRIVER_RIGHT 1 is auto align
+        // TODO:Write these with the new library
+        // DRIVER_RIGHT 1 is auto align
         new JoystickButton(ControlMap.DRIVER_BUTTONS, 1).whileTrue(new TapeAlign());
 
-        //DRIVER_LEFT 1 is 0 degrees
-        //DRIVER_LEFT 2 is 180 degrees
+        // DRIVER_LEFT 1 is 0 degrees
+        new JoystickButton(ControlMap.DRIVER_LEFT, 1).onTrue(new TurnToAngle(0, 0.1));
+        // DRIVER_LEFT 2 is 180 degrees
+        new JoystickButton(ControlMap.DRIVER_LEFT, 2).onTrue(new TurnToAngle(Math.PI, 0.1));
 
         new JoystickButton(ControlMap.CO_DRIVER_BUTTONS, 1).onTrue(new CollectFloor());
         new JoystickButton(ControlMap.CO_DRIVER_BUTTONS, 2).onTrue(new CollectSubstation());

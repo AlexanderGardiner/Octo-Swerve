@@ -66,7 +66,7 @@ public class CollectFloor extends CommandBase {
                     // begin moving once the pivot is done.
                 boolean timeout = 3 < Timer.getFPGATimestamp() - start;
                 boolean tolerance = MathUtil.isWithinTolerance(armPivot.getAngle(), ArmPositions.INTAKE_GROUND.armAngle,
-                        0.05);
+                        0.01);
                 if (timeout || tolerance) {
                     armExtension.setPosition(ArmPositions.INTAKE_GROUND, false);
                     armWrist.setAngle(ArmPositions.INTAKE_GROUND);
