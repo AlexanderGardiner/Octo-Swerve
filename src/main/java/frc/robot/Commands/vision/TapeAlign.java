@@ -24,15 +24,14 @@ public class TapeAlign extends CommandBase {
     // private final CaliGirls caliGirls;
     private PhotonTrackedTarget cameraToTarget;
     private double ySpeed = 0;
-    // private Light light;
+    private Light light;
 
     public TapeAlign() {
         // Initialization
         this.swerveDrive = SwerveDrive.getInstance();
         this.vision = Vision.getInstance();
-        // this.caliGirls = CaliGirls.getInstance();
         this.cameraToTarget = null;
-        // this.light = Light.getInstance();
+        this.light = Light.getInstance();
     }
 
     @Override
@@ -41,18 +40,9 @@ public class TapeAlign extends CommandBase {
         if (vision.getTapeCamHasTarget()) {
             if (vision.getBestTarget() != null) {
                 cameraToTarget = vision.getBestTarget();
-                // caliGirls.setBottomPos(ArmPositions.AUTO_ALIGN.armAngle);
-                //caliGirls.setBottomKf();
-            } else {
-                // end(true);
             }
         }
-        // } catch (Exception e) {
-        //     // TO DO: handle exception
-        // }
     }
-
-    public int detectioncycles = 0;
 
     @Override
     public void execute() {
@@ -60,32 +50,19 @@ public class TapeAlign extends CommandBase {
             if (vision.getTapeCamHasTarget()) {
                 if (vision.getBestTarget() != null) {
                     cameraToTarget = vision.getBestTarget();
-                    //     // SmartDashboard.putNumber("Degrees", cameraToTarget.getYaw()-3);
-                    //     //light.setDegrees(cameraToTarget.getYaw()-3);
-                    //     //light.setHasTarget(true);
-                    //     //light.lightUpdateControl(-1);
                     ySpeed = (cameraToTarget.getYaw() - 1.5) * 0.1;
-                    //     // SmartDashboard.putNumber("Degrees to target", cameraToTarget.getYaw()-3);
 
-                        if (MathUtil.isWithinTolerance(cameraToTarget.getYaw() - 1.5, 0, 2)) {
-                            Light.getInstance().setAnimation(Animations.ALIGNED);
-                        } else {
-                            Light.getInstance().setAnimation(Animations.ALIGNMENT);
-                        }
+                    if (MathUtil.isWithinTolerance(cameraToTarget.getYaw() - 1.5, 0, 2)) {
+                        light.setAnimation(Animations.ALIGNED);
+                    } else {
+                        light.setAnimation(Animations.ALIGNMENT);
+                    }
 
                 } else {
                     ySpeed = 0;
-                    //     //light.setHasTarget(false);
-                    //     //light.lightUpdateControl(-1);
-                    //     light.AdrUpdateStrobe(255, 0, 0, 1);
-                    Light.getInstance().setAnimation(Animations.ALIGNMENT);
-                    // end(true);
-                    //     // driveTrain.drive(0, 0, 0, true);
+                    light.setAnimation(Animations.ALIGNMENT);
                 }
                 swerveDrive.drive(new ChassisSpeeds(0, ySpeed, 0), true);
-                // //SmartDashboard.putNumber("Y_SPED", ySpeed);
-                // CommandScheduler.getInstance().schedule(new SetDriveAngle(180));
-                
             }
         } catch (Exception e) {
             // error
