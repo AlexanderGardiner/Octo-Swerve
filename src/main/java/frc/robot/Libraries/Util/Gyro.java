@@ -157,4 +157,8 @@ public class Gyro implements Sendable {
         builder.addDoubleProperty("Yaw", () -> getContinuousAngleDegrees(), null);
 
     }
+
+    public double getPitch() {
+        return navX.getPitch();
+    }
 }

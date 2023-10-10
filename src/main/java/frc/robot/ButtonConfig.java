@@ -1,6 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.Commands.Swerve.BalanceChargeStationAuto;
 import frc.robot.Commands.Swerve.GyroZero;
 import frc.robot.Commands.Swerve.TurnToAngle;
 import frc.robot.Commands.arms.ArmZero;
@@ -25,6 +26,7 @@ public class ButtonConfig {
         // TODO:Write these with the new library
         // DRIVER_RIGHT 1 is auto align
         new JoystickButton(ControlMap.DRIVER_BUTTONS, 1).whileTrue(new TapeAlign());
+        new JoystickButton(ControlMap.DRIVER_BUTTONS, 2).onTrue(new BalanceChargeStationAuto());
 
         // DRIVER_LEFT 1 is 0 degrees
         new JoystickButton(ControlMap.DRIVER_LEFT, 1).onTrue(new TurnToAngle(0, 0.1));

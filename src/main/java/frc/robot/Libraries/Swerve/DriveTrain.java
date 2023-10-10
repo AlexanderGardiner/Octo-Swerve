@@ -97,11 +97,11 @@ public class DriveTrain {
 
         swerveDriveKinematics = new SwerveKinematics(modulePositions);
         gyro = new Gyro(simulated, 0);
-        
+
         if (loggingEnabled) {
             SmartDashboard.putData("Gyro", gyro);
         }
-        
+
         poseEstimator = new PoseEstimator(initalPose2d);
         targetPose2d = initalPose2d;
         this.simulated = simulated;
@@ -212,8 +212,6 @@ public class DriveTrain {
                 gyro.getRotation2d());
     }
 
-    
-
     /**
      * Gets the robot estimated pose on the field
      * 
@@ -231,6 +229,10 @@ public class DriveTrain {
      */
     public Pose2d getAllianceRelativePose2d() {
         return poseEstimator.getPose2dAllianceRelative();
+    }
+
+    public double getPitch() {
+        return gyro.getPitch();
     }
 
     /**

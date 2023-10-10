@@ -187,7 +187,8 @@ public class Robot extends TimedRobot {
 
     ButtonConfig.initTeleop();
 
-    CommandScheduler.getInstance().setDefaultCommand(SwerveDrive.getInstance(), new SwerveControl());
+    CommandScheduler.getInstance().setDefaultCommand(SwerveDrive.getInstance(),
+        new SwerveControl());
   }
 
   /**

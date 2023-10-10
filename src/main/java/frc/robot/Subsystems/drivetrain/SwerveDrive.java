@@ -193,6 +193,10 @@ public class SwerveDrive extends SubsystemBase {
         return this.driveTrain.getUnwrappedGyroRotation();
     }
 
+    public double getPitch() {
+        return this.driveTrain.getPitch();
+    }
+
     /**
      * Sets the gyro offset for the pose estimator
      * 
