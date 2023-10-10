@@ -5,7 +5,10 @@ import org.photonvision.targeting.PhotonTrackedTarget;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.Libraries.Util.MathUtil;
 import frc.robot.Subsystems.drivetrain.SwerveDrive;
+import frc.robot.Subsystems.light.Animations;
+import frc.robot.Subsystems.light.Light;
 // import frc.robot.commands.swerve.SetDriveAngle;
 // import frc.robot.subsystems.Light;
 // import frc.robot.subsystems.arm.ArmPositions;
@@ -41,7 +44,7 @@ public class TapeAlign extends CommandBase {
                 // caliGirls.setBottomPos(ArmPositions.AUTO_ALIGN.armAngle);
                 //caliGirls.setBottomKf();
             } else {
-                end(true);
+                // end(true);
             }
         }
         // } catch (Exception e) {
@@ -64,22 +67,22 @@ public class TapeAlign extends CommandBase {
                     ySpeed = (cameraToTarget.getYaw() - 1.5) * 0.1;
                     //     // SmartDashboard.putNumber("Degrees to target", cameraToTarget.getYaw()-3);
 
-                    //     if (MathUtil.isWithinTolerance(cameraToTarget.getYaw() - 1.5, 0, 2)) {
-                    //         light.AdrUpdateStrobe(255, 200, 0, 1);
-                    //     } else {
-                    //         light.AdrUpdateStrobe(0, 0, 255, 1);
-                    //     }
-                    swerveDrive.drive(new ChassisSpeeds(swerveDrive.previousXSpeed, ySpeed, 0), true);
+                        if (MathUtil.isWithinTolerance(cameraToTarget.getYaw() - 1.5, 0, 2)) {
+                            Light.getInstance().setAnimation(Animations.ALIGNED);
+                        } else {
+                            Light.getInstance().setAnimation(Animations.ALIGNMENT);
+                        }
 
                 } else {
                     ySpeed = 0;
                     //     //light.setHasTarget(false);
                     //     //light.lightUpdateControl(-1);
                     //     light.AdrUpdateStrobe(255, 0, 0, 1);
-                    end(true);
+                    Light.getInstance().setAnimation(Animations.ALIGNMENT);
+                    // end(true);
                     //     // driveTrain.drive(0, 0, 0, true);
                 }
-
+                swerveDrive.drive(new ChassisSpeeds(0, ySpeed, 0), true);
                 // //SmartDashboard.putNumber("Y_SPED", ySpeed);
                 // CommandScheduler.getInstance().schedule(new SetDriveAngle(180));
                 
