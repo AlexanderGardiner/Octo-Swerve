@@ -50,7 +50,7 @@ public class TapeAlign extends CommandBase {
             if (vision.getTapeCamHasTarget()) {
                 if (vision.getBestTarget() != null) {
                     cameraToTarget = vision.getBestTarget();
-                    ySpeed = (cameraToTarget.getYaw() - 1.5) * 0.1;
+                    ySpeed = (cameraToTarget.getYaw() - 1.5) * 0.06;
 
                     if (MathUtil.isWithinTolerance(cameraToTarget.getYaw() - 1.5, 0, 2)) {
                         light.setAnimation(Animations.ALIGNED);
@@ -62,7 +62,7 @@ public class TapeAlign extends CommandBase {
                     ySpeed = 0;
                     light.setAnimation(Animations.ALIGNMENT);
                 }
-                swerveDrive.drive(new ChassisSpeeds(0, ySpeed, 0), true);
+                swerveDrive.drive(new ChassisSpeeds(swerveDrive.previousXSpeed, ySpeed, 0), true);
             }
         } catch (Exception e) {
             // error

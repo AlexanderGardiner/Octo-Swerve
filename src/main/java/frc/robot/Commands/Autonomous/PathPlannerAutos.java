@@ -108,14 +108,14 @@ public class PathPlannerAutos {
             startingGyroAngle = 180;
             SwerveDrive.getInstance().setPoseEstimatorPose2d(pathgroup.get(0).getInitialHolonomicPose());
 
-            SwerveDrive.getInstance().resetGyro();
-
             if (DriverStation.getAlliance() == DriverStation.Alliance.Red) {
                 SwerveDrive.getInstance()
                         .setGyroAngleAdjustment(MathUtil.flipAngleOverYAxis(PathPlannerAutos.startingGyroAngle));
             } else {
                 SwerveDrive.getInstance().setGyroAngleAdjustment(PathPlannerAutos.startingGyroAngle);
             }
+
+            SwerveDrive.getInstance().updatePose();
 
             CommandScheduler.getInstance().schedule(autoBuilder.fullAuto(pathgroup));
         });
@@ -142,14 +142,14 @@ public class PathPlannerAutos {
             startingGyroAngle = 180;
             SwerveDrive.getInstance().setPoseEstimatorPose2d(pathgroup.get(0).getInitialHolonomicPose());
 
-            SwerveDrive.getInstance().resetGyro();
-
             if (DriverStation.getAlliance() == DriverStation.Alliance.Red) {
                 SwerveDrive.getInstance()
                         .setGyroAngleAdjustment(MathUtil.flipAngleOverYAxis(PathPlannerAutos.startingGyroAngle));
             } else {
                 SwerveDrive.getInstance().setGyroAngleAdjustment(PathPlannerAutos.startingGyroAngle);
             }
+
+            SwerveDrive.getInstance().updatePose();
 
             CommandScheduler.getInstance().schedule(autoBuilder.fullAuto(pathgroup));
         });

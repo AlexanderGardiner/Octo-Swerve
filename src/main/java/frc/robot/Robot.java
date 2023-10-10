@@ -43,8 +43,8 @@ public class Robot extends TimedRobot {
     initAllSubsystems();
     Light.getInstance().setAnimation(Animations.BOOT_COMPLETE);
     autoChooser = new SendableChooser<Command>();
-    autoChooser.setDefaultOption("Test Path", PathPlannerAutos.ConeHighCubeLowCableSide());
-    autoChooser.addOption("Test Path1", PathPlannerAutos.TestPath1());
+    autoChooser.setDefaultOption("Cable Side 2 Piece", PathPlannerAutos.ConeHighCubeLowCableSide());
+    autoChooser.addOption("Substation Side 2 Piece", PathPlannerAutos.ConeHighCubeLow());
 
     SmartDashboard.putData("autonomous", autoChooser);
 
@@ -128,6 +128,8 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     CommandScheduler.getInstance().cancelAll();
     CommandScheduler.getInstance().removeDefaultCommand(SwerveDrive.getInstance());
+
+    SwerveDrive.getInstance().resetGyro();
     Light.getInstance().setAnimation(Animations.ENABLE);
 
     m_autonomousCommand = autoChooser.getSelected();

@@ -12,7 +12,7 @@ public enum ArmPositions {
     PRE_CONE_PLACE_MID(.76, 23.35, .65), // taken from original
     CONE_PLACE_MID(.728, 17.85, .63), // same as prep but with caligirlsmovedownalittle incorporated
 
-    INTAKE_GROUND(.57, 28.43, 0.44),
+    INTAKE_GROUND(.58, 30.43, 0.44),
     INTAKE_SUBSTATION(.78, 0.2, .66),
 
     CUBE_PLACE_HIGH(.77, 47, .65),
