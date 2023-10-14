@@ -3,6 +3,7 @@ package frc.robot.Commands.vision;
 import org.photonvision.targeting.PhotonTrackedTarget;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Libraries.Util.MathUtil;
@@ -50,9 +51,8 @@ public class TapeAlign extends CommandBase {
             if (vision.getTapeCamHasTarget()) {
                 if (vision.getBestTarget() != null) {
                     cameraToTarget = vision.getBestTarget();
-                    ySpeed = (cameraToTarget.getYaw() - 1.5) * 0.06;
-
-                    if (MathUtil.isWithinTolerance(cameraToTarget.getYaw() - 1.5, 0, 2)) {
+                    ySpeed = (cameraToTarget.getYaw() - 4) * 0.07;
+                    if (MathUtil.isWithinTolerance(cameraToTarget.getYaw() - 4, 0, 1)) {
                         light.setAnimation(Animations.ALIGNED);
                     } else {
                         light.setAnimation(Animations.ALIGNMENT);

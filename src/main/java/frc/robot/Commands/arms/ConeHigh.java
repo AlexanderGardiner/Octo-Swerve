@@ -74,7 +74,7 @@ public class ConeHigh extends CommandBase {
                     // This should help speed up the placement, but will need to be tuned carefully.
                 timeout = 1 < Timer.getFPGATimestamp() - start;
                 tolerance = MathUtil.isWithinTolerance(armPivot.getAngle(), ArmPositions.HALF_CONE_PLACE_HIGH.armAngle,
-                        0.02);
+                        0.04);
 
                 if (timeout || tolerance) {
                     armExtension.setPosition(ArmPositions.PRE_CONE_PLACE_HIGH, false);
@@ -93,9 +93,9 @@ public class ConeHigh extends CommandBase {
                 break;
             case 1: // Once the extension and wrist are in position, we are able to both lower the
                     // arm into place, and release the cone.
-                timeout = 2 < Timer.getFPGATimestamp() - start;
+                timeout = 5 < Timer.getFPGATimestamp() - start;
                 tolerance = MathUtil.isWithinTolerance(armWrist.getAngle(), ArmPositions.PRE_CONE_PLACE_HIGH.wrist,
-                        0.02)
+                        0.05)
                         && MathUtil.isWithinTolerance(armExtension.getPosition(),
                                 ArmPositions.PRE_CONE_PLACE_HIGH.extension, 1)
                         && MathUtil.isWithinTolerance(armPivot.getAngle(), ArmPositions.PRE_CONE_PLACE_HIGH.armAngle,
@@ -103,7 +103,6 @@ public class ConeHigh extends CommandBase {
 
                 if (timeout || tolerance) {
                     armPivot.setAngle(ArmPositions.CONE_PLACE_HIGH);
-                    armRollers.setSpeed(ArmSpeeds.PLACE_CONE);
 
                     start = Timer.getFPGATimestamp();
                     flag = 2;
@@ -124,6 +123,7 @@ public class ConeHigh extends CommandBase {
                 if (timeout || tolerance) {
                     armExtension.setPosition(ArmPositions.STOW, false);
                     armRollers.setSpeed(ArmSpeeds.EJECT_CONE);
+                    armRollers.setSpeed(ArmSpeeds.PLACE_CONE);
 
                     start = Timer.getFPGATimestamp();
                     flag = 3;

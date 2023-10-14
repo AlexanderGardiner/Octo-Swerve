@@ -2,6 +2,7 @@ package frc.robot.Commands.Swerve;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Libraries.Util.MathUtil;
@@ -12,7 +13,8 @@ public class TurnToAngle extends CommandBase {
     private SwerveDrive swerveDrive;
     private double targetAngle;
     private double tolerance;
-    private PIDController pidController = new PIDController(5, 0, 0);
+    private PIDController pidController = new PIDController(6, 0, 0);
+    private double startTimeInTolerance;
 
     public TurnToAngle(double targetAngle, double tolerance) {
         this.swerveDrive = SwerveDrive.getInstance();
@@ -37,14 +39,19 @@ public class TurnToAngle extends CommandBase {
     @Override
     public boolean isFinished() {
         if (MathUtil.isWithinTolerance(targetAngle, swerveDrive.getGyroRotation().getRadians(), tolerance)) {
-            swerveDrive.autonomousAngle = false;
-            SmartDashboard.putNumber("autoangle", 0);
-            swerveDrive.updatePose();
-            swerveDrive.setTargetPose2d(swerveDrive.getPose2d());
-            return true;
-        } else {
-            return false;
+            if (Timer.getFPGATimestamp() - 0.2 > startTimeInTolerance) {
+                startTimeInTolerance = Timer.getFPGATimestamp();
+
+            } else if (Timer.getFPGATimestamp() - 0.2 < startTimeInTolerance) {
+                swerveDrive.autonomousAngle = false;
+                SmartDashboard.putNumber("autoangle", 0);
+                swerveDrive.updatePose();
+                swerveDrive.setTargetPose2d(swerveDrive.getPose2d());
+                return true;
+            }
+
         }
+        return false;
 
     }
 
