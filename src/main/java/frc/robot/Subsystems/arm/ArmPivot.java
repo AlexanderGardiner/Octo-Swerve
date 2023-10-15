@@ -43,13 +43,13 @@ public class ArmPivot extends SubsystemBase {
                 true,
                 SparkMaxEncoderType.Absolute,
                 IdleMode.kCoast,
-                5,
-                5,
+                30,
+                30,
                 false,
                 true,
                 4096,
                 false,
-                new PIDConfig(6, 0.0, 0, 0.06));
+                new PIDConfig(6, 0.0001, 0, 0.06));
         motor1 = new CANSparkMax(MotorIDs.ARM_PIVOT_ANGLE, MotorType.kBrushless);
         SparkMaxSetup.setup(motor1, pivotConfig1);
 
@@ -65,8 +65,8 @@ public class ArmPivot extends SubsystemBase {
                 1000,
                 true,
                 IdleMode.kCoast,
-                5,
-                5,
+                30,
+                30,
                 true,
                 motor1);
         motor2 = new CANSparkMax(MotorIDs.ARM_PIVOT_ANGLE_FOLLOWER, MotorType.kBrushless);

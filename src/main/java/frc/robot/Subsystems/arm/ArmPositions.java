@@ -2,7 +2,7 @@ package frc.robot.Subsystems.arm;
 
 public enum ArmPositions {
     AUTO_ALIGN(0.785, 0.2, 0.35), // taken from original
-    STOW(.49, 0.2, .242), // taken from original
+    STOW(.487, 0, .242), // taken from original
 
     HALF_CONE_PLACE_HIGH(.758, 0.2, .567), // fill in the crossover
     PRE_CONE_PLACE_HIGH(.8, 70.5, .58), // taken from original

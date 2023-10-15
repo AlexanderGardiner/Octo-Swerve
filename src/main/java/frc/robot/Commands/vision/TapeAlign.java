@@ -52,7 +52,7 @@ public class TapeAlign extends CommandBase {
                 if (vision.getBestTarget() != null) {
                     cameraToTarget = vision.getBestTarget();
                     ySpeed = (cameraToTarget.getYaw() - 4) * 0.07;
-                    if (MathUtil.isWithinTolerance(cameraToTarget.getYaw() - 4, 0, 1)) {
+                    if (MathUtil.isWithinTolerance(cameraToTarget.getYaw() - 4, 0, 2)) {
                         light.setAnimation(Animations.ALIGNED);
                     } else {
                         light.setAnimation(Animations.ALIGNMENT);
