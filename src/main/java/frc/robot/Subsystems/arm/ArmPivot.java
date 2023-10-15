@@ -6,6 +6,7 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.MotorIDs;
 import frc.robot.Libraries.Util.PIDConfig;
@@ -43,7 +44,7 @@ public class ArmPivot extends SubsystemBase {
                 SparkMaxEncoderType.Absolute,
                 IdleMode.kCoast,
                 5,
-                15,
+                5,
                 false,
                 true,
                 4096,
@@ -65,12 +66,12 @@ public class ArmPivot extends SubsystemBase {
                 true,
                 IdleMode.kCoast,
                 5,
-                15,
+                5,
                 true,
                 motor1);
         motor2 = new CANSparkMax(MotorIDs.ARM_PIVOT_ANGLE_FOLLOWER, MotorType.kBrushless);
         SparkMaxSetup.setup(motor2, pivotConfig2);
-        motor1.getAbsoluteEncoder(Type.kDutyCycle).setZeroOffset(0.72 + (-.258) - (1 / 6) + 0.07);
+        motor1.getAbsoluteEncoder(Type.kDutyCycle).setZeroOffset((0.7));
     }
 
     public void setAngle(double angle) {
