@@ -37,7 +37,7 @@ public class ArmRollers extends SubsystemBase {
             SparkMaxEncoderType.Relative,
             IdleMode.kBrake,
             10,
-            20,
+            30,
             false,
             false,
             2048,

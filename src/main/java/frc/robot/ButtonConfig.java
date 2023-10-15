@@ -5,6 +5,8 @@ import frc.robot.Commands.Swerve.BalanceChargeStationAuto;
 import frc.robot.Commands.Swerve.GyroZero;
 import frc.robot.Commands.Swerve.TurnToAngle;
 import frc.robot.Commands.arms.ArmZero;
+import frc.robot.Commands.arms.ClawCollect;
+import frc.robot.Commands.arms.ClawEject;
 import frc.robot.Commands.arms.CollectFloor;
 import frc.robot.Commands.arms.CollectSubstation;
 import frc.robot.Commands.arms.ConeHigh;
@@ -46,5 +48,8 @@ public class ButtonConfig {
         new JoystickButton(ControlMap.CO_DRIVER_BUTTONS, 10).onTrue(new ConeMid());
         new JoystickButton(ControlMap.CO_DRIVER_BUTTONS, 11).onTrue(new PositionAutoAlign());
         new JoystickButton(ControlMap.CO_DRIVER_BUTTONS, 12).onTrue(new PositionStow());
+
+        new JoystickButton(ControlMap.CO_DRIVER_RIGHT, 1).onTrue(new ClawEject());
+        new JoystickButton(ControlMap.CO_DRIVER_RIGHT, 2).onTrue(new ClawCollect());
     }
 }

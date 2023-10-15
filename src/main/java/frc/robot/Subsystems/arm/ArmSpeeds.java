@@ -6,7 +6,7 @@ public enum ArmSpeeds {
     EJECT_CONE(-4),
     HOLD_CONE(4),
 
-    PLACE_CUBE(-5),
+    PLACE_CUBE(-7),
     HOLD_CUBE(4),
 
     COLLECT(10),
