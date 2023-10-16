@@ -10,11 +10,14 @@ public class TurnToAngle extends CommandBase {
     //TODO:This whole file is broken
     private SwerveDrive swerveDrive;
     private double targetAngle;
+    //TODO: why is this a pid
     private PIDController pidController = new PIDController(6, 0, 0);
 
     public TurnToAngle(double targetAngle) {
+        //TODO: this should be reqired.
         this.swerveDrive = SwerveDrive.getInstance();
         this.targetAngle = targetAngle;
+        //TODO: probably fine just not sure what it does
         this.pidController.enableContinuousInput(0, 2 * Math.PI);
     }
 
@@ -26,6 +29,7 @@ public class TurnToAngle extends CommandBase {
 
     @Override
     public void execute() {
+        //TODO: does this rely on canstant alternating commands by swerve control? if so wtf
         swerveDrive.drive(new ChassisSpeeds(swerveDrive.previousXSpeed,
                 swerveDrive.previousYSpeed,
                 pidController.calculate(swerveDrive.getGyroRotation().getRadians(), targetAngle)));
