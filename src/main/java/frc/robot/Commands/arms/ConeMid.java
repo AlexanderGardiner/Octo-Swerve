@@ -93,7 +93,7 @@ public class ConeMid extends CommandBase {
                 timeout = 1 < Timer.getFPGATimestamp() - start;
                 tolerance = MathUtil.isWithinTolerance(armWrist.getAngle(), ArmPositions.PRE_CONE_PLACE_MID.wrist, 0.05)
                         && MathUtil.isWithinTolerance(armExtension.getPosition(),
-                                ArmPositions.PRE_CONE_PLACE_MID.extension, 5)
+                                ArmPositions.PRE_CONE_PLACE_MID.extension, 2)
                         && MathUtil.isWithinTolerance(armPivot.getAngle(), ArmPositions.PRE_CONE_PLACE_MID.armAngle,
                                 0.05);
 
@@ -135,7 +135,7 @@ public class ConeMid extends CommandBase {
                     // clear for takeoff.
                 timeout = 1 < Timer.getFPGATimestamp() - start;
                 tolerance = MathUtil.isWithinTolerance(armExtension.getMotorPos(),
-                        ArmPositions.HALF_CONE_PLACE_MID.extension, 5);
+                        ArmPositions.STOW.extension, 5);
 
                 if (timeout || tolerance) {
                     armWrist.setAngle(ArmPositions.STOW);
