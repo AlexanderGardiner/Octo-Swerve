@@ -5,6 +5,7 @@ import frc.robot.Subsystems.arm.ArmExtension;
 import frc.robot.Subsystems.arm.ArmPivot;
 import frc.robot.Subsystems.arm.ArmPositions;
 import frc.robot.Subsystems.arm.ArmRollers;
+import frc.robot.Subsystems.arm.ArmSpeeds;
 import frc.robot.Subsystems.arm.ArmWrist;
 import frc.robot.Subsystems.hippo.HippoPositions;
 import frc.robot.Subsystems.hippo.HippoRollers;
@@ -39,7 +40,7 @@ public class PositionStow extends InstantCommand{
     public void initialize() { 
         hippoWrist.setAngle(HippoPositions.STOW);
         hippoRollers.setSpeed(0);
-        armRollers.setSpeed(0);
+        armRollers.setSpeed(ArmSpeeds.COLLECT.roller);
         armPivot.setAngle(ArmPositions.STOW);
         armExtension.setPosition(ArmPositions.STOW, false);
         armWrist.setAngle(ArmPositions.STOW);

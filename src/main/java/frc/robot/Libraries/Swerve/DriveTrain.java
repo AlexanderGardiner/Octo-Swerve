@@ -190,7 +190,7 @@ public class DriveTrain {
         for (int i = 0; i < 4; i++) {
             swerveModules.get(i).setTargetState(swerveModuleStates[i]);
         }
-
+        
         updatePose();
 
         if (simulated) {
