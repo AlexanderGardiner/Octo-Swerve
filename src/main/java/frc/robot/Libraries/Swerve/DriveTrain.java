@@ -299,6 +299,13 @@ public class DriveTrain {
     }
 
     /**
+     * Gets the target pose2d of the drivetrain
+     */
+    public Pose2d getTargetPose2d() {
+        return this.targetPose2d;
+    }
+
+    /**
      * Sets the gyro offset that the pose estimator uses to avoid resetting the gyro
      * 
      * @param gyroOffset The offset to set (ccw positive)
