@@ -68,7 +68,7 @@ public class SwerveDrive extends SubsystemBase {
                 new PIDConfig(0.001, 0, 0, 0, Double.valueOf(0)),
                 //TODO: FIX ThIS SHIT
                 new PIDConfig(0.12, 0, 0, 0, Double.valueOf(0)),
-                true);
+                false);
     }
 
     /**

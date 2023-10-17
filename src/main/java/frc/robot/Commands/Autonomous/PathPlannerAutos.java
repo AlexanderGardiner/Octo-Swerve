@@ -249,8 +249,6 @@ public class PathPlannerAutos {
                         .setPoseEstimatorPose2d(new Pose2d(pathgroup.get(0).getInitialHolonomicPose().getX(),
                                 pathgroup.get(0).getInitialHolonomicPose().getY(),
                                 new Rotation2d(Math.toRadians(MathUtil.flipAngleOverYAxis(startingGyroAngle)))));
-                SmartDashboard.putNumber("flipped gyro",
-                        MathUtil.flipAngleOverYAxis(PathPlannerAutos.startingGyroAngle));
                 SwerveDrive.getInstance()
                         .setGyroAngleAdjustment(MathUtil.flipAngleOverYAxis(PathPlannerAutos.startingGyroAngle));
             } else {

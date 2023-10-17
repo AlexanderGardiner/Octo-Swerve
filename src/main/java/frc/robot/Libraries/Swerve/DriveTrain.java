@@ -153,8 +153,8 @@ public class DriveTrain {
                     new Rotation2d(
                             targetPose2d.getRotation().getRadians() + (chassisSpeeds.omegaRadiansPerSecond * 0.02)));
 
-            SmartDashboard.putString("targetPose", targetPose2d.toString());
-            SmartDashboard.putString("currentPose", currentPose.toString());
+            // SmartDashboard.putString("targetPose", targetPose2d.toString());
+            // SmartDashboard.putString("currentPose", currentPose.toString());
             chassisSpeeds = new ChassisSpeeds(
                     chassisSpeeds.vxMetersPerSecond
                             + (translationPIDController.calculate(currentPose.getX(),
@@ -190,7 +190,7 @@ public class DriveTrain {
         for (int i = 0; i < 4; i++) {
             swerveModules.get(i).setTargetState(swerveModuleStates[i]);
         }
-        
+
         updatePose();
 
         if (simulated) {

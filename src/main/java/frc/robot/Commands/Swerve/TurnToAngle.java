@@ -18,7 +18,6 @@ public class TurnToAngle extends InstantCommand {
 
     @Override
     public void initialize() {
-        SmartDashboard.putNumber("autoangle", 1);
         Pose2d targetPose = swerveDrive.getTargetPose2d();
         this.swerveDrive.setTargetPose2d(new Pose2d(targetPose.getX(), targetPose.getY(), new Rotation2d(targetAngle)));
     }

@@ -66,8 +66,6 @@ public class ConeHigh extends CommandBase {
 
     @Override
     public void execute() {
-        SmartDashboard.putNumber("flag", flag);
-
         switch (flag) {
             case 0: // At a certain point of acceptable height, we allow the extension and wrist to
                     // begin moving even before the pivot is done.

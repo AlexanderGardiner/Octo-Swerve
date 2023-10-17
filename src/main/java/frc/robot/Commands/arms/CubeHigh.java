@@ -65,8 +65,6 @@ public class CubeHigh extends CommandBase {
 
     @Override
     public void execute() {
-        SmartDashboard.putNumber("flag", flag);
-
         switch (flag) {
             case 0:
                 timeout = 5 < Timer.getFPGATimestamp() - start;

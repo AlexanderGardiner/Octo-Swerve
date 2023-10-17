@@ -56,7 +56,7 @@ public class ArmWrist extends SubsystemBase {
 
     public void setAngle(double angle) {
         lastpos = angle;
-        SmartDashboard.putNumber("angle", angle);
+        // SmartDashboard.putNumber("angle", angle);
         motor.getPIDController().setReference(angle, ControlType.kPosition);
     }
 
