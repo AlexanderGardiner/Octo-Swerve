@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.Commands.Swerve.BalanceChargeStationAuto;
 import frc.robot.Commands.arms.ConeHigh;
 import frc.robot.Commands.arms.HippoIntake;
 import frc.robot.Commands.arms.HippoPlace;
@@ -39,7 +40,8 @@ public class PathPlannerAutos {
             Map.entry("Stow", new PositionStow()),
             Map.entry("HippoPlace", new HippoPlace()),
             Map.entry("ConeHigh", new ConeHigh()),
-            Map.entry("AlignPosition", new PositionAutoAlign())));
+            Map.entry("AlignPosition", new PositionAutoAlign()),
+            Map.entry("Balance", new BalanceChargeStationAuto())));
 
     /**
      * Creates the pathplanner autobuilder that generates the paths
@@ -82,6 +84,74 @@ public class PathPlannerAutos {
             } else {
                 SwerveDrive.getInstance().setGyroAngleAdjustment(PathPlannerAutos.startingGyroAngle);
             }
+
+            CommandScheduler.getInstance().schedule(autoBuilder.fullAuto(pathgroup));
+        });
+    }
+
+    /**
+     * An example path
+     * <ul>
+     * <li>Sets the starting gyro angle to the holonmic angle of the inital pose,
+     * make sure 0 is towards the red alliance (cw positive)</li>
+     * <li>Sets the inital pose</li>
+     * <li>Resets the gyro and offsets it so 0 is facing towards the red
+     * alliance</li>
+     * <li>Schedules the path</li>
+     * </ul>
+     * 
+     * @return The path as a command
+     */
+    public static CommandBase MiddleConeHighCubeLow() {
+        return new InstantCommand(() -> {
+            List<PathPlannerTrajectory> pathgroup = PathPlanner.loadPathGroup("ConeHighCubeLowCenter",
+                    new PathConstraints(2, 1));
+
+            startingGyroAngle = 180;
+            SwerveDrive.getInstance().setPoseEstimatorPose2d(pathgroup.get(0).getInitialHolonomicPose());
+
+            if (DriverStation.getAlliance() == DriverStation.Alliance.Red) {
+                SwerveDrive.getInstance()
+                        .setGyroAngleAdjustment(MathUtil.flipAngleOverYAxis(PathPlannerAutos.startingGyroAngle));
+            } else {
+                SwerveDrive.getInstance().setGyroAngleAdjustment(PathPlannerAutos.startingGyroAngle);
+            }
+
+            SwerveDrive.getInstance().updatePose();
+
+            CommandScheduler.getInstance().schedule(autoBuilder.fullAuto(pathgroup));
+        });
+    }
+
+    /**
+     * An example path
+     * <ul>
+     * <li>Sets the starting gyro angle to the holonmic angle of the inital pose,
+     * make sure 0 is towards the red alliance (cw positive)</li>
+     * <li>Sets the inital pose</li>
+     * <li>Resets the gyro and offsets it so 0 is facing towards the red
+     * alliance</li>
+     * <li>Schedules the path</li>
+     * </ul>
+     * 
+     * @return The path as a command
+     */
+    public static CommandBase MiddleConeHighCubeLowRed() {
+        return new InstantCommand(() -> {
+            List<PathPlannerTrajectory> pathgroup = PathPlanner.loadPathGroup("ConeHighCubeLowCenterRed",
+                    new PathConstraints(2, 1));
+
+            startingGyroAngle = 180;
+            SwerveDrive.getInstance().setPoseEstimatorPose2d(pathgroup.get(0).getInitialHolonomicPose());
+
+            if (DriverStation.getAlliance() == DriverStation.Alliance.Red) {
+                SwerveDrive.getInstance()
+                        .setGyroAngleAdjustment(MathUtil.flipAngleOverYAxis(PathPlannerAutos.startingGyroAngle));
+            } else {
+                SwerveDrive.getInstance().setGyroAngleAdjustment(PathPlannerAutos.startingGyroAngle);
+            }
+
+            SwerveDrive.getInstance().updatePose();
 
             CommandScheduler.getInstance().schedule(autoBuilder.fullAuto(pathgroup));
         });

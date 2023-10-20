@@ -45,8 +45,10 @@ public class Robot extends TimedRobot {
     autoChooser = new SendableChooser<Command>();
     autoChooser.setDefaultOption("Cable Side 2 Piece BLUE", PathPlannerAutos.ConeHighCubeLowCableSide());
     autoChooser.addOption("Substation Side 2 Piece BLUE", PathPlannerAutos.ConeHighCubeLow());
-    autoChooser.setDefaultOption("Cable Side 2 Piece RED", PathPlannerAutos.ConeHighCubeLowCableSideRed());
+    autoChooser.addOption("Middle 2 Piece BLUE", PathPlannerAutos.MiddleConeHighCubeLow());
+    autoChooser.addOption("Cable Side 2 Piece RED", PathPlannerAutos.ConeHighCubeLowCableSideRed());
     autoChooser.addOption("Substation Side 2 Piece RED", PathPlannerAutos.ConeHighCubeLowRed());
+    autoChooser.addOption("Middle 2 Piece RED", PathPlannerAutos.MiddleConeHighCubeLowRed());
 
     SmartDashboard.putData("autonomous", autoChooser);
 
