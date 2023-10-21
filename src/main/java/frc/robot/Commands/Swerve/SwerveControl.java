@@ -9,6 +9,7 @@ import frc.robot.Subsystems.drivetrain.SwerveDrive;
 
 public class SwerveControl extends CommandBase {
     SwerveDrive swerveDrive;
+    private boolean team;
 
     /**
      * Creates a new swerve control command and adds the swervedrive subsystme as a
@@ -18,6 +19,11 @@ public class SwerveControl extends CommandBase {
         this.swerveDrive = SwerveDrive.getInstance();
 
         this.addRequirements(swerveDrive);
+    }
+
+    @Override
+    public void initialize() {
+        team = DriverStation.getAlliance() == DriverStation.Alliance.Red;
     }
 
     /**
@@ -45,7 +51,7 @@ public class SwerveControl extends CommandBase {
         xSpeed = -1 * Math.signum(yAxis) * Math.pow(MathUtil.fitDeadband(yAxis, 0.05), 2) * swerveDrive.getMaxSpeed();
         ySpeed = -1 * Math.signum(xAxis) * Math.pow(MathUtil.fitDeadband(xAxis, 0.05), 2) * swerveDrive.getMaxSpeed();
 
-        if (DriverStation.getAlliance() == DriverStation.Alliance.Red) {
+        if (team) {
             xSpeed = xSpeed * -1;
             ySpeed = ySpeed * -1;
         }

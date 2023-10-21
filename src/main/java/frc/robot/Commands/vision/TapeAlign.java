@@ -27,6 +27,7 @@ public class TapeAlign extends CommandBase {
     private PhotonTrackedTarget cameraToTarget;
     private double ySpeed = 0;
     private Light light;
+    private boolean team;
 
     public TapeAlign() {
         // Initialization
@@ -43,6 +44,7 @@ public class TapeAlign extends CommandBase {
             if (vision.getBestTarget() != null) {
                 cameraToTarget = vision.getBestTarget();
             }
+            team = DriverStation.getAlliance() == DriverStation.Alliance.Red;
         }
     }
 
@@ -52,12 +54,12 @@ public class TapeAlign extends CommandBase {
             if (vision.getTapeCamHasTarget()) {
                 if (vision.getBestTarget() != null) {
                     cameraToTarget = vision.getBestTarget();
-                    if (DriverStation.getAlliance()==DriverStation.Alliance.Blue) {
+                    if (!team) {
                         ySpeed = (cameraToTarget.getYaw() - 4) * 0.07;
                     } else {
                         ySpeed = -(cameraToTarget.getYaw() - 4) * 0.07;
                     }
-                    
+
                     if (MathUtil.isWithinTolerance(cameraToTarget.getYaw() - 4, 0, 2)) {
                         light.setAnimation(Animations.ALIGNED);
                     } else {
