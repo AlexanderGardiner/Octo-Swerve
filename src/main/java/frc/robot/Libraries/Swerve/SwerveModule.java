@@ -133,7 +133,7 @@ public class SwerveModule implements Sendable {
      * @param state The target state (in m/s and radians)
      */
     public void setTargetState(SwerveModuleState state) {
-        if (!MathUtil.isWithinTolerance(state.speedMetersPerSecond, 0, 0.05)) {
+        if (!MathUtil.isWithinTolerance(state.speedMetersPerSecond, 0, 0.05) && !MathUtil.isWithinTolerance(state.angle.getRadians(), 0, 0.02)) {
             SwerveModuleState optimizedState = StateOptimizer.optimizeSwerveStates(state, getAngleRadians());
             setTargetVelocityMeters(optimizedState.speedMetersPerSecond);
             setTargetAngleRadians(optimizedState.angle.getRadians());
