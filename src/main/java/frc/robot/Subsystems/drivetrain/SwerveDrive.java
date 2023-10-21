@@ -14,7 +14,7 @@ public class SwerveDrive extends SubsystemBase {
     DriveTrain driveTrain;
     private static SwerveDrive INSTANCE;
     private double maxSpeed = 10;
-    private double maxAngularSpeed = 4 * Math.PI;
+    private double maxAngularSpeed = 3 * Math.PI;
     public double previousXSpeed = 0;
     public double previousYSpeed = 0;
     public double previousRotSpeed = 0;

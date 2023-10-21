@@ -144,9 +144,7 @@ public class DriveTrain {
                 targetPoseY = currentPose.getY();
             }
 
-            if (chassisSpeeds.omegaRadiansPerSecond == 0) {
-                targetPoseRotation = currentPose.getRotation();
-            }
+        
 
             targetPose2d = new Pose2d(targetPoseX, targetPoseY, targetPoseRotation);
 
