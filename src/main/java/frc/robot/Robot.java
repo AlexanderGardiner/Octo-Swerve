@@ -112,20 +112,6 @@ public class Robot extends TimedRobot {
   }
 
   /**
-   * Runs every robot loop when the robot is disabled
-   */
-  @Override
-  public void disabledPeriodic() {
-  }
-
-  /**
-   * Runs when the robot exits disabled mode
-   */
-  @Override
-  public void disabledExit() {
-  }
-
-  /**
    * Runs when the robot enters autonomous mode
    * <ul>
    * <li>Cancels current commands</li>
@@ -145,20 +131,6 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
-  }
-
-  /**
-   * Runs every robot loop when the robot is in autonomous
-   */
-  @Override
-  public void autonomousPeriodic() {
-  }
-
-  /**
-   * Runs when the robot exists autonomous smode
-   */
-  @Override
-  public void autonomousExit() {
   }
 
   /**
@@ -198,13 +170,6 @@ public class Robot extends TimedRobot {
 
     CommandScheduler.getInstance().setDefaultCommand(SwerveDrive.getInstance(),
         new SwerveControl());
-  }
-
-  /**
-   * Runs every robot loop when the robot is in teleop
-   */
-  @Override
-  public void teleopPeriodic() {
   }
 
   /**
