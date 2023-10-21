@@ -45,14 +45,12 @@ public class Robot extends TimedRobot {
     Light.getInstance().setAnimation(Animations.BOOT_COMPLETE);
     autoChooser = new SendableChooser<Command>();
     autoChooser.addOption("Substation Side 2 Piece BLUE", PathPlannerAutos.BLUESubstation2Piece());
-    autoChooser.addOption("Substation Side 2 Piece RED", PathPlannerAutos.REDSubstation2Piece());
-    autoChooser.setDefaultOption("Cable Side 2 Piece BLUE", PathPlannerAutos.BLUECable2Piece());
+    autoChooser.addOption("BAD Substation Side 2 Piece RED", PathPlannerAutos.REDSubstation2Piece());
+    autoChooser.setDefaultOption("BAD Cable Side 2 Piece BLUE", PathPlannerAutos.BLUECable2Piece());
     autoChooser.addOption("Cable Side 2 Piece RED", PathPlannerAutos.REDCable2Piece());
-    autoChooser.addOption("Center 2 Piece BLUE", PathPlannerAutos.BLUECenter2Piece());
+    autoChooser.addOption("BAD Center 2 Piece BLUE", PathPlannerAutos.BLUECenter2Piece());
     autoChooser.addOption("Center 2 Piece RED", PathPlannerAutos.REDCenter2Piece());
-    
-    
-    
+
     autoChooser.addOption("PlaceHighBalance", PathPlannerAutos.PlaceHighBalance());
     autoChooser.addOption("ConeHigh", new ConeHigh());
 
