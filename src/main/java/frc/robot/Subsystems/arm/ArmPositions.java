@@ -15,7 +15,7 @@ public enum ArmPositions {
     INTAKE_GROUND(.58, 30.43, 0.44),
     INTAKE_SUBSTATION(.77, 0.2, .66),
 
-    CUBE_PLACE_HIGH(.77, 47, .65),
+    CUBE_PLACE_HIGH(.785, 60, .65),
 
     CUBE_PLACE_MID(.67, 0.2, .493),
 

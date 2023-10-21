@@ -90,7 +90,7 @@ public class CubeHigh extends CommandBase {
                 timeout = 1 < Timer.getFPGATimestamp() - start;
                 tolerance = MathUtil.isWithinTolerance(armWrist.getAngle(), ArmPositions.CUBE_PLACE_HIGH.wrist, 0.05)
                         && MathUtil.isWithinTolerance(armExtension.getPosition(),
-                                ArmPositions.CUBE_PLACE_HIGH.extension, 5)
+                                ArmPositions.CUBE_PLACE_HIGH.extension, 2)
                         && MathUtil.isWithinTolerance(armPivot.getAngle(), ArmPositions.CUBE_PLACE_HIGH.armAngle,
                                 0.05);
 
@@ -114,7 +114,7 @@ public class CubeHigh extends CommandBase {
                 timeout = 5 < Timer.getFPGATimestamp() - start;
                 tolerance = MathUtil.isWithinTolerance(armExtension.getPosition(),
                         ArmPositions.STOW.extension,
-                        5);
+                        2) && 0.5 < Timer.getFPGATimestamp() - start;
                 if (0.2 < Timer.getFPGATimestamp() - start) {
                     armWrist.setAngle(ArmPositions.STOW);
                 }
