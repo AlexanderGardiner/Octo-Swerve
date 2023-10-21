@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Commands.Autonomous.PathPlannerAutos;
 import frc.robot.Commands.Swerve.SwerveControl;
+import frc.robot.Commands.arms.ConeHigh;
 import frc.robot.Subsystems.arm.ArmExtension;
 import frc.robot.Subsystems.arm.ArmPivot;
 import frc.robot.Subsystems.arm.ArmRollers;
@@ -43,16 +44,21 @@ public class Robot extends TimedRobot {
     initAllSubsystems();
     Light.getInstance().setAnimation(Animations.BOOT_COMPLETE);
     autoChooser = new SendableChooser<Command>();
-    autoChooser.setDefaultOption("Cable Side 2 Piece BLUE", PathPlannerAutos.ConeHighCubeLowCableSide());
-    autoChooser.addOption("Substation Side 2 Piece BLUE", PathPlannerAutos.ConeHighCubeLow());
-    autoChooser.addOption("Middle 2 Piece BLUE", PathPlannerAutos.MiddleConeHighCubeLow());
-    autoChooser.addOption("Cable Side 2 Piece RED", PathPlannerAutos.ConeHighCubeLowCableSideRed());
-    autoChooser.addOption("Substation Side 2 Piece RED", PathPlannerAutos.ConeHighCubeLowRed());
-    autoChooser.addOption("Middle 2 Piece RED", PathPlannerAutos.MiddleConeHighCubeLowRed());
+    autoChooser.addOption("Substation Side 2 Piece BLUE", PathPlannerAutos.BLUESubstation2Piece());
+    autoChooser.addOption("Substation Side 2 Piece RED", PathPlannerAutos.REDSubstation2Piece());
+    autoChooser.setDefaultOption("Cable Side 2 Piece BLUE", PathPlannerAutos.BLUECable2Piece());
+    autoChooser.addOption("Cable Side 2 Piece RED", PathPlannerAutos.REDCable2Piece());
+    autoChooser.addOption("Center 2 Piece BLUE", PathPlannerAutos.BLUECenter2Piece());
+    autoChooser.addOption("Center 2 Piece RED", PathPlannerAutos.REDCenter2Piece());
+    
+    
+    
+    autoChooser.addOption("PlaceHighBalance", PathPlannerAutos.PlaceHighBalance());
+    autoChooser.addOption("ConeHigh", new ConeHigh());
 
     SmartDashboard.putData("autonomous", autoChooser);
 
-    // SmartDashboard.putData("Field", field);
+    //SmartDashboard.putData("Field", field);
     PathPlannerServer.startServer(5811);
     ArmExtension.getInstance().setOffset();
 
