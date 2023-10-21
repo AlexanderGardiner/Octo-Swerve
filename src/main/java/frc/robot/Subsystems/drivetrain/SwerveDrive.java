@@ -43,6 +43,7 @@ public class SwerveDrive extends SubsystemBase {
                         MotorIDs.BACK_RIGHT_STEER },
                 new int[] { MotorIDs.FRONT_LEFT_DRIVE, MotorIDs.FRONT_RIGHT_DRIVE, MotorIDs.BACK_LEFT_DRIVE,
                         MotorIDs.BACK_RIGHT_DRIVE },
+                        //TODO: No.
                 new PIDConfig[] { new PIDConfig(5, .0, 0.02, Double.valueOf(0)),
                         new PIDConfig(5, .0, 0.02, Double.valueOf(0)),
                         new PIDConfig(5, .0, 0.02, Double.valueOf(0)),
@@ -65,6 +66,7 @@ public class SwerveDrive extends SubsystemBase {
                 new boolean[] { false, false, false, false },
                 false,
                 new Pose2d(0, 0, new Rotation2d(Math.PI)),
+                //TODO: what
                 new PIDConfig(0.001, 0, 0, 0, Double.valueOf(0)),
                 //TODO: FIX ThIS SHIT
                 new PIDConfig(0.12, 0, 0, 0, Double.valueOf(0)),
