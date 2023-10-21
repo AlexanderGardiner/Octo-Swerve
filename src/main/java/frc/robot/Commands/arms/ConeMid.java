@@ -71,7 +71,7 @@ public class ConeMid extends CommandBase {
                     // This should help speed up the placement, but will need to be tuned carefully.
                 timeout = 1 < Timer.getFPGATimestamp() - start;
                 tolerance = MathUtil.isWithinTolerance(armPivot.getAngle(), ArmPositions.HALF_CONE_PLACE_MID.armAngle,
-                        0.05);
+                        0.1);
 
                 if (timeout || tolerance) {
                     armExtension.setPosition(ArmPositions.PRE_CONE_PLACE_MID, false);

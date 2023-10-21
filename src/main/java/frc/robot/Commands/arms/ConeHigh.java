@@ -101,6 +101,7 @@ public class ConeHigh extends CommandBase {
 
                 if (timeout || tolerance) {
                     armPivot.setAngle(ArmPositions.CONE_PLACE_HIGH);
+                    armRollers.setSpeed(ArmSpeeds.PLACE_CONE);
 
                     start = Timer.getFPGATimestamp();
                     flag = 2;
@@ -120,8 +121,6 @@ public class ConeHigh extends CommandBase {
 
                 if (timeout || tolerance) {
                     armExtension.setPosition(ArmPositions.STOW, false);
-                    armRollers.setSpeed(ArmSpeeds.EJECT_CONE);
-                    armRollers.setSpeed(ArmSpeeds.PLACE_CONE);
 
                     start = Timer.getFPGATimestamp();
                     flag = 3;
