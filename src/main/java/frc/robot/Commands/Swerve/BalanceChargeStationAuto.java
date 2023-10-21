@@ -24,14 +24,18 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Subsystems.drivetrain.SwerveDrive;
+import frc.robot.Subsystems.light.Animations;
+import frc.robot.Subsystems.light.Light;
 
 public class BalanceChargeStationAuto extends PIDCommand {
     public BalanceChargeStationAuto() {
+        // Light.getInstance().setAnimation(Animations.BALANCING);
+
         super(
                 new PIDController(0.05, 0.000, 0),
                 SwerveDrive.getInstance()::getPitch,
                 0,
-                output -> SwerveDrive.getInstance().drive(new ChassisSpeeds(output, 0, 0), true),
+                output -> SwerveDrive.getInstance().drive(new ChassisSpeeds(output, 0, 0), false),
                 SwerveDrive.getInstance());
 
         getController().setTolerance(20, 20);

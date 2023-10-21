@@ -173,7 +173,6 @@ public class Robot extends TimedRobot {
       SwerveDrive.getInstance().setTargetPose2d(SwerveDrive.getInstance().getPose2d());
     } else {
       if (DriverStation.getAlliance() == DriverStation.Alliance.Red) {
-        SwerveDrive.getInstance().resetGyro();
         SwerveDrive.getInstance().setGyroAngleAdjustment(180);
         SwerveDrive.getInstance().setPoseEstimatorGyroOffset(new Rotation2d());
         SwerveDrive.getInstance().setPoseEstimatorPose2d(new Pose2d(0, 0, new Rotation2d(0)));

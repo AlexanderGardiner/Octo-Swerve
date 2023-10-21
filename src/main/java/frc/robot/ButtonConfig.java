@@ -29,7 +29,7 @@ public class ButtonConfig {
         // DRIVER_RIGHT 1 is auto align
         new JoystickButton(ControlMap.DRIVER_RIGHT, 1).whileTrue(new TapeAlign());
         new JoystickButton(ControlMap.DRIVER_BUTTONS, 4).whileTrue(new TapeAlign());
-        new JoystickButton(ControlMap.DRIVER_BUTTONS, 3).onTrue(new BalanceChargeStationAuto());
+        new JoystickButton(ControlMap.DRIVER_BUTTONS, 3).whileTrue(new BalanceChargeStationAuto());
 
         // DRIVER_LEFT 1 is 0 degrees
         new JoystickButton(ControlMap.DRIVER_LEFT, 1).whileTrue(new TurnToAngle(0));
