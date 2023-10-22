@@ -9,11 +9,11 @@ public enum ArmPositions {
     CONE_PLACE_HIGH(.75, 69.2, .582), // same as prep but with caligirlsmovedownalittle incorporated
 
     HALF_CONE_PLACE_MID(.728, 0.2, .619), // fill in the crossover
-    PRE_CONE_PLACE_MID(.785, 25, .65), // taken from original
+    PRE_CONE_PLACE_MID(.785, 25, .64), // taken from original
     CONE_PLACE_MID(.715, 25, .63), // same as prep but with caligirlsmovedownalittle incorporated
 
     INTAKE_GROUND(.58, 30.43, 0.44),
-    INTAKE_SUBSTATION(.77, 0.2, .66),
+    INTAKE_SUBSTATION(.77, 0.2, .61),
 
     CUBE_PLACE_HIGH(.785, 60, .65),
 
