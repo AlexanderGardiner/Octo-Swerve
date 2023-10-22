@@ -10,6 +10,7 @@ import frc.robot.Subsystems.arm.ArmWrist;
 import frc.robot.Subsystems.hippo.HippoPositions;
 import frc.robot.Subsystems.hippo.HippoRollers;
 import frc.robot.Subsystems.hippo.HippoWrist;
+import frc.robot.Subsystems.light.Animations;
 import frc.robot.Subsystems.light.CmdIDSequences;
 import frc.robot.Subsystems.light.Light;
 
@@ -46,6 +47,7 @@ public class PositionAutoAlign extends InstantCommand{
         armWrist.setAngle(ArmPositions.AUTO_ALIGN);
         light.command = true;
         light.setAnimation(CmdIDSequences.PositionAutoAlign);
+        light.setAnimation(Animations.ALIGNMENT);
         
 
     }
