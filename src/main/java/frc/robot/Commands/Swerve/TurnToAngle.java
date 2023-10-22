@@ -5,11 +5,12 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Libraries.Util.MathUtil;
 import frc.robot.Subsystems.drivetrain.SwerveDrive;
 
-public class TurnToAngle extends InstantCommand {
+public class TurnToAngle extends CommandBase {
     private SwerveDrive swerveDrive;
     private double targetAngle;
 
@@ -29,6 +30,17 @@ public class TurnToAngle extends InstantCommand {
             this.swerveDrive.setTargetPose2d(new Pose2d(targetPose.getX(), targetPose.getY(), new Rotation2d(targetAngle)));
         }
         
+    }
+
+    @Override
+    public boolean isFinished() {
+        return MathUtil.isWithinTolerance(targetAngle, swerveDrive.getGyroRotation().getRadians(), 0.1);
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        this.swerveDrive.setPidRotation(false);
+
     }
 
 

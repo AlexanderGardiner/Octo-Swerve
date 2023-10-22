@@ -24,6 +24,7 @@ public class DriveTrain {
     private PoseEstimator poseEstimator;
     private boolean simulated;
     private boolean pidRotation = false;
+    private double firstZeroRotation = 10;
 
     private Pose2d targetPose2d = new Pose2d();
     private PIDController translationPIDController;
@@ -147,7 +148,7 @@ public class DriveTrain {
 
         
 
-            targetPose2d = new Pose2d(targetPoseX, targetPoseY, targetPoseRotation);
+            
 
             // Calculates the target position with the chassis speeds added and calculates
             // speeds
@@ -159,11 +160,25 @@ public class DriveTrain {
             // SmartDashboard.putString("targetPose", targetPose2d.toString());
             // SmartDashboard.putString("currentPose", currentPose.toString());
             double omegaRadiansPerSecond = chassisSpeeds.omegaRadiansPerSecond;
-            if (pidRotation) {
-                omegaRadiansPerSecond += (rotationPidController.calculate(currentPose.getRotation().getRadians(),
-                targetPose2d.getRotation().getRadians()) / 0.02);
+            if (pidRotation || MathUtil.isWithinTolerance(chassisSpeeds.omegaRadiansPerSecond, 0, 0.01)) {
+                if (firstZeroRotation==0) {
+                    
+                    updatePose();
+                    targetPoseRotation = getPose2d().getRotation();
+                }
+                firstZeroRotation-=1;
+                if (firstZeroRotation<0) {
+                    
+                    omegaRadiansPerSecond += (rotationPidController.calculate(currentPose.getRotation().getRadians(),
+                    targetPose2d.getRotation().getRadians()) / 0.02);
+                }
+                
+            } else {
+                firstZeroRotation = 10;
+                updatePose();
+                targetPoseRotation = getPose2d().getRotation();
             }
-            SmartDashboard.putBoolean("Pid rotation ", pidRotation);
+            targetPose2d = new Pose2d(targetPoseX, targetPoseY, targetPoseRotation);
             chassisSpeeds = new ChassisSpeeds(
                 chassisSpeeds.vxMetersPerSecond
                 + (translationPIDController.calculate(currentPose.getX(),

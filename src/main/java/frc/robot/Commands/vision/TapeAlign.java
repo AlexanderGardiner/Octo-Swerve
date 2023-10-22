@@ -41,7 +41,7 @@ public class TapeAlign extends CommandBase {
     @Override
     public void initialize() {
         // try {
-        CommandScheduler.getInstance().schedule(new TurnToAngle(Math.PI));
+        
         if (vision.getTapeCamHasTarget()) {
             if (vision.getBestTarget() != null) {
                 cameraToTarget = vision.getBestTarget();
@@ -55,6 +55,7 @@ public class TapeAlign extends CommandBase {
         try {
             if (vision.getTapeCamHasTarget()) {
                 if (vision.getBestTarget() != null) {
+                    CommandScheduler.getInstance().schedule(new TurnToAngle(Math.PI));
                     cameraToTarget = vision.getBestTarget();
                     if (!team) {
                         ySpeed = (cameraToTarget.getYaw() - 4) * 0.07;
