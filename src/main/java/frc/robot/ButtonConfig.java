@@ -3,6 +3,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Commands.Swerve.BalanceChargeStationAuto;
 import frc.robot.Commands.Swerve.GyroZero;
+import frc.robot.Commands.Swerve.TogglePidRotation;
 import frc.robot.Commands.Swerve.TurnToAngle;
 import frc.robot.Commands.arms.ArmZero;
 import frc.robot.Commands.arms.ClawCollect;
@@ -56,5 +57,7 @@ public class ButtonConfig {
 
         new JoystickButton(ControlMap.CO_DRIVER_RIGHT, 1).onTrue(new ClawEject());
         new JoystickButton(ControlMap.CO_DRIVER_RIGHT, 2).onTrue(new ClawCollect());
+
+        new JoystickButton(ControlMap.DRIVER_RIGHT, 2).onTrue(new TogglePidRotation());
     }
 }

@@ -97,6 +97,14 @@ public class SwerveDrive extends SubsystemBase {
         this.drive(chassisSpeeds, false);
     }
 
+    public void setPidRotation(boolean pidRotation) {
+        this.driveTrain.setPidRotation(pidRotation);;
+    }
+
+    public boolean getPidRotation() {
+        return this.driveTrain.getPidRotation();
+    }
+
     /**
      * Sets the max translation speed of the robot
      * 

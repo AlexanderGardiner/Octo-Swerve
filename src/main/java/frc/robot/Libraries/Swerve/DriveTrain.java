@@ -23,6 +23,7 @@ public class DriveTrain {
     private Gyro gyro;
     private PoseEstimator poseEstimator;
     private boolean simulated;
+    private boolean pidRotation = false;
 
     private Pose2d targetPose2d = new Pose2d();
     private PIDController translationPIDController;
@@ -157,20 +158,24 @@ public class DriveTrain {
 
             // SmartDashboard.putString("targetPose", targetPose2d.toString());
             // SmartDashboard.putString("currentPose", currentPose.toString());
+            double omegaRadiansPerSecond = chassisSpeeds.omegaRadiansPerSecond;
+            if (pidRotation) {
+                omegaRadiansPerSecond += (rotationPidController.calculate(currentPose.getRotation().getRadians(),
+                targetPose2d.getRotation().getRadians()) / 0.02);
+            }
+            SmartDashboard.putBoolean("Pid rotation ", pidRotation);
             chassisSpeeds = new ChassisSpeeds(
-                    chassisSpeeds.vxMetersPerSecond
-                            + (translationPIDController.calculate(currentPose.getX(),
-                                    targetPose2d.getX())
-                                    /
-                                    0.02),
-                    chassisSpeeds.vyMetersPerSecond
-                            + (translationPIDController.calculate(currentPose.getY(),
-                                    targetPose2d.getY())
-                                    /
-                                    0.02),
-                    chassisSpeeds.omegaRadiansPerSecond
-                            + (rotationPidController.calculate(currentPose.getRotation().getRadians(),
-                                    targetPose2d.getRotation().getRadians()) / 0.02));
+                chassisSpeeds.vxMetersPerSecond
+                + (translationPIDController.calculate(currentPose.getX(),
+                        targetPose2d.getX())
+                        /
+                        0.02),
+        chassisSpeeds.vyMetersPerSecond
+                + (translationPIDController.calculate(currentPose.getY(),
+                        targetPose2d.getY())
+                        /
+                        0.02),
+                    omegaRadiansPerSecond);
 
             if (MathUtil.isWithinTolerance(chassisSpeeds.vxMetersPerSecond, 0, 0.01)) {
                 chassisSpeeds.vxMetersPerSecond = 0;
@@ -221,6 +226,14 @@ public class DriveTrain {
      */
     public Pose2d getPose2d() {
         return poseEstimator.getPose2d();
+    }
+
+    public void setPidRotation(boolean pidRotation) {
+        this.pidRotation = pidRotation;
+    }
+
+    public boolean getPidRotation() {
+        return this.pidRotation;
     }
 
     /**

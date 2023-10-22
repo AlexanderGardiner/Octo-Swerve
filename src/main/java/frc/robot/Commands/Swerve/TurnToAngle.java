@@ -22,6 +22,7 @@ public class TurnToAngle extends InstantCommand {
     @Override
     public void initialize() {
         Pose2d targetPose = swerveDrive.getTargetPose2d();
+        this.swerveDrive.setPidRotation(true);
         if (DriverStation.getAlliance()==DriverStation.Alliance.Red) {
             this.swerveDrive.setTargetPose2d(new Pose2d(targetPose.getX(), targetPose.getY(), new Rotation2d(Math.PI-targetAngle)));
         } else {

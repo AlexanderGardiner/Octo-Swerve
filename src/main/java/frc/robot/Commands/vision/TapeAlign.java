@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.Commands.Swerve.TurnToAngle;
 import frc.robot.Libraries.Util.MathUtil;
 import frc.robot.Subsystems.drivetrain.SwerveDrive;
 import frc.robot.Subsystems.light.Animations;
@@ -40,6 +41,7 @@ public class TapeAlign extends CommandBase {
     @Override
     public void initialize() {
         // try {
+        CommandScheduler.getInstance().schedule(new TurnToAngle(Math.PI));
         if (vision.getTapeCamHasTarget()) {
             if (vision.getBestTarget() != null) {
                 cameraToTarget = vision.getBestTarget();
