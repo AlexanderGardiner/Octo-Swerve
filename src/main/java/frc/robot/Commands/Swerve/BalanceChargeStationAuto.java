@@ -32,7 +32,7 @@ public class BalanceChargeStationAuto extends PIDCommand {
         // Light.getInstance().setAnimation(Animations.BALANCING);
 
         super(
-                new PIDController(0.05, 0.000, 0),
+                new PIDController(0.015, 0.000, 0),
                 SwerveDrive.getInstance()::getPitch,
                 0,
                 output -> SwerveDrive.getInstance().drive(new ChassisSpeeds(output, 0, 0), false),
