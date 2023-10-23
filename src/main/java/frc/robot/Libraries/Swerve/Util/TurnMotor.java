@@ -72,8 +72,8 @@ public class TurnMotor {
             sparkMax = new CANSparkMax(canID, CANSparkMaxLowLevel.MotorType.kBrushless);
 
             SparkMaxConfig sparkMaxConfig = new SparkMaxConfig(
-                    new SparkMaxStatusFrames(100, 100, 10, 100, 10, 10, 100),
-                    1000,
+                    new SparkMaxStatusFrames(100, 100, 20, 100, 20, 20, 100),
+                    500,
                     true,
                     SparkMaxEncoderType.Absolute,
                     IdleMode.kBrake,
